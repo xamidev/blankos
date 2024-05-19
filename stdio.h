@@ -13,6 +13,10 @@ void move_cursor(int x, int y);
 void putchar(int x, int y, char c);
 void puts(const char* str);
 void clear(void);
-void putcolor(int x, int y, int color);
+void putcolor(int x, int y, unsigned int color);
+char getchar(int x, int y);
+unsigned int getcolor(int x, int y);
+void scroll(int lines);
+void putc(char c);
 
 #endif

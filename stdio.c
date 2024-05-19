@@ -23,7 +23,7 @@ void putchar(int x, int y, char c)
   fb[2*(y*VGA_WIDTH+x)] = c;
 }
 
-void putcolor(int x, int y, int color)
+void putcolor(int x, int y, unsigned int color)
 {
   fb[2*(y*VGA_WIDTH+x)+1] = color;
 }
@@ -41,6 +41,37 @@ void clear(void)
   VGA_X = 0;
   VGA_Y = 0;
   move_cursor(VGA_X, VGA_Y);
+}
+
+char getchar(int x, int y)
+{
+  return fb[2*(y*VGA_WIDTH+x)];
+}
+
+unsigned int getcolor(int x, int y)
+{
+  return fb[2*(y*VGA_WIDTH+x)+1];
+}
+
+void scroll(int lines)
+{
+  for (unsigned int y = lines; y < VGA_HEIGHT; y++)
+  {
+    for (unsigned int x = 0; x < VGA_WIDTH; x++)
+    {
+      putchar(x, y-lines, getchar(x, y));
+      putcolor(x, y-lines, getcolor(x, y));
+    }
+  }
+
+  for (unsigned int y = VGA_HEIGHT-lines; y<VGA_HEIGHT; y++)
+  {
+    for (unsigned int x = 0; x < VGA_WIDTH; x++)
+    {
+      putchar(x, y, '\0');
+      putcolor(x, y, COLOR);
+    }
+  }
 }
 
 void putc(char c)
@@ -65,7 +96,7 @@ void putc(char c)
     VGA_Y++;
     VGA_X = 0;
   }
-  //if (VGA_Y >= VGA_HEIGHT) scroll
+  if (VGA_Y >= VGA_HEIGHT) scroll(1);
 
   move_cursor(VGA_X, VGA_Y);
 }
@@ -78,8 +109,4 @@ void puts(const char* str)
     str++;
   }
 }
-
-
-
-
 
