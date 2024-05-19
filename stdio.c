@@ -1,5 +1,6 @@
 #include "io.h"
 #include "stdio.h"
+#include "string.h"
 
 char* fb = (char *) 0x000B8000;
 
@@ -17,7 +18,10 @@ void putchar(unsigned int i, char c, unsigned char fg, unsigned char bg)
   fb [i+1] = ((fg & 0x0F) << 4 | (bg & 0x0F));
 }
 
-int write(char *buf, unsigned int len)
+void write(char *buf)
 {
-  return 42;
+  for (int i=0; i<strlen(buf); i++)
+  {
+    putchar(2*i, buf[i], FB_GREEN, FB_DARK_GREY);
+  }
 }

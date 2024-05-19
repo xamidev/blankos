@@ -11,6 +11,6 @@
 
 void move_cursor(unsigned short pos);
 void putchar(unsigned int i, char c, unsigned char fg, unsigned char bg);
-int write(char *buf, unsigned int len);
+void write(char *buf);
 
 #endif
