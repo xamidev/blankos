@@ -9,8 +9,10 @@
 #define FB_HIGH_BYTE_CMD  14
 #define FB_LOW_BYTE_CMD   15
 
-void move_cursor(unsigned short pos);
-void putchar(unsigned int i, char c, unsigned char fg, unsigned char bg);
-void write(char *buf);
+void move_cursor(int x, int y);
+void putchar(int x, int y, char c);
+void puts(const char* str);
+void clear(void);
+void putcolor(int x, int y, int color);
 
 #endif

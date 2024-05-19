@@ -2,6 +2,7 @@
 
 int kmain(int retvalue)
 {
-  write("hello");
+  clear();
+  puts("hello\nbrave\nnew\nworld");
   return retvalue;
 }
