@@ -3,11 +3,12 @@
 
 int kmain(int retvalue)
 {
+  init_serial();
+  log("serial connection established", 3);
+  log("Kernel started", 2);
+
   clear();
   puts("hello\nbrave\nnew\nworld");
 
-  init_serial();
-  serial_puts("Hello, brave new world. This is a message to let you know that the kernel has started.\n");
-  serial_puts("This is a second message.\n");
   return retvalue;
 }

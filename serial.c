@@ -42,3 +42,24 @@ void serial_puts(const char* str)
     write_serial(str[i]);
   }
 }
+
+void log(const char* str, const int errlevel)
+{
+  switch (errlevel)
+  {
+    case 0:
+      serial_puts("[ERROR] ");
+      break;
+    case 1:
+      serial_puts("[WARNING] ");
+      break;
+    case 2:
+      serial_puts("[INFO] ");
+      break;
+    case 3:
+      serial_puts("[DEBUG] ");
+      break;
+  }
+  serial_puts(str);
+  serial_puts("\n");
+}
