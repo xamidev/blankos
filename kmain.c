@@ -8,7 +8,6 @@ int kmain(int retvalue)
   log("Kernel started", 2);
 
   clear();
-  puts("hello\nbrave\nnew\nworld");
-
+  printf("Formatted: %% %c %s %d\n", 'f', "Hello", 77);
   return retvalue;
 }
