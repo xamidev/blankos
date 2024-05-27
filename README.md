@@ -1,3 +1,7 @@
+# ⚠️ Disclaimer
+
+Abandonded project for now. I spent too much time on OSdeving for pathetic results. Will maybe try again in some years.
+
 # Blank OS
 
 Rewritten 32-bit Protected Mode monolithic version of Blank OS for the x86 processor architecture. Features a framebuffer and serial port driver. The OS relies on an old, legacy version of GRUB as the bootloader. This *should* be GRUB 2 compatible.
