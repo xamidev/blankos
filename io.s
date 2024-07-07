@@ -16,19 +16,29 @@ inb:
 global x86_div64_32
 
 x86_div64_32:
-  mov eax, [bp+8]
-  mov ecx, [bp+12]
-  xor edx, edx
-  div ecx
+    push ebp
+    mov ebp, esp
 
-  mov bx, [bp+16]
-  mov [bx+4], eax
+    ; Arguments:
+    ; [ebp + 8]  - lower 32 bits of dividend (uint32_t)
+    ; [ebp + 12] - upper 32 bits of dividend (uint32_t)
+    ; [ebp + 16] - divisor (uint32_t)
+    ; [ebp + 20] - pointer to quotient (uint64_t*)
+    ; [ebp + 24] - pointer to remainder (uint32_t*)
 
-  mov eax, [bp+4]
-  div ecx
+    mov eax, [ebp + 8]
+    mov edx, [ebp + 12]
 
-  mov [bx], eax
-  mov bx, [bp+18]
-  mov [bx], edx
+    mov ecx, [ebp + 16]
 
-  ret
+    div ecx
+    mov esi, [ebp + 20]
+    mov [esi], eax
+
+    mov dword [esi + 4], 0
+
+    mov esi, [ebp + 24]
+    mov [esi], edx
+
+    pop ebp
+    ret
