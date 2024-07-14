@@ -1,11 +1,13 @@
 #include "stdio.h"
 #include "serial.h"
 #include "gdt.h"
+#include "idt.h"
 
 int kmain(int retvalue)
 {
   
   gdt_install();
+  idt_install();
 
   // serial testing
 
