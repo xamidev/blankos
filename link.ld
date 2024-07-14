@@ -5,6 +5,10 @@ SECTIONS {
 
   . = 0x00100000;
 
+  .__mbHeader : {
+	  *(.__mbHeader)
+  }
+
   /* Align relevant sections at 4KB  */
 
   .text ALIGN (0x1000) :
