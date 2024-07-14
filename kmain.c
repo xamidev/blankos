@@ -1,14 +1,19 @@
 #include "stdio.h"
 #include "serial.h"
+#include "gdt.h"
 
 int kmain(int retvalue)
 {
+  
+  gdt_install();
 
   // serial testing
 
   init_serial();
+  
   log("serial connection established", 3);
-  log("Kernel started", 2);
+  log("initialized GDT entries", 2);
+  log("kernel started", 2);
 
   clear();
 
