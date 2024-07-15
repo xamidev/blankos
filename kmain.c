@@ -14,7 +14,10 @@ int kmain(int retvalue)
   idt_install();
   log("initialized IDT", 2);
   isr_install();
-  log("initialized ISRs", 3);
+  log("initialized ISRs", 2);
+  irq_install();
+  __asm__ __volatile__("sti");
+  log("initialized IRQs", 2),
  
   log("kernel started", 2);
 
