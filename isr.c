@@ -111,7 +111,8 @@ void fault_handler(struct regs *r)
 {
 	if (r->int_no < 32)
 	{
-		printf("%s Exception. Halting!\n", exception_messages[r->int_no]);
+		printf("\n\n*** [Kernel panic - %s Exception] ***\nInterrupt error code %u\nedi: %x esi: %u ebp: %u esp: %u\nebx: %u edx: %u ecx: %u eax: %u\neip: %x cs:%x eflags: %x ss: %x\ngs: %x fs: %x es: %x ds: %x\nHalting!\n", exception_messages[r->int_no], r->err_code, r->edi, r->esi, r->ebp, r->esp, r->ebx, r->edx, r->ecx, r->eax, r->eip, r->cs, r->eflags, r->ss, r->gs, r->fs, r->es, r->ds);
 		for (;;);
 	}
 }
+
