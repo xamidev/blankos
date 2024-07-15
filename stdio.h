@@ -14,12 +14,14 @@
 void move_cursor(int x, int y);
 void putchar(int x, int y, char c);
 void puts(const char* str);
+void colorputs(const char* str, unsigned int color);
 void clear(void);
 void putcolor(int x, int y, unsigned int color);
 char getchar(int x, int y);
 unsigned int getcolor(int x, int y);
 void scroll(int lines);
 void putc(char c);
+void colorputc(char c, unsigned int color);
 
 #define PRINTF_STATE_START 0
 #define PRINTF_STATE_LENGTH 1

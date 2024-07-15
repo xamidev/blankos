@@ -102,11 +102,47 @@ void putc(char c)
   move_cursor(VGA_X, VGA_Y);
 }
 
+void colorputc(char c, unsigned int color)
+{
+  switch(c)
+  {
+    case '\n':
+      VGA_X = 0;
+      VGA_Y++;
+      break;
+    case '\r':
+      VGA_X = 0;
+      break;
+    default:
+      putchar(VGA_X, VGA_Y, c);
+      putcolor(VGA_X, VGA_Y, color);
+      VGA_X++;
+      break;
+  }
+
+  if (VGA_X >= VGA_WIDTH)
+  {
+    VGA_Y++;
+    VGA_X = 0;
+  }
+  if (VGA_Y >= VGA_HEIGHT) scroll(1);
+  move_cursor(VGA_X, VGA_Y);
+}
+
 void puts(const char* str)
 {
   while (*str)
   {
     putc(*str);
+    str++;
+  }
+}
+
+void colorputs(const char* str, unsigned int color)
+{
+  while (*str)
+  {
+    colorputc(*str, color);
     str++;
   }
 }

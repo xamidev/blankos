@@ -7,25 +7,24 @@
 int kmain(int retvalue)
 {
   
-  gdt_install();
-  idt_install();
-  isr_install();
-
-  // serial testing
-
   init_serial();
-  
   log("serial connection established", 3);
+  gdt_install();
   log("initialized GDT entries", 2);
-  log("kernel started", 2);
+  idt_install();
   log("initialized IDT", 2);
+  isr_install();
   log("initialized ISRs", 3);
+ 
+  log("kernel started", 2);
 
   clear();
 
   // printf testing
 
   // TODO: Framebuffer upgrade: color output
+  // TODO: Serial printf to dump registers on kernel panic
+  // TODO: Fix scrolling bug (framebuffer driver)
 
   int age = 34;
   int problems = 124;
@@ -41,10 +40,14 @@ int kmain(int retvalue)
   printf("such hex %x %X\n", 0xcafe, 0xdeadbeef);
   
   printf("such pointer %p\n", (void*)0xcafe1234);
- 
+
+  for (int i=0; i<10; i++)
+  {
+    colorputs("hello colorful world!!\n", i);
+  }
   // Div by zero exception
   
-  printf("Lalala, what a beautiful day! %d", 4/0);
+  //printf("Lalala, what a beautiful day! %d", 4/0);
 
   return retvalue;
 }
