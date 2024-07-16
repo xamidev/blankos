@@ -25,11 +25,13 @@ int kmain(int retvalue)
 
   colorputs("Blank OS version 1 iteration 3 minor 20\n", 10);
 
-  // TODO: Framebuffer upgrade: color output
   // TODO: Serial printf to dump registers on kernel panic
   // TODO: Fix scrolling bug (framebuffer driver)
+  // TODO: Fix keyboard driver bug (some keys mapped weirdly) + add suport for SHIFT and backspace (deleting character)
+  // TODO: Grub modules to load programs
+  // TODO: Folder and build process restructuration
 
-  timer_install();
-
+  //timer_install();
+  keyboard_install();
   return retvalue;
 }
