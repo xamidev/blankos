@@ -1,14 +1,29 @@
-OBJECTS = loader.o kmain.o stdio.o io.o string.o serial.o gdt.o idt.o system.o isr.o irq.o timer.o kb.o 
 CC = gcc
-CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall -Wextra -c
+CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall -Wextra -c -I src/
 LDFLAGS = -T link.ld -melf_i386
 AS = nasm
 ASFLAGS = -f elf
+SRC_DIR = src
+OBJ_DIR = build
 
-all: kernel.elf
+C_SOURCES = $(wildcard $(SRC_DIR)/*.c)
+ASM_SOURCES = $(wildcard $(SRC_DIR)/*.s)
+OBJECTS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(C_SOURCES)) \
+          $(patsubst $(SRC_DIR)/%.s, $(OBJ_DIR)/%.o, $(ASM_SOURCES))
+
+all: $(OBJ_DIR) kernel.elf
+
+$(OBJ_DIR):
+	mkdir -p $(OBJ_DIR)
 
 kernel.elf: $(OBJECTS)
 	ld $(LDFLAGS) $(OBJECTS) -o kernel.elf
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
+	$(CC) $(CFLAGS) $< -o $@
+
+$(OBJ_DIR)/%.o: $(SRC_DIR)/%.s
+	$(AS) $(ASFLAGS) $< -o $@
 
 os.iso: kernel.elf
 	cp kernel.elf iso/boot/kernel.elf
@@ -26,10 +41,5 @@ os.iso: kernel.elf
 run: os.iso
 	bochs -f bochsrc.txt -q 
 
-%.o: %.c 
-	$(CC) $(CFLAGS) $< -o $@
-%.o: %.s 
-	$(AS) $(ASFLAGS) $< -o $@
-
 clean:
-	rm -rf *.o kernel.elf os.iso
+	rm -rf $(OBJ_DIR) *.o kernel.elf os.iso
