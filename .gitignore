@@ -1,3 +1,4 @@
 *.o
 bochslog.txt
 build/
+kernel.elf
