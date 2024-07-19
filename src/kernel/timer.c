@@ -1,5 +1,5 @@
 #include "system.h"
-#include "stdio.h"
+#include "../libc/stdio.h"
 
 int timer_ticks = 0;
 

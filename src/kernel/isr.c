@@ -1,5 +1,5 @@
 #include "system.h"
-#include "stdio.h"
+#include "../libc/stdio.h"
 #include "idt.h"
 
 extern void isr0();

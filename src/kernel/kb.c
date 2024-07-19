@@ -1,5 +1,5 @@
 #include "io.h"
-#include "stdio.h"
+#include "../libc/stdio.h"
 #include "system.h"
 
 unsigned char kbdus[128] =

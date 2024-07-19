@@ -3,18 +3,23 @@ CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfile
 LDFLAGS = -T link.ld -melf_i386
 AS = nasm
 ASFLAGS = -f elf
+
 SRC_DIR = src
+KERNEL_DIR = $(SRC_DIR)/kernel
+LIBC_DIR = $(SRC_DIR)/libc
+PROGRAMS_DIR = $(SRC_DIR)/programs
 OBJ_DIR = build
 
-C_SOURCES = $(wildcard $(SRC_DIR)/*.c)
-ASM_SOURCES = $(wildcard $(SRC_DIR)/*.s)
-OBJECTS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(C_SOURCES)) \
-          $(patsubst $(SRC_DIR)/%.s, $(OBJ_DIR)/%.o, $(ASM_SOURCES))
+C_SOURCES = $(wildcard $(KERNEL_DIR)/*.c) $(wildcard $(LIBC_DIR)/*.c) $(wildcard $(PROGRAMS_DIR)/*.c)
+ASM_SOURCES = $(wildcard $(KERNEL_DIR)/*.s) $(wildcard $(LIBC_DIR)/*.s) $(wildcard $(PROGRAMS_DIR)/*.s)
+
+OBJECTS = $(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%, $(C_SOURCES:.c=.o) $(ASM_SOURCES:.s=.o))
 
 all: $(OBJ_DIR) kernel.elf
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
+	mkdir -p $(OBJ_DIR)/kernel $(OBJ_DIR)/libc $(OBJ_DIR)/programs
 
 kernel.elf: $(OBJECTS)
 	ld $(LDFLAGS) $(OBJECTS) -o kernel.elf
@@ -42,4 +47,5 @@ run: os.iso
 	bochs -f bochsrc.txt -q 
 
 clean:
-	rm -rf $(OBJ_DIR) *.o kernel.elf os.iso
+	rm -rf $(OBJ_DIR) kernel.elf os.iso
+

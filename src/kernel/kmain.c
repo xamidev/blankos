@@ -1,4 +1,4 @@
-#include "stdio.h"
+#include "../libc/stdio.h"
 #include "serial.h"
 #include "gdt.h"
 #include "idt.h"
@@ -29,7 +29,6 @@ int kmain(int retvalue)
   // TODO: Fix scrolling bug (framebuffer driver)
   // TODO: Fix keyboard driver bug (some keys mapped weirdly) + add suport for SHIFT and backspace (deleting character)
   // TODO: Grub modules to load programs
-  // TODO: Folder and build process restructuration
 
   //timer_install();
   keyboard_install();
