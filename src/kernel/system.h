@@ -21,5 +21,6 @@ void timer_install();
 void delay(int ticks);
 void keyboard_install();
 char keyboard_getchar();
+void shell_install();
 #endif
 

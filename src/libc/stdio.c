@@ -87,6 +87,9 @@ void putc(char c)
     case '\r':
       VGA_X = 0;
       break;
+    case '\t':
+      VGA_X += 4;
+      break;
     default:
       putchar(VGA_X, VGA_Y, c);
       VGA_X++;
@@ -113,6 +116,9 @@ void colorputc(char c, unsigned int color)
       break;
     case '\r':
       VGA_X = 0;
+      break;
+    case '\t':
+      VGA_X += 4;
       break;
     default:
       putchar(VGA_X, VGA_Y, c);

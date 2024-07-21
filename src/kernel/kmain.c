@@ -4,8 +4,6 @@
 #include "idt.h"
 #include "system.h"
 
-#define BUFFER_SIZE 256
-
 int kmain(int retvalue)
 {
   
@@ -34,10 +32,7 @@ int kmain(int retvalue)
   //timer_install();
   keyboard_install();
 
-  char input_buffer[BUFFER_SIZE];
-  colorputs("Enter something: ", 9);
-  get_input(input_buffer, BUFFER_SIZE);
-  printf("\nYou entered: %s\n", input_buffer);
+  shell_install();
 
   return retvalue;
 }
