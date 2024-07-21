@@ -2,6 +2,7 @@
 #include "stdio.h"
 #include "string.h"
 #include "stdint.h"
+#include "../kernel/system.h"
 
 char* fb = (char *) 0x000B8000;
 const unsigned VGA_WIDTH = 80;
@@ -334,4 +335,24 @@ int* printf_number(int* argp, int length, bool sign, int radix)
   }
 
   return argp;
+}
+
+int getch()
+{
+	return keyboard_getchar();
+}
+
+void get_input(char *buffer, int size) {
+	int index = 0;
+	char c;
+
+	while (index < size-1)
+	{
+		c = getch();
+		if (c == '\n') break;
+
+		buffer[index++] = c;
+		putc(c);
+	}
+	buffer[index] = '\0';
 }

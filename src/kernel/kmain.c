@@ -4,6 +4,8 @@
 #include "idt.h"
 #include "system.h"
 
+#define BUFFER_SIZE 256
+
 int kmain(int retvalue)
 {
   
@@ -29,8 +31,13 @@ int kmain(int retvalue)
   // TODO: Fix scrolling bug (framebuffer driver)
   // TODO: Fix keyboard driver bug (some keys mapped weirdly) + add suport for SHIFT and backspace (deleting character)
   // TODO: Grub modules to load programs
-
   //timer_install();
   keyboard_install();
+
+  char input_buffer[BUFFER_SIZE];
+  colorputs("Enter something: ", 9);
+  get_input(input_buffer, BUFFER_SIZE);
+  printf("\nYou entered: %s\n", input_buffer);
+
   return retvalue;
 }

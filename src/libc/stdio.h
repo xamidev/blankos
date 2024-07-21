@@ -37,5 +37,7 @@ void colorputc(char c, unsigned int color);
 
 void printf(const char* fmt, ...);
 int* printf_number(int* argp, int length, bool sign, int radix);
+int getch();
+void get_input(char *buffer, int size);
 
 #endif

@@ -20,5 +20,6 @@ void irq_uninstall_handler(int irq);
 void timer_install();
 void delay(int ticks);
 void keyboard_install();
+char keyboard_getchar();
 #endif
 
