@@ -1,5 +1,5 @@
 CC = gcc
-CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall -Wextra -c -I src/
+CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall -Wextra -Wno-div-by-zero -c -I src/
 LDFLAGS = -T link.ld -melf_i386
 AS = nasm
 ASFLAGS = -f elf
@@ -43,9 +43,14 @@ os.iso: kernel.elf
 							-o os.iso                       \
 							iso
 
+real: kernel.elf
+	mkdir -p real/boot/grub
+	cp kernel.elf real/boot/kernel.elf
+	grub-mkrescue real -o blankos.iso
+
 run: os.iso
 	bochs -f bochsrc.txt -q 
 
 clean:
-	rm -rf $(OBJ_DIR) kernel.elf os.iso
+	rm -rf $(OBJ_DIR) kernel.elf os.iso blankos.iso real
 

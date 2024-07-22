@@ -39,6 +39,21 @@ make run
 
 This will start a new Bochs debugger instance. To proceed with the kernel execution, you will have to type `c` in the shell spawning Bochs. Serial output will be saved under the `com1.out` file, this way you can debug the kernel by viewing its log messages. To quit, type `q`. Feel free to open issues or pull requests.
 
+## Running on real hardware
+
+To run the OS on real hardware, you'll first need to have a BIOS-compatible computer. Some of the new laptops with graphical "BIOSes" only support UEFI now. So make sure to get a computer that can boot into BIOS mode, **not UEFI mode**. Then, switch the boot mode to "Legacy" in your BIOS utility.
+
+Then, use the Makefile target `real` to build a "real"-capable ISO disk image. The image will have GRUB2 installed on it, using the `grub-mkrescue` utility (make sure to install it before) which is dependent on `xorriso` (install it too).
+
+Once the ISO file is generated, you can write it on a disk using this command:
+
+```
+sudo dd bs=4M if=blankos.iso of=/dev/sdX status=progress oflag=sync
+```
+
+Replace `sdX` with your USB drive name (you can find it by doing `sudo fdisk -l`).
+Tada! You now have a working BlankOS USB stick. Go ahead and try it out!
+
 ### ⚠️ Disclaimer
 
-This is a hobbyist operating system kernel and it comes without any warranty whatsoever! It isn't capable of anything really.
+This is a hobbyist operating system kernel and it comes without any warranty whatsoever! It isn't capable of anything really. Feedback and contributions are highly appreciated!

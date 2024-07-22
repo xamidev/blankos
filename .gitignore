@@ -2,3 +2,6 @@
 bochslog.txt
 build/
 kernel.elf
+os.iso
+blankos.iso
+real/

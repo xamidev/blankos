@@ -17,7 +17,11 @@ void shell_install()
 
     if (strcmp(input_buffer, "help") == 0)
     {
-        printf("This is the Blank Operating System\ndesigned for fun by xamidev\n\nCommand help:\n\n\thelp - shows this message\n");
+        printf("This is the Blank Operating System\ndesigned for fun by xamidev\n\nCommand help:\n\n\thelp - shows this message\n\tpanic - makes the kernel panic\n");
+    }
+    else if (strcmp(input_buffer, "panic") == 0)
+    {
+	printf("%d", 4/0);
     }
 
   }
