@@ -21,7 +21,7 @@ void shell_install()
     }
     else if (strcmp(input_buffer, "help") == 0)
     {
-        printf("This is the Blank Operating System\ndesigned for fun by xamidev\n\nCommand help:\n\n\thelp - shows this message\n\tpanic - makes the kernel panic\n");
+        printf("This is the Blank Operating System\ndesigned for fun by xamidev\n\nCommand help:\n\n\thelp - shows this message\n\tpanic - makes the kernel panic\n\twords - generates random words\n");
     }
     else if (strcmp(input_buffer, "panic") == 0)
     {
