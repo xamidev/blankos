@@ -36,7 +36,7 @@ int kmain(int retvalue)
 
   // TODO: Grub modules to load programs
   
-  //timer_install();
+  timer_install();
   keyboard_install();
 
   shell_install();

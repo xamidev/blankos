@@ -22,5 +22,8 @@ void delay(int ticks);
 void keyboard_install();
 char keyboard_getchar();
 void shell_install();
+
+extern volatile unsigned long global_ticks;
+
 #endif
 

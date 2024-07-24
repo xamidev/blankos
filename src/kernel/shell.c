@@ -1,6 +1,7 @@
 #include "system.h"
 #include "../libc/stdio.h"
 #include "../libc/string.h"
+#include "../programs/programs.h"
 
 #define BUFFER_SIZE 256
 
@@ -25,6 +26,10 @@ void shell_install()
     else if (strcmp(input_buffer, "panic") == 0)
     {
 	printf("%d", 4/0);
+    }
+    else if (strcmp(input_buffer, "words") == 0)
+    {
+	    program_words();
     }
     else {
 	printf("Unknown command %s\n", input_buffer);
