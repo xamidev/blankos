@@ -14,8 +14,11 @@ void shell_install()
     printf("\n");
     
     // Childish shell
-
-    if (strcmp(input_buffer, "help") == 0)
+    if (strcmp(input_buffer, "") == 0)
+    {
+	continue;
+    }
+    else if (strcmp(input_buffer, "help") == 0)
     {
         printf("This is the Blank Operating System\ndesigned for fun by xamidev\n\nCommand help:\n\n\thelp - shows this message\n\tpanic - makes the kernel panic\n");
     }
@@ -23,6 +26,8 @@ void shell_install()
     {
 	printf("%d", 4/0);
     }
-
+    else {
+	puts("Unknown command\n");
+    }
   }
 }

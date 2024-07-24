@@ -57,12 +57,14 @@ unsigned int getcolor(int x, int y)
 
 void scroll(int lines)
 {
-  for (unsigned int y = lines; y < VGA_HEIGHT; y++)
+  if (lines <= 0 || (unsigned int)lines >= VGA_HEIGHT) return;
+
+  for (unsigned int y = 0; y < VGA_HEIGHT-lines; y++)
   {
     for (unsigned int x = 0; x < VGA_WIDTH; x++)
     {
-      putchar(x, y-lines, getchar(x, y));
-      putcolor(x, y-lines, getcolor(x, y));
+      putchar(x, y, getchar(x, y+lines));
+      putcolor(x, y, getcolor(x, y+lines));
     }
   }
 
@@ -70,9 +72,14 @@ void scroll(int lines)
   {
     for (unsigned int x = 0; x < VGA_WIDTH; x++)
     {
-      putchar(x, y, '\0');
+      putchar(x, y, ' ');
       putcolor(x, y, COLOR);
     }
+  }
+
+  VGA_Y -= lines;
+  if ((int)VGA_Y < 0) {
+	  VGA_Y = 0;
   }
 }
 
@@ -89,6 +96,10 @@ void putc(char c)
       break;
     case '\t':
       VGA_X += 4;
+      if (VGA_X >= VGA_WIDTH) {
+	      VGA_X -= VGA_WIDTH;
+	      VGA_Y++;
+      }
       break;
     default:
       putchar(VGA_X, VGA_Y, c);
