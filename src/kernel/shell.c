@@ -27,7 +27,7 @@ void shell_install()
 	printf("%d", 4/0);
     }
     else {
-	puts("Unknown command\n");
+	printf("Unknown command %s\n", input_buffer);
     }
   }
 }

@@ -101,6 +101,17 @@ void putc(char c)
 	      VGA_Y++;
       }
       break;
+    case '\b':
+      if (VGA_X > 0)
+      {
+	      VGA_X--;
+      }
+      else if (VGA_Y > 0) {
+	      VGA_Y--;
+	      VGA_X = VGA_WIDTH-1;
+      }
+      putchar(VGA_X, VGA_Y, ' ');
+      break;
     default:
       putchar(VGA_X, VGA_Y, c);
       VGA_X++;
@@ -366,10 +377,19 @@ void get_input(char *buffer, int size) {
 	while (index < size-1)
 	{
 		c = getch();
-		if (c == '\n') break;
-
-		buffer[index++] = c;
-		putc(c);
+		if (c == '\n') {
+			break;
+		} else if (c == '\b') {
+			if (index > 0) {
+				index--;
+				putc('\b');
+				putc(' ');
+				putc('\b');
+			}
+		} else {
+			buffer[index++] = c;
+			putc(c);
+		}
 	}
 	buffer[index] = '\0';
 }

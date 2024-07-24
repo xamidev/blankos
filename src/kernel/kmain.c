@@ -4,6 +4,15 @@
 #include "idt.h"
 #include "system.h"
 
+char* ascii_title =
+"\n"
+"   oooooooooo o888                         oooo          ooooooo    oooooooo8\n"
+"   888    888 888   ooooooo   oo oooooo    888  ooooo o888   888o 888        \n"
+"   888oooo88  888   ooooo888   888   888   888o888    888     888  888oooooo \n"
+"   888    888 888 888    888   888   888   8888 88o   888o   o888         888\n"
+"   o888ooo888 o888o 88ooo88 8o o888o o888o o888o o888o   88ooo88   o88oooo888\n\n"
+"   --------------------------------- v0.3.31 --------------------------------\n\n";
+
 int kmain(int retvalue)
 {
   
@@ -23,12 +32,10 @@ int kmain(int retvalue)
 
   clear();
 
-  colorputs("Blank OS version 1 iteration 3 minor 20\n", 10);
+  colorputs(ascii_title, 10);
 
-  // TODO: Serial printf to dump registers on kernel panic
-  // TODO: Fix scrolling bug (framebuffer driver)
-  // TODO: Fix keyboard driver bug (some keys mapped weirdly) + add suport for SHIFT and backspace (deleting character)
   // TODO: Grub modules to load programs
+  
   //timer_install();
   keyboard_install();
 
