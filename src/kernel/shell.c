@@ -12,7 +12,7 @@ void shell_install()
     char input_buffer[BUFFER_SIZE];
     colorputs("blankos> ", 9);
     get_input(input_buffer, BUFFER_SIZE);
-    printf("\n");
+    puts("\n");
     
     // Childish shell
     if (strcmp(input_buffer, "") == 0)
@@ -21,7 +21,7 @@ void shell_install()
     }
     else if (strcmp(input_buffer, "help") == 0)
     {
-        printf("This is the Blank Operating System\ndesigned for fun by xamidev\n\nCommand help:\n\n\thelp - shows this message\n\tpanic - makes the kernel panic\n\twords - generates random words\n");
+        printf("This is the Blank Operating System\ndesigned for fun by xamidev\n\nCommand help:\n\n\thelp - shows this message\n\tpanic - makes the kernel panic\n\twords - generates random words\n\tprimes - computes prime numbers\n");
     }
     else if (strcmp(input_buffer, "panic") == 0)
     {
@@ -30,6 +30,10 @@ void shell_install()
     else if (strcmp(input_buffer, "words") == 0)
     {
 	    program_words();
+    }
+    else if (strcmp(input_buffer, "primes") == 0)
+    {
+	    program_primes();
     }
     else {
 	printf("Unknown command %s\n", input_buffer);
