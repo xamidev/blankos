@@ -46,6 +46,7 @@ os.iso: kernel.elf
 real: kernel.elf
 	mkdir -p real/boot/grub
 	cp kernel.elf real/boot/kernel.elf
+	cp grub.cfg real/boot/grub/grub.cfg
 	grub-mkrescue real -o blankos.iso
 
 run: os.iso
