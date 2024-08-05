@@ -1,5 +1,5 @@
 #include "../libc/stdio.h"
-#include "serial.h"
+#include "../drivers/serial.h"
 #include "gdt.h"
 #include "idt.h"
 #include "system.h"
@@ -33,7 +33,7 @@ int kmain(int retvalue)
   clear();
 
   colorputs(ascii_title, 10);
-  colorputs("   by @xamidev - star the repo for a cookie!\n\n", 11);
+  colorputs("   by @xamidev - star the repo for a cookie!\n\n", 14);
 
   // TODO: Grub modules to load programs
   

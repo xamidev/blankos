@@ -1,4 +1,4 @@
-#include "system.h"
+#include "../kernel/system.h"
 #include "../libc/stdio.h"
 
 volatile unsigned long global_ticks = 0;

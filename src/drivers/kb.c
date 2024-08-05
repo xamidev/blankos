@@ -1,6 +1,6 @@
-#include "io.h"
+#include "../kernel/io.h"
 #include "../libc/stdio.h"
-#include "system.h"
+#include "../kernel/system.h"
 
 #define KEYBOARD_BUFFER_SIZE 256
 
