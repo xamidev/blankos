@@ -33,6 +33,7 @@ int kmain(int retvalue)
   clear();
 
   colorputs(ascii_title, 10);
+  colorputs("   by @xamidev - star the repo for a cookie!\n\n", 11);
 
   // TODO: Grub modules to load programs
   

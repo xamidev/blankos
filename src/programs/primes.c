@@ -1,5 +1,6 @@
 #include "../libc/stdint.h"
 #include "../libc/stdio.h"
+#include "../kernel/system.h"
 
 #define PRIMES_MAX 1000000
 
@@ -16,8 +17,9 @@ void program_primes()
 	{	
 		if (isPrime(x))
 		{
-				printf("%d ", x);
+				printf("%d ", x);	
 		}
+		delay(2);
 	}
 	puts("\n");
 }
