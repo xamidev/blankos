@@ -3,6 +3,7 @@
 
 void program_words();
 void program_primes();
+void program_math();
 
 // Misc
 void program_rainbow();

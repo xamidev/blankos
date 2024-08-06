@@ -39,7 +39,6 @@ int kmain(int retvalue)
   
   timer_install();
   keyboard_install();
-
   shell_install();
 
   return retvalue;

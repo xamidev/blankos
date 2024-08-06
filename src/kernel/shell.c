@@ -21,7 +21,7 @@ void shell_install()
     }
     else if (strcmp(input_buffer, "help") == 0)
     {
-        printf("help\tpanic\twords\tprimes\trainbow\tclear\n");
+        printf("help\tpanic\twords\tprimes\trainbow\tclear\nmath\n");
     }
     else if (strcmp(input_buffer, "panic") == 0)
     {
@@ -42,6 +42,10 @@ void shell_install()
     else if (strcmp(input_buffer, "clear") == 0)
     {
 	program_clear();
+    }
+    else if (strcmp(input_buffer, "math") == 0)
+    {
+	    program_math();
     }
     else {
 	printf("Unknown command %s\n", input_buffer);

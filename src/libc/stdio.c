@@ -176,6 +176,50 @@ void colorputs(const char* str, unsigned int color)
   }
 }
 
+// double to string for printf
+void dtostrf(double val, char *buffer, int precision)
+{
+  int whole_part = (int)val;
+  double fractional_part = val - whole_part;
+  if (fractional_part < 0) fractional_part = -fractional_part;
+
+  char *start = buffer;
+  if (whole_part == 0)
+  {
+    *buffer++ = '0';
+  }
+  else
+  {
+    if (whole_part < 0)
+    {
+      *buffer++ = '-';
+      whole_part = -whole_part;
+    }
+    char temp[32];
+    int pos = 0;
+
+    while (whole_part > 0)
+    {
+      temp[pos++] = '0' + (whole_part % 10);
+      whole_part /= 10;
+    }
+    while (pos > 0)
+    {
+      *buffer++ = temp[--pos];
+    }
+  }
+
+  *buffer++ = '.';
+  for (int i = 0; i < precision; i++)
+  {
+    fractional_part *= 10;
+    int digit = (int)fractional_part;
+    *buffer++ = '0' + digit;
+    fractional_part -= digit;
+  }
+  *buffer = '\0';
+}
+
 void printf(const char* fmt, ...)
 {
   int* argp = (int*) &fmt;
@@ -188,52 +232,52 @@ void printf(const char* fmt, ...)
   while (*fmt)
   {
     switch(state) {
-    case PRINTF_STATE_START:
-      if (*fmt == '%')
-      {
-        state = PRINTF_STATE_LENGTH;
-      }
-      else {
-        putc(*fmt);
-      }
-      break;
-    case PRINTF_STATE_LENGTH:
-      if (*fmt == 'h')
-      {
-        length = PRINTF_LENGTH_SHORT;
-        state = PRINTF_STATE_SHORT;
-      }
-      else if (*fmt == 'l')
-      {
-        length = PRINTF_LENGTH_LONG;
-        state = PRINTF_STATE_LONG;
-      }
-      else {
-        goto PRINTF_STATE_SPEC_;
-      }
-      break;
-    case PRINTF_STATE_SHORT:
-      if (*fmt == 'h')
-      {
-        length = PRINTF_LENGTH_SHORT_SHORT;
-        state = PRINTF_STATE_SPEC;
-      }
-      else {
-        goto PRINTF_STATE_SPEC_;
-      }
-      break;
-    case PRINTF_STATE_LONG:
-      if (*fmt == 'l')
-      {
-        length = PRINTF_LENGTH_LONG_LONG;
-        state = PRINTF_STATE_SPEC;
-      }
-      else {
-        goto PRINTF_STATE_SPEC_;
-      }
-      break;
-    case PRINTF_STATE_SPEC:
-      PRINTF_STATE_SPEC_:
+      case PRINTF_STATE_START:
+        if (*fmt == '%')
+        {
+          state = PRINTF_STATE_LENGTH;
+        }
+        else {
+          putc(*fmt);
+        }
+        break;
+      case PRINTF_STATE_LENGTH:
+        if (*fmt == 'h')
+        {
+          length = PRINTF_LENGTH_SHORT;
+          state = PRINTF_STATE_SHORT;
+        }
+        else if (*fmt == 'l')
+        {
+          length = PRINTF_LENGTH_LONG;
+          state = PRINTF_STATE_LONG;
+        }
+        else {
+          goto PRINTF_STATE_SPEC_;
+        }
+        break;
+      case PRINTF_STATE_SHORT:
+        if (*fmt == 'h')
+        {
+          length = PRINTF_LENGTH_SHORT_SHORT;
+          state = PRINTF_STATE_SPEC;
+        }
+        else {
+          goto PRINTF_STATE_SPEC_;
+        }
+        break;
+      case PRINTF_STATE_LONG:
+        if (*fmt == 'l')
+        {
+          length = PRINTF_LENGTH_LONG_LONG;
+          state = PRINTF_STATE_SPEC;
+        }
+        else {
+          goto PRINTF_STATE_SPEC_;
+        }
+        break;
+      case PRINTF_STATE_SPEC:
+        PRINTF_STATE_SPEC_:
         switch(*fmt)
         {
           case 'c':
@@ -270,14 +314,24 @@ void printf(const char* fmt, ...)
             sign = false;
             argp = printf_number(argp, length, sign, radix);
             break;
+          case 'f': {
+            // Handle floating-point numbers
+            double* dargp = (double*)argp;
+            double d = *(double*)dargp;
+            char buffer[64];
+            dtostrf(d, buffer, 6); // Default precision: 6
+            puts(buffer);
+            argp += 2; // Incrementing by 2 to move past the double argument
+            break;
+          }
           default:
             break;
         }
-      state = PRINTF_STATE_START;
-      length = PRINTF_LENGTH_START;
-      radix = 10;
-      sign = false;
-      break;
+        state = PRINTF_STATE_START;
+        length = PRINTF_LENGTH_START;
+        radix = 10;
+        sign = false;
+        break;
     }
     fmt++;
   }
