@@ -1,6 +1,7 @@
 // Miscellaneous small programs
 
 #include "../libc/stdio.h"
+#include "../kernel/system.h"
 
 // Print a rainbow colorful text for testing
 
@@ -28,4 +29,11 @@ void program_rainbow()
 void program_clear()
 {	
 	for (int i=0; i<ROWS; i++) scroll(1);
+}
+
+// Get uptime in ticks
+
+void program_uptime()
+{
+	printf("%d ticks\n", uptime());
 }

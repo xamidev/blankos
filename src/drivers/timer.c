@@ -19,3 +19,8 @@ void delay(int ticks)
 	eticks = global_ticks + ticks;
 	while (global_ticks < eticks);
 }
+
+int uptime()
+{
+	return global_ticks;
+}

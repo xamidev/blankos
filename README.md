@@ -1,11 +1,19 @@
 # BlankOS
 
-Rewritten monolithic version of Blank OS for the x86 processor architecture. Features a framebuffer, serial port driver, GDT, IDT. The OS relies on an old, legacy version of GRUB as the bootloader (eltorito). This *should* be GRUB 2 compatible. Emulation was tested on Arch Linux 6.9.7-arch1-1. The long-term goal of this OS is to be capable of running user programs and having its own complete kernel C library so that users can write their own C programs and expand the system!
+Rewritten monolithic version of Blank OS for the x86 processor architecture. The OS relies on an old, legacy version of GRUB as the bootloader (eltorito). This *should* be GRUB 2 compatible. Emulation was tested on Bochs and QEMU using Arch Linux 6.9.7-arch1-1, and on real hardware too.
+The long-term goal of this OS is to be capable of running user programs and having its own complete kernel C library so that users can write their own C programs and expand the system!
 
-Next steps for this project will be:
-- User programs
-- Completing the kernel libc
-- Filesystem support
+## Features
+
+- Serial port driver (output & debug)
+- Framebuffer driver (output)
+- PS/2 Keyboard and PIC driver (input)
+- PIT (system clock/timer) driver
+- Working IDT, GDT, ISRs, and IRQs
+- Kernel panicking (exception handling)
+- A kernel-space shell
+- Cool color output!!
+- Some small working kernel-space programs!!
 
 ## Usage
 
@@ -51,9 +59,26 @@ sudo dd bs=4M if=blankos.iso of=/dev/sdX status=progress oflag=sync
 Replace `sdX` with your USB drive name (you can find it by doing `sudo fdisk -l`).
 Tada! You now have a working BlankOS USB stick. Go ahead and try it out!
 
-## Post-install guides
+## Post-install
 
-Two documents are available to help you understand the project better. One is the User's Manual, labelled `USERS.md`, and the other one is the Developer's Manual, labelled `DEVELOPERS.md`. They are full of useful resources around Blank OS.
+Two documents are available to help you understand the project better. One is the User's Manual, labelled `USERS.md`, and the other one is the Developer's Manual, labelled `DEVELOPERS.md`. They are full of useful resources around Blank OS. You'll learn how to use the system and how to contribute to it.
+
+### Next Steps?
+
+Next steps for this project will be:
+
+- User programs
+- Completing the kernel libc
+- Filesystem support
+
+### Resources
+
+- the [OSDev.org](https://wiki.osdev.org/Expanded_Main_Page) wiki and forums
+- the [Nanobyte](https://www.youtube.com/watch?v=9t-SPC7Tczc&list=PLFjM7v6KGMpiH2G-kT781ByCNC_0pKpPN) YouTube channel
+- the [Daedalus Community](https://www.youtube.com/@DaedalusCommunity) YouTube channel
+- a great book named *Operating Systems: From 0 to 1*, by Tu, Do Hoang
+- the Intel [64 and IA-32 Architectures Software Developer Manuals](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html)
+- [Bran's Kernel Development Tutorial](http://www.osdever.net/bkerndev/index.php)
 
 ### ⚠️ Disclaimer
 
