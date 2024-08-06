@@ -1,4 +1,4 @@
-![](https://i.ibb.co/9b7PxCT/Screenshot-20240806-153153.png)
+![showcase](https://github.com/user-attachments/assets/0e3208db-e585-4086-9346-c00414d98646)
 
 # BlankOS
 
