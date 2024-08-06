@@ -1,3 +1,5 @@
+![](https://i.ibb.co/9b7PxCT/Screenshot-20240806-153153.png)
+
 # BlankOS
 
 Rewritten monolithic version of Blank OS for the x86 processor architecture. The OS relies on an old, legacy version of GRUB as the bootloader (eltorito). This *should* be GRUB 2 compatible. Emulation was tested on Bochs and QEMU using Arch Linux 6.9.7-arch1-1, and on real hardware too.
