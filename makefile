@@ -1,5 +1,5 @@
-CC = gcc
-CFLAGS = -m32 -nostdlib -nostdinc -fno-builtin -fno-stack-protector -nostartfiles -nodefaultlibs -Wall -Wextra -Wno-div-by-zero -c -I src/
+CC = i386-elf-7.5.0-Linux-x86_64/bin/i386-elf-gcc
+CFLAGS = -Wall -Wextra -Wno-div-by-zero -Wno-builtin-declaration-mismatch -c -I src/
 LDFLAGS = -T link.ld -melf_i386
 AS = nasm
 ASFLAGS = -f elf
