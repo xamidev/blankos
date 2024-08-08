@@ -22,7 +22,7 @@ The long-term goal of this OS is to be capable of running user programs and havi
 Download the latest BlankOS ISO image from the "Releases" tab, and emulate it directly using the QEMU emulator:
 
 ```
-qemu-system-i386 blankOS-i386-1.4.45.iso
+qemu-system-i386 blankOS-i386-0.3.45.iso
 ```
 
 Alternatively, burn the image on a USB stick and use it on a machine (see section "Real Hardware").
