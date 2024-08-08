@@ -3,6 +3,7 @@
 #include "gdt.h"
 #include "idt.h"
 #include "system.h"
+//#include <stdarg.h>
 
 char* ascii_title =
 "\n"

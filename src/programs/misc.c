@@ -35,5 +35,7 @@ void program_clear()
 
 void program_uptime()
 {
-	printf("%d ticks\n", uptime());
+	int ticks = uptime();
+	double seconds = ticks/18.2065; // PIC channel 0 freq
+	printf("%d ticks\t%f seconds\n", ticks, seconds);
 }

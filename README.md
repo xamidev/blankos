@@ -19,6 +19,16 @@ The long-term goal of this OS is to be capable of running user programs and havi
 
 ## Usage
 
+Download the latest BlankOS ISO image from the "Releases" tab, and emulate it directly using the QEMU emulator:
+
+```
+qemu-system-i386 blankOS-i386-1.4.45.iso
+```
+
+Alternatively, burn the image on a USB stick and use it on a machine (see section "Real Hardware").
+
+## Building from source
+
 ### Dependencies
 
 For Debian-based distros:
@@ -42,7 +52,7 @@ A cross-compiler is needed to build the system. More info on why [here](https://
 
 Why didn't I use one sooner? Can't tell. Maybe I was too lazy. This is actually problematic because I wasn't able to use some libraries and I had to put in a bunch of weird compilation flags. It's better like this.
 
-## Building and running
+To clone and build, do:
 
 ```
 git clone https://github.com/xamidev/blankos
@@ -50,7 +60,8 @@ make
 make run
 ```
 
-This will start a new Bochs debugger instance. To proceed with the kernel execution, you will have to type `c` in the shell spawning Bochs. Serial output will be saved under the `com1.out` file, this way you can debug the kernel by viewing its log messages. To quit, type `q`. Feel free to open issues or pull requests.
+This will start a new Bochs debugger instance. To proceed with the kernel execution, you will have to type `c` in the shell spawning Bochs. Serial output will be saved under the `com1.out` file, this way you can debug the kernel by viewing its log messages. To quit, type `q`.
+You can try out QEMU too.
 
 ## Running on real hardware
 

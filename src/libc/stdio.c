@@ -183,7 +183,6 @@ void dtostrf(double val, char *buffer, int precision)
   double fractional_part = val - whole_part;
   if (fractional_part < 0) fractional_part = -fractional_part;
 
-  char *start = buffer;
   if (whole_part == 0)
   {
     *buffer++ = '0';

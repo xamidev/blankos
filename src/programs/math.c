@@ -87,7 +87,6 @@ Token lexer_get_next_token(Lexer *lexer)
 				}
 				lexer->current_token.type = TOKEN_NUMBER;
 				lexer->current_token.value = value;
-				//printf("NUMBER %f\n", value);
 				return lexer->current_token;
 		}
 
@@ -95,7 +94,6 @@ Token lexer_get_next_token(Lexer *lexer)
 		{
 			lexer_advance(lexer);
 			lexer->current_token.type = TOKEN_PLUS;
-			printf("PLUS\n");
 			return lexer->current_token;
 		}
 
@@ -103,7 +101,6 @@ Token lexer_get_next_token(Lexer *lexer)
 		{
 			lexer_advance(lexer);
 			lexer->current_token.type = TOKEN_MINUS;
-			printf("MINUS\n");
 			return lexer->current_token;
 		}
 
@@ -111,7 +108,6 @@ Token lexer_get_next_token(Lexer *lexer)
 		{
 			lexer_advance(lexer);
 			lexer->current_token.type = TOKEN_MULTIPLY;
-			printf("MULTIPLY\n");
 			return lexer->current_token;
 		}
 
@@ -119,7 +115,6 @@ Token lexer_get_next_token(Lexer *lexer)
 		{
 			lexer_advance(lexer);
 			lexer->current_token.type = TOKEN_DIVIDE;
-			printf("DIVIDE\n");
 			return lexer->current_token;
 		}
 
@@ -127,7 +122,6 @@ Token lexer_get_next_token(Lexer *lexer)
 		{
 			lexer_advance(lexer);
 			lexer->current_token.type = TOKEN_LPAREN;
-			printf("LPAREN\n");
 			return lexer->current_token;
 		}
 
@@ -135,16 +129,14 @@ Token lexer_get_next_token(Lexer *lexer)
 		{
 			lexer_advance(lexer);
 			lexer->current_token.type = TOKEN_RPAREN;
-			printf("RPAREN\n");
 			return lexer->current_token;
 		}
 
-		printf("Unknown character %c\n", current_char);
-		//shell_install();
+		printf("\nUnknown character %c\n", current_char);
+		shell_install();
 	}
 	
 	lexer->current_token.type = TOKEN_END;
-	printf("END\n");
 	return lexer->current_token;
 }
 
@@ -166,8 +158,8 @@ void parser_eat(Parser *parser, TokenType type)
 	{
 		parser->current_token = lexer_get_next_token(&parser->lexer);
 	} else {
-		printf("Unexpected token %d\n", parser->current_token.type);
-		//shell_install();
+		printf("\nUnexpected token %d\n", parser->current_token.type);
+		shell_install();
 	}
 }
 
@@ -181,17 +173,15 @@ double parser_factor(Parser *parser)
 	if (token.type == TOKEN_NUMBER)
 	{
 		parser_eat(parser, TOKEN_NUMBER);
-		//printf("Factor: %f\n", token.value);
 		return token.value;
 	} else if (token.type == TOKEN_LPAREN) {
 		parser_eat(parser, TOKEN_LPAREN);
 		double result = parser_expression(parser);
 		parser_eat(parser, TOKEN_RPAREN);
-		//printf("Factor (expression): %f\n", result);
 		return result;
 	} else {
-		printf("Unexpected token in factor %d\n", token.type);
-		//shell_install();
+		printf("\nUnexpected token in factor %d\n", token.type);
+		shell_install();
 	}
 	return -1;
 }
@@ -199,7 +189,6 @@ double parser_factor(Parser *parser)
 double parser_term(Parser *parser)
 {
 	double result = parser_factor(parser);
-	//printf("Initial term: %f\n", result);
 
 	while (parser->current_token.type == TOKEN_MULTIPLY || parser->current_token.type == TOKEN_DIVIDE)
 	{
@@ -208,11 +197,9 @@ double parser_term(Parser *parser)
 		{
 			parser_eat(parser, TOKEN_MULTIPLY);
 			result *= parser_factor(parser);
-			//printf("Term after multiply: %f\n", result);
 		} else if (token.type == TOKEN_DIVIDE) {
 			parser_eat(parser, TOKEN_DIVIDE);
 			result /= parser_factor(parser);
-			//printf("Term after divide: %f\n", result);
 		}
 	}
 	return result;
@@ -221,7 +208,6 @@ double parser_term(Parser *parser)
 double parser_expression(Parser *parser)
 {
 	double result = parser_term(parser);
-	//printf("Initial expression: %f\n", result);
 
 	while (parser->current_token.type == TOKEN_PLUS || parser->current_token.type == TOKEN_MINUS) 
 	{
@@ -230,11 +216,9 @@ double parser_expression(Parser *parser)
 		{
 			parser_eat(parser, TOKEN_PLUS);
 			result += parser_term(parser);
-			//printf("Expression after plus: %f\n", result);
 		} else if (token.type == TOKEN_MINUS) {
 			parser_eat(parser, TOKEN_MINUS);
 			result -= parser_term(parser);
-			//printf("Expression after minus: %f\n", result);
 		}
 	}
 	return result;
@@ -245,7 +229,6 @@ double parse(const char* text)
 	Parser parser;
 	parser_init(&parser, text);
 	double result = parser_expression(&parser);
-	//printf("Final result: %f\n", result);
 	return result;
 }
 
@@ -254,7 +237,6 @@ void program_math()
 	char input_buffer[BUFFER_SIZE];
 	puts("Expression? ");
 	get_input(input_buffer, BUFFER_SIZE);
-	printf("Input: %s\n", input_buffer);
 	double result = parse(input_buffer);
 	printf("\n%f\n", result);
 }
