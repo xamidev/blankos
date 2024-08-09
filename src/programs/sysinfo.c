@@ -2,6 +2,7 @@
 #include "../kernel/sysinfo.h"
 #include "../libc/stdio.h"
 #include "../kernel/system.h"
+#include "../libc/string.h"
 
 extern unsigned int multiboot_info_address;
 
@@ -35,7 +36,7 @@ void get_cpuid()
 	printf("CPU information\n\tvendor:   %s\n\tfamily:   %u\n\tmodel:    %u\n\tfeatures: 0x%x\n", vendor, family, model, edx);
 }
 
-void get_meminfo(unsigned int multiboot_info_address)
+void get_meminfo(unsigned int multiboot_info_address, int verbose)
 {
 	// RAM
 	
@@ -44,21 +45,34 @@ void get_meminfo(unsigned int multiboot_info_address)
 
 	printf("RAM information\n\tLower memory: %u KB\n\tUpper memory: %u KB\n", mem_lower, mem_upper);
 
-	multiboot_memory_map_t* mmap = (multiboot_memory_map_t*)*((unsigned int*)(multiboot_info_address + 44));
-	printf("\tMemory map:\n");
-
-	while ((unsigned int)mmap < multiboot_info_address + *((unsigned int*)(multiboot_info_address + 40)))
+	if (verbose)
 	{
-		printf("\t\tBase addr: 0x%x%x\n\t\tLength:    0x%x%x\n\t\tType:      %u\n",
-				mmap->base_addr_high, mmap->base_addr_low,
-				mmap->length_high, mmap->length_low,
-				mmap->type);
-		mmap = (multiboot_memory_map_t*)((unsigned int)mmap + mmap->size + sizeof(unsigned int));
+		multiboot_memory_map_t* mmap = (multiboot_memory_map_t*)*((unsigned int*)(multiboot_info_address + 44));
+		printf("Memory map:\nBase addr          | Length             | Type\n----------------------------------------------------\n");
+
+		while ((unsigned int)mmap < multiboot_info_address + *((unsigned int*)(multiboot_info_address + 40)))
+		{
+			if (mmap->length_high != 0 && mmap->length_low != 0)
+			{
+				printf("0x%x%x | 0x%x%x | %u\n",
+					mmap->base_addr_high, mmap->base_addr_low,
+					mmap->length_high, mmap->length_low,
+					mmap->type);
+			}
+			mmap = (multiboot_memory_map_t*)((unsigned int)mmap + mmap->size + sizeof(unsigned int));
+		}
 	}
 }
 
-void program_sysinfo()
+void program_sysinfo(int argc, char* argv[])
 {
-	get_cpuid();
-	get_meminfo(g_multiboot_info_address);
+	if (argc == 1)
+	{
+		get_cpuid();
+		get_meminfo(g_multiboot_info_address, 0);
+	} else if (argc == 2 && strcmp(argv[1], "-v") == 0)
+	{	
+		get_cpuid();
+		get_meminfo(g_multiboot_info_address, 1);
+	}
 }

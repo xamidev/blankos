@@ -40,4 +40,6 @@ int* printf_number(int* argp, int length, bool sign, int radix);
 int getch();
 void get_input(char *buffer, int size);
 
+void dtostrf(double val, char *buffer, int precision);
+
 #endif
