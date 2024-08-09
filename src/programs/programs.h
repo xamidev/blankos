@@ -12,4 +12,5 @@ void program_clear();
 void program_uptime();
 void program_panic();
 void program_help();
+void program_echo();
 #endif

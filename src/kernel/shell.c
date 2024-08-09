@@ -2,11 +2,13 @@
 #include "../libc/stdio.h"
 #include "../libc/string.h"
 #include "../programs/programs.h"
+#include "../libc/stdint.h"
 
 #define BUFFER_SIZE 256
 #define MAX_COMMANDS 16
+#define MAX_ARGS 64
 
-typedef void (*command_func_t)();
+typedef void (*command_func_t)(int argc, char *argv[]);
 
 typedef struct
 {
@@ -37,6 +39,19 @@ command_func_t find_command(const char* name)
 	return 0;
 }
 
+int parse_input(char* input, char* argv[], int max_args)
+{
+	int argc = 0;
+	char* token = strtok(input, " ");
+	while (token != NULL && argc < max_args - 1)
+	{
+		argv[argc++] = token;
+		token = strtok(NULL, " ");
+	}
+	argv[argc] = NULL;
+	return argc;
+}
+
 void shell_install()
 {
   register_command("help", program_help);
@@ -48,24 +63,26 @@ void shell_install()
   register_command("math", program_math);
   register_command("bf", program_bf);
   register_command("uptime", program_uptime);
+  register_command("echo", program_echo);
   
   for (;;)
   {
     char input_buffer[BUFFER_SIZE];
+    char* argv[MAX_ARGS];
     colorputs("blankos> ", 9);
     get_input(input_buffer, BUFFER_SIZE);
     puts("\n");
+    
+    int argc = parse_input(input_buffer, argv, MAX_ARGS);
 
-    if (strcmp(input_buffer, "") == 0) {
-    	continue;
-    }
+    if (argc == 0) continue;
 
-    command_func_t command = find_command(input_buffer);
+    command_func_t command = find_command(argv[0]);
     if (command)
     {
-	    command();
+	    command(argc, argv);
     } else {
-	    printf("Unknown command %s\n", input_buffer);
+	    printf("Unknown command %s\n", argv[0]);
     }
   }
 }

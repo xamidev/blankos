@@ -2,6 +2,7 @@
 
 #include "../libc/stdio.h"
 #include "../kernel/system.h"
+#include "../libc/string.h"
 
 // Print a rainbow colorful text for testing
 
@@ -44,10 +45,26 @@ void program_uptime()
 
 void program_help()
 {
-	printf("help\tpanic\twords\tprimes\trainbow\tclear\nmath\tbf\tuptime\n");
+	printf("help\tpanic\twords\tprimes\trainbow\tclear\nmath\tbf\tuptime\techo\n");
 }
+
+// Panic
 
 void program_panic()
 {
 	asm volatile("int $0x13");
+}
+
+// Output input
+
+void program_echo(int argc, char* argv[])
+{
+	for (int i=1; i<argc; i++)
+	{
+		puts(argv[i]);
+		if (i < argc-1) {
+			putc(' ');
+		}
+	}
+	puts("\n");
 }
