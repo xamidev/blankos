@@ -19,7 +19,8 @@ extern kmain
 loader:
   cli
   ; mov eax, 0xCAFEBABE
-  push dword 42
+  ; push dword 42
+  push ebx
   call kmain
 
 .loop:

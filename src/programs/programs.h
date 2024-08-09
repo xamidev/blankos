@@ -5,6 +5,10 @@ void program_words();
 void program_primes();
 void program_math();
 void program_bf();
+void program_sysinfo();
+
+void get_cpuid();
+void get_meminfo(unsigned int multiboot_info_address);
 
 // Misc
 void program_rainbow();

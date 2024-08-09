@@ -64,6 +64,7 @@ void shell_install()
   register_command("bf", program_bf);
   register_command("uptime", program_uptime);
   register_command("echo", program_echo);
+  register_command("sysinfo", program_sysinfo);
   
   for (;;)
   {

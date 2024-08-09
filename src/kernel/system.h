@@ -26,5 +26,7 @@ int uptime();
 
 extern volatile unsigned long global_ticks;
 
+extern unsigned int g_multiboot_info_address;
+
 #endif
 
