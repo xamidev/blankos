@@ -1,4 +1,4 @@
-int strlen(char* str)
+int strlen(const char* str)
 {
   int len = 0;
   while (*str++)
@@ -8,7 +8,7 @@ int strlen(char* str)
   return len;
 }
 
-int strcmp(char* str1, char* str2)
+int strcmp(const char* str1, const char* str2)
 {
   while (*str1 && (*str1 == *str2))
   {

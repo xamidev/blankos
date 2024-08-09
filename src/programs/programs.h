@@ -10,5 +10,6 @@ void program_bf();
 void program_rainbow();
 void program_clear();
 void program_uptime();
-
+void program_panic();
+void program_help();
 #endif

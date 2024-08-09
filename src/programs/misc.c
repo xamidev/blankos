@@ -39,3 +39,15 @@ void program_uptime()
 	double seconds = ticks/18.2065; // PIC channel 0 freq
 	printf("%d ticks\t%f seconds\n", ticks, seconds);
 }
+
+// Get help
+
+void program_help()
+{
+	printf("help\tpanic\twords\tprimes\trainbow\tclear\nmath\tbf\tuptime\n");
+}
+
+void program_panic()
+{
+	asm volatile("int $0x13");
+}
