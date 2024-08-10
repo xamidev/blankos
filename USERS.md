@@ -40,8 +40,7 @@ Clears the screen by scrolling (screen height) times.
 
 #### `math`
 
-**This program is not working!**
-The lexer and parser should be okay, but I can't figure out the `%f` floating point format specifier in the freestanding printf implementation; it triggers weird exceptions that I don't understand. So no math interpreter for now.
+A math lexer & parser that can calculate simple arithmetic operations. Adding, subtracting, multiplying, dividing, and factoring are supported. (I plan to get support for trigonometric functions maybe)
 
 #### `bf`
 
@@ -50,3 +49,20 @@ A brainfuck interpreter with every instruction and default tape size (30k cells)
 #### `uptime`
 
 Gets system uptime from the timer in ticks. Ticks are incremented at a rate of 18.222Hz (18.222 ticks per second).
+
+#### `echo`
+
+The classic echo command, that outputs your input.
+
+#### `sysinfo`
+
+Outputs information about the current system. Calling the command without options will show basic info about the CPUid and the lower/upper memory. To show the full memory map, use the verbose flag `-v`.
+
+#### `conway`
+
+A classic Game of Life implementation with standard rules and 100 generations.
+
+Options:
+- `<nothing>` will spawn a random soup of cells
+- `-g` will spawn a classic glider
+- `-l` will spawn a lightweight spaceship
