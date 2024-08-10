@@ -65,7 +65,8 @@ void shell_install()
   register_command("uptime", program_uptime);
   register_command("echo", program_echo);
   register_command("sysinfo", program_sysinfo);
-  
+  register_command("conway", program_conway);
+
   for (;;)
   {
     char input_buffer[BUFFER_SIZE];

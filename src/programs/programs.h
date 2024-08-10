@@ -9,6 +9,7 @@ void program_sysinfo();
 
 void get_cpuid();
 void get_meminfo(unsigned int multiboot_info_address);
+void program_conway();
 
 // Misc
 void program_rainbow();

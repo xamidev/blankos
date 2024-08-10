@@ -35,7 +35,7 @@ void kmain(unsigned int multiboot_info_address)
   clear();
   colorputs(ascii_title, 10);
   colorputs("   by @xamidev - star the repo for a cookie!\n\n", 14);
- 
+
   timer_install();
   serial_printf(2, "%d\tinitialized timer handler", global_ticks); 
   keyboard_install(); 
