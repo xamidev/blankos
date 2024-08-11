@@ -2,7 +2,7 @@
 
 # BlankOS
 
-Rewritten monolithic version of Blank OS for the x86 processor architecture. The OS relies on an old, legacy version of GRUB as the bootloader (eltorito). This *should* be GRUB 2 compatible. Emulation was tested on Bochs and QEMU using Arch Linux 6.9.7-arch1-1, and on real hardware too.
+Rewritten monolithic, ring 0, lower-half, single-threaded kernel for the x86 processor architecture, using GRUB (eltorito) as bootloader. Emulation was tested on Bochs and QEMU using Arch Linux 6.9.7-arch1-1, and on real hardware too.
 The long-term goal of this OS is to be capable of running user programs and having its own complete kernel C library so that users can write their own C programs and expand the system!
 
 ## Features
@@ -16,6 +16,14 @@ The long-term goal of this OS is to be capable of running user programs and havi
 - A kernel-space shell
 - Cool color output!!
 - Some small working kernel-space programs!!
+
+### Kernel-space programs
+
+- A brainfuck interpreter
+- An arithmetic calculator
+- ROT13 and Morse cipher programs
+- Conway's Game of Life
+- And some more...
 
 ## Usage
 

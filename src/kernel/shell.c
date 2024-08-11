@@ -66,6 +66,8 @@ void shell_install()
   register_command("echo", program_echo);
   register_command("sysinfo", program_sysinfo);
   register_command("conway", program_conway);
+  register_command("rot13", program_rot13);
+  register_command("morse", program_morse);
 
   for (;;)
   {

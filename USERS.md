@@ -56,7 +56,11 @@ The classic echo command, that outputs your input.
 
 #### `sysinfo`
 
-Outputs information about the current system. Calling the command without options will show basic info about the CPUid and the lower/upper memory. To show the full memory map, use the verbose flag `-v`.
+Outputs information about the current system (CPU and RAM).
+ 
+Options:
+- `nothing` will show basic info about the CPUid and lower/upper memory.
+- `-v` will output the CPUID, lower/upper memory, and the memory map.
 
 #### `conway`
 
@@ -66,3 +70,11 @@ Options:
 - `<nothing>` will spawn a random soup of cells
 - `-g` will spawn a classic glider
 - `-l` will spawn a lightweight spaceship
+
+#### `rot13`
+
+Encode a string using the rot13 cipher.
+
+#### `morse`
+
+Convert a string to its morse equivalent.

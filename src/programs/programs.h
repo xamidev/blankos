@@ -11,6 +11,10 @@ void get_cpuid();
 void get_meminfo(unsigned int multiboot_info_address);
 void program_conway();
 
+// Ciphers
+void program_rot13();
+void program_morse();
+
 // Misc
 void program_rainbow();
 void program_clear();
