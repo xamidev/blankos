@@ -67,7 +67,7 @@ If possible make sure that the new command name is aligned with the other ones.
 
 ### Step 3 - Compiling and linking
 
-The linking process should be taken care by the appropriate Linker script `link.ld` and the Makefile instructions and targets. Nothing should be changed in those files, and your source files should be added automatically.
+The linking process should be taken care of by the appropriate Linker script `link.ld` and the Makefile instructions and targets. Nothing should be changed in those files, and your source files should be added automatically.
 
 ### Step 4 - Contributing to the project (optional)
 
