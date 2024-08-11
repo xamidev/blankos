@@ -33,7 +33,7 @@ Download the latest BlankOS ISO image from the "Releases" tab, and emulate it di
 qemu-system-i386 blankOS-i386-0.3.45.iso
 ```
 
-Alternatively, burn the image on a USB stick and use it on a machine (see section "Real Hardware").
+Alternatively, burn the image on a USB stick and use it on a machine. (see section "Real Hardware"). *Note that the ISO images provided in the "Releases" tab are already real-hardware capable; no need to do anything except burning the image on a USB stick and running it on your machine.*
 
 ## Building from source
 
