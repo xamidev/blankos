@@ -2,7 +2,7 @@
 
 # BlankOS
 
-Rewritten monolithic, ring 0, lower-half, single-threaded kernel for the x86 processor architecture, using GRUB (eltorito) as bootloader. Emulation was tested on Bochs and QEMU using Arch Linux 6.9.7-arch1-1, and on real hardware too.
+Rewritten monolithic, ring 0, lower-half, singletasking kernel for the x86 processor architecture, using GRUB (eltorito) as bootloader. Emulation was tested on QEMU using Arch Linux 6.9.7-arch1-1, and on real hardware too.
 The long-term goal of this OS is to be capable of running user programs and having its own complete kernel C library so that users can write their own C programs and expand the system!
 
 ## Features
@@ -15,10 +15,7 @@ The long-term goal of this OS is to be capable of running user programs and havi
 - Kernel panicking (exception handling)
 - A kernel-space shell
 - Cool color output!!
-- Some small working kernel-space programs!!
-
-### Kernel-space programs
-
+- Some small working kernel-space programs, such as...
 - A brainfuck interpreter
 - An arithmetic calculator
 - ROT13 and Morse cipher programs
@@ -27,76 +24,51 @@ The long-term goal of this OS is to be capable of running user programs and havi
 
 ## Usage
 
-Download the latest BlankOS ISO image from the "Releases" tab, and emulate it directly using the QEMU emulator:
+Download the latest BlankOS disk image from the "Releases" tab, and start it using the QEMU emulator:
 
 ```
-qemu-system-i386 blankOS-i386-0.3.45.iso
+qemu-system-i386 blankOS-i386-0.3.45.img
 ```
-
-Alternatively, burn the image on a USB stick and use it on a machine. (see section "Real Hardware"). *Note that the ISO images provided in the "Releases" tab are already real-hardware capable; no need to do anything except burning the image on a USB stick and running it on your machine.*
 
 ## Building from source
 
-### Dependencies
-
-For Debian-based distros:
-```
-sudo apt install gcc nasm make bochs
-```
-
-Then change `display-library` to `sdl2` in the `bochsrc.txt` file.
-
-For Arch-based distros:
-```
-sudo pacman -S nasm gcc make
-git clone https://aur.archlinux.org/bochs.git
-```
-
-Then follow [these](https://bbs.archlinux.org/viewtopic.php?id=178479) instructions to compile Bochs with X support. Alternatively you can use Bochs with SDL but you'll have to change the `bochsrc.txt` file accordingly.
-
-### Cross Compiler
-
-A cross-compiler is needed to build the system. More info on why [here](https://wiki.osdev.org/GCC_Cross-Compiler). To get the proper toolchain, do `make toolchain`, or build it by youself if you're not lazy like me. Then you can build the kernel without problems.
-
-Why didn't I use one sooner? Can't tell. Maybe I was too lazy. This is actually problematic because I wasn't able to use some libraries and I had to put in a bunch of weird compilation flags. It's better like this.
-
-To clone and build, do:
-
 ```
 git clone https://github.com/xamidev/blankos
+make toolchain
 make
 make run
 ```
 
-This will start a new Bochs debugger instance. To proceed with the kernel execution, you will have to type `c` in the shell spawning Bochs. Serial output will be saved under the `com1.out` file, this way you can debug the kernel by viewing its log messages. To quit, type `q`.
-You can try out QEMU too.
+The `toolchain` target will download the appropriate cross-compiling tools, and the `run` target will make a disk image for emulation or real hardware testing. *Some operations require root access. Always audit the code yourself before running anything as root!*
 
 ## Running on real hardware
 
-To run the OS on real hardware, you'll first need to have a BIOS-compatible computer. Some of the new laptops with graphical "BIOSes" only support UEFI now. So make sure to get a computer that can boot into BIOS mode, **not UEFI mode**. Then, switch the boot mode to "Legacy" in your BIOS utility.
+To run the OS on real hardware, you'll first need to have a BIOS-compatible computer. Some of the new laptops with graphical "BIOSes" only support UEFI now. So make sure to get a computer that can boot into BIOS mode. You'll have to switch the boot mode to "Legacy" in your BIOS/UEFI utility.
 
-Then, use the Makefile target `real` to build a "real"-capable ISO disk image. The image will have GRUB2 installed on it, using the `grub-mkrescue` utility (make sure to install it before) which is dependent on `xorriso` (install it too).
-
-Once the ISO file is generated, you can write it on a disk using this command:
-
+Burn your image file onto a USB stick:
 ```
-sudo dd bs=4M if=blankos.iso of=/dev/sdX status=progress oflag=sync
+sudo dd bs=4M if=blankos-fat.img of=/dev/sdX status=progress oflag=sync
 ```
 
 Replace `sdX` with your USB drive name (you can find it by doing `sudo fdisk -l`).
 Tada! You now have a working BlankOS USB stick. Go ahead and try it out!
 
-## Post-install
+## Debugging (QEMU w/ GDB)
 
-Two documents are available to help you understand the project better. One is the User's Manual, labelled `USERS.md`, and the other one is the Developer's Manual, labelled `DEVELOPERS.md`. They are full of useful resources around Blank OS. You'll learn how to use the system and how to contribute to it.
+```
+qemu-system-i386 -s -S -drive file=blankos-fat.img,format=raw
+```
 
-### Next Steps?
+In another shell:
 
-Next steps for this project will be:
+```
+gdb kernel.elf
+(gdb) target remote localhost:1234
+```
 
-- User programs
-- Completing the kernel libc
-- Filesystem support
+## Documentation
+
+Two other documents are available to help you understand the project better. One is the User's Manual, labelled [USERS.md](USERS.md), and the other one is the Developer's Manual, labelled [DEVELOPERS.md](DEVELOPERS.md). They are full of useful resources around Blank OS. You'll learn how to use the system and how to contribute to it.
 
 ### Resources
 
@@ -106,7 +78,26 @@ Next steps for this project will be:
 - a great book named *Operating Systems: From 0 to 1*, by Tu, Do Hoang
 - the Intel [64 and IA-32 Architectures Software Developer Manuals](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html)
 - [Bran's Kernel Development Tutorial](http://www.osdever.net/bkerndev/index.php)
+- Ralf Brown's Interrupt List
 
 ### ⚠️ Disclaimer
 
 This is a hobbyist operating system kernel and it comes without any warranty whatsoever! It isn't capable of anything really. Feedback and contributions are highly appreciated!
+
+### Roadmap
+
+- [X] Booting with GRUB
+- [X] Common basic structures (IDT, GDT, ISRs, IRQs)
+- [X] Common drivers (framebuffer, keyboard, serial, timer)
+- [X] Kernel-space utilities (shell, simple programs)
+- [ ] FAT32 filesystem
+- [ ] Paging/Page Frame Allocation
+- [ ] TCP/IP Network stack
+- [ ] Getting to Ring-3 (userspace)
+- [ ] Multitasking (via round robin scheduling)
+- [ ] Advanced/other drivers (video, SB16, RTC, Ethernet)
+- [ ] UEFI support
+- [ ] ELF parsing
+- [ ] System calls
+- [ ] GUI
+- [ ] POSIX and ANSI specification compatibility
