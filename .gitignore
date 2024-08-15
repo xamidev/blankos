@@ -1,8 +1,6 @@
 *.o
-bochslog.txt
 build/
 kernel.elf
-os.iso
-blankos.iso
-real/
+blankos-fat.img
 i386-elf-7.5.0-Linux-x86_64/
+i386-elf-7.5.0-Linux-x86_64.tar.xz

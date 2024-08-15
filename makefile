@@ -1,5 +1,5 @@
 CC = i386-elf-7.5.0-Linux-x86_64/bin/i386-elf-gcc
-CFLAGS = -Wall -Wextra -Wno-builtin-declaration-mismatch -c -I src/
+CFLAGS = -g -Wall -Wextra -Wno-builtin-declaration-mismatch -c -I src/
 LDFLAGS = -T link.ld -melf_i386
 AS = nasm
 ASFLAGS = -f elf
@@ -15,6 +15,9 @@ C_SOURCES = $(wildcard $(KERNEL_DIR)/*.c) $(wildcard $(LIBC_DIR)/*.c) $(wildcard
 ASM_SOURCES = $(wildcard $(KERNEL_DIR)/*.s) $(wildcard $(LIBC_DIR)/*.s) $(wildcard $(PROGRAMS_DIR)/*.s) $(wildcard $(DRIVERS_DIR)/*.s)
 
 OBJECTS = $(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%, $(C_SOURCES:.c=.o) $(ASM_SOURCES:.s=.o))
+
+TOOLCHAIN_SRC = https://newos.org/toolchains/i386-elf-7.5.0-Linux-x86_64.tar.xz
+TOOLCHAIN_FILE = i386-elf-7.5.0-Linux-x86_64.tar.xz
 
 all: $(OBJ_DIR) kernel.elf
 
@@ -32,31 +35,17 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.s
 	$(AS) $(ASFLAGS) $< -o $@
 
 toolchain:
-	wget https://newos.org/toolchains/i386-elf-7.5.0-Linux-x86_64.tar.xz
-	tar xf i386-elf-7.5.0-Linux-x86_64.tar.xz
+	wget $(TOOLCHAIN_SRC)
+	tar xf $(TOOLCHAIN_FILE)
 
-os.iso: kernel.elf
-	cp kernel.elf iso/boot/kernel.elf
-	genisoimage -R                              \
-							-b boot/grub/stage2_eltorito    \
-							-no-emul-boot                   \
-							-boot-load-size 4               \
-							-A os                           \
-							-input-charset utf8             \
-							-quiet                          \
-							-boot-info-table                \
-							-o os.iso                       \
-							iso
+blankos-fat.img:
+	sudo ./setup.sh
 
-real: kernel.elf
-	mkdir -p real/boot/grub
-	cp kernel.elf real/boot/kernel.elf
-	cp grub.cfg real/boot/grub/grub.cfg
-	grub-mkrescue real -o blankos.iso
+run: blankos-fat.img
+	qemu-system-i386 -drive file=blankos-fat.img,format=raw
 
-run: os.iso
-	bochs -f bochsrc.txt -q 
+debug:
+	qemu-system-i386 -s -S -drive file=blankos-fat.img,format=raw
 
 clean:
-	rm -rf $(OBJ_DIR) kernel.elf os.iso blankos.iso real
-
+	rm -rf $(OBJ_DIR) kernel.elf blankos-fat.img $(TOOLCHAIN_FILE)
