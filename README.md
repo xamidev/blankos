@@ -56,7 +56,7 @@ Then follow [these](https://bbs.archlinux.org/viewtopic.php?id=178479) instructi
 
 ### Cross Compiler
 
-A cross-compiler is needed to build the system. More info on why [here](https://wiki.osdev.org/GCC_Cross-Compiler). In order for the build to work, you will need to download the i386-elf toolchain from [here](https://newos.org/toolchains/i386-elf-7.5.0-Linux-x86_64.tar.xz) and extract the root folder into the BlankOS root folder, or build it by youself if you're not lazy like me.
+A cross-compiler is needed to build the system. More info on why [here](https://wiki.osdev.org/GCC_Cross-Compiler). To get the proper toolchain, do `make toolchain`, or build it by youself if you're not lazy like me. Then you can build the kernel without problems.
 
 Why didn't I use one sooner? Can't tell. Maybe I was too lazy. This is actually problematic because I wasn't able to use some libraries and I had to put in a bunch of weird compilation flags. It's better like this.
 

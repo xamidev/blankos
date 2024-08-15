@@ -31,6 +31,10 @@ $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.s
 	$(AS) $(ASFLAGS) $< -o $@
 
+toolchain:
+	wget https://newos.org/toolchains/i386-elf-7.5.0-Linux-x86_64.tar.xz
+	tar xf i386-elf-7.5.0-Linux-x86_64.tar.xz
+
 os.iso: kernel.elf
 	cp kernel.elf iso/boot/kernel.elf
 	genisoimage -R                              \
