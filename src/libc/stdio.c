@@ -221,201 +221,247 @@ void dtostrf(double val, char *buffer, int precision)
 
 void printf(const char* fmt, ...)
 {
-  int* argp = (int*) &fmt;
-  int state = PRINTF_STATE_START;
-  int length = PRINTF_LENGTH_START;
-  int radix = 10;
-  bool sign = false;
+    int* argp = (int*)&fmt;
+    int state = PRINTF_STATE_START;
+    int length = PRINTF_LENGTH_START;
+    int radix = 10;
+    bool sign = false;
+    int width = 0;
+    char pad_char = ' ';
 
-  argp++;
-  while (*fmt)
-  {
-    switch(state) {
-      case PRINTF_STATE_START:
-        if (*fmt == '%')
+    argp++;
+    while (*fmt)
+    {
+        switch (state)
         {
-          state = PRINTF_STATE_LENGTH;
-        }
-        else {
-          putc(*fmt);
-        }
-        break;
-      case PRINTF_STATE_LENGTH:
-        if (*fmt == 'h')
-        {
-          length = PRINTF_LENGTH_SHORT;
-          state = PRINTF_STATE_SHORT;
-        }
-        else if (*fmt == 'l')
-        {
-          length = PRINTF_LENGTH_LONG;
-          state = PRINTF_STATE_LONG;
-        }
-        else {
-          goto PRINTF_STATE_SPEC_;
-        }
-        break;
-      case PRINTF_STATE_SHORT:
-        if (*fmt == 'h')
-        {
-          length = PRINTF_LENGTH_SHORT_SHORT;
-          state = PRINTF_STATE_SPEC;
-        }
-        else {
-          goto PRINTF_STATE_SPEC_;
-        }
-        break;
-      case PRINTF_STATE_LONG:
-        if (*fmt == 'l')
-        {
-          length = PRINTF_LENGTH_LONG_LONG;
-          state = PRINTF_STATE_SPEC;
-        }
-        else {
-          goto PRINTF_STATE_SPEC_;
-        }
-        break;
-      case PRINTF_STATE_SPEC:
+        case PRINTF_STATE_START:
+            if (*fmt == '%')
+            {
+                state = PRINTF_STATE_LENGTH;
+                width = 0;
+                pad_char = ' ';
+            }
+            else
+            {
+                putc(*fmt);
+            }
+            break;
+
+        case PRINTF_STATE_LENGTH:
+            if (*fmt == '0')
+            {
+                pad_char = '0';
+                state = PRINTF_STATE_WIDTH;
+            }
+            else if (*fmt >= '1' && *fmt <= '9')
+            {
+                width = *fmt - '0';
+                state = PRINTF_STATE_WIDTH;
+            }
+            else if (*fmt == 'h')
+            {
+                length = PRINTF_LENGTH_SHORT;
+                state = PRINTF_STATE_SHORT;
+            }
+            else if (*fmt == 'l')
+            {
+                length = PRINTF_LENGTH_LONG;
+                state = PRINTF_STATE_LONG;
+            }
+            else
+            {
+                goto PRINTF_STATE_SPEC_;
+            }
+            break;
+
+        case PRINTF_STATE_WIDTH:
+            if (*fmt >= '0' && *fmt <= '9')
+            {
+                width = width * 10 + (*fmt - '0');
+            }
+            else
+            {
+                goto PRINTF_STATE_SPEC_;
+            }
+            break;
+
+        case PRINTF_STATE_SHORT:
+            if (*fmt == 'h')
+            {
+                length = PRINTF_LENGTH_SHORT_SHORT;
+                state = PRINTF_STATE_SPEC;
+            }
+            else
+            {
+                goto PRINTF_STATE_SPEC_;
+            }
+            break;
+
+        case PRINTF_STATE_LONG:
+            if (*fmt == 'l')
+            {
+                length = PRINTF_LENGTH_LONG_LONG;
+                state = PRINTF_STATE_SPEC;
+            }
+            else
+            {
+                goto PRINTF_STATE_SPEC_;
+            }
+            break;
+
+        case PRINTF_STATE_SPEC:
         PRINTF_STATE_SPEC_:
-        switch(*fmt)
-        {
-          case 'c':
-            putc((char)*argp);
-            argp++;
-            break;
-          case 's':
-            puts(*(const char **)argp);
-            argp++;
-            break;
-          case '%':
-            putc('%');
-            break;
-          case 'd':
-          case 'i':
+            switch (*fmt)
+            {
+            case 'c':
+                putc((char)*argp);
+                argp++;
+                break;
+            case 's':
+                puts(*(const char**)argp);
+                argp++;
+                break;
+            case '%':
+                putc('%');
+                break;
+            case 'd':
+            case 'i':
+                radix = 10;
+                sign = true;
+                argp = printf_number(argp, length, sign, radix, width, pad_char);
+                break;
+            case 'u':
+                radix = 10;
+                sign = false;
+                argp = printf_number(argp, length, sign, radix, width, pad_char);
+                break;
+            case 'X':
+            case 'x':
+            case 'p':
+                radix = 16;
+                sign = false;
+                argp = printf_number(argp, length, sign, radix, width, pad_char);
+                break;
+            case 'o':
+                radix = 8;
+                sign = false;
+                argp = printf_number(argp, length, sign, radix, width, pad_char);
+                break;
+            case 'f': {
+                double* dargp = (double*)argp;
+                double d = *(double*)dargp;
+                char buffer[64];
+                dtostrf(d, buffer, 6);
+                puts(buffer);
+                argp += 2;
+                break;
+            }
+            default:
+                break;
+            }
+            state = PRINTF_STATE_START;
+            length = PRINTF_LENGTH_START;
             radix = 10;
-            sign = true;
-            argp = printf_number(argp, length, sign, radix);
-            break;
-          case 'u':
-            radix = 10;
             sign = false;
-            argp = printf_number(argp, length, sign, radix);
-            break;
-          case 'X':
-          case 'x':
-          case 'p':
-            radix = 16;
-            sign = false;
-            argp = printf_number(argp, length, sign, radix);
-            break;
-          case 'o':
-            radix = 8;
-            sign = false;
-            argp = printf_number(argp, length, sign, radix);
-            break;
-          case 'f': {
-            // Handle floating-point numbers
-            double* dargp = (double*)argp;
-            double d = *(double*)dargp;
-            char buffer[64];
-            dtostrf(d, buffer, 6); // Default precision: 6
-            puts(buffer);
-            argp += 2; // Incrementing by 2 to move past the double argument
-            break;
-          }
-          default:
+            width = 0;
+            pad_char = ' ';
             break;
         }
-        state = PRINTF_STATE_START;
-        length = PRINTF_LENGTH_START;
-        radix = 10;
-        sign = false;
-        break;
+        fmt++;
     }
-    fmt++;
-  }
 }
 
 const char charset[] = "0123456789abcdef";
 
-int* printf_number(int* argp, int length, bool sign, int radix)
+int* printf_number(int* argp, int length, bool sign, int radix, int width, char pad_char)
 {
-  char buffer[32];
-  unsigned long long number;
-  int number_sign = 1;
-  int pos = 0;
+    char buffer[32];
+    unsigned long long number;
+    int number_sign = 1;
+    int pos = 0;
 
-  switch(length)
-  {
+    switch (length)
+    {
     case PRINTF_LENGTH_SHORT_SHORT:
     case PRINTF_LENGTH_SHORT:
     case PRINTF_LENGTH_START:
-      if (sign)
-      {
-        int n = *argp;
-        if (n < 0)
+        if (sign)
         {
-          n = -n;
-          number_sign = -1;
+            int n = *argp;
+            if (n < 0)
+            {
+                n = -n;
+                number_sign = -1;
+            }
+            number = (unsigned long long)n;
         }
-        number = (unsigned long long) n;
-      }
-      else {
-        number = *(unsigned int*) argp;
-      }
-      argp++;
-      break;
+        else
+        {
+            number = *(unsigned int*)argp;
+        }
+        argp++;
+        break;
     case PRINTF_LENGTH_LONG:
-      if (sign)
-      {
-        long int n = *(long int*)argp;
-        if (n < 0)
+        if (sign)
         {
-          n = -n;
-          number_sign = -1;
+            long int n = *(long int*)argp;
+            if (n < 0)
+            {
+                n = -n;
+                number_sign = -1;
+            }
+            number = (unsigned long long)n;
         }
-        number = (unsigned long long) n;
-      }
-      else {
-        number = *(unsigned long int*) argp;
-      }
-      argp += 2;
-      break;
+        else
+        {
+            number = *(unsigned long int*)argp;
+        }
+        argp += 2;
+        break;
     case PRINTF_LENGTH_LONG_LONG:
-      if (sign)
-      {
-        long long int n = *(long long int*)argp;
-        if (n < 0)
+        if (sign)
         {
-          n = -n;
-          number_sign = -1;
+            long long int n = *(long long int*)argp;
+            if (n < 0)
+            {
+                n = -n;
+                number_sign = -1;
+            }
+            number = (unsigned long long)n;
         }
-        number = (unsigned long long) n;
-      }
-      else {
-        number = *(unsigned long long int*) argp;
-      }
-      argp += 4;
-      break;
-  }
+        else
+        {
+            number = *(unsigned long long int*)argp;
+        }
+        argp += 4;
+        break;
+    }
 
-  do {
-    uint32_t rem;
-    x86_div64_32(number, radix, &number, &rem);
-    buffer[pos++] = charset[rem];
-  } while (number > 0);
+    do
+    {
+        uint32_t rem;
+        x86_div64_32(number, radix, &number, &rem);
+        buffer[pos++] = charset[rem];
+    } while (number > 0);
 
-  if (sign && number_sign < 0)
-  {
-    buffer[pos++] = '-';
-  }
+    if (sign && number_sign < 0)
+    {
+        buffer[pos++] = '-';
+    }
 
-  while (--pos >= 0)
-  {
-    putc(buffer[pos]);
-  }
+    int padding = width - pos;
 
-  return argp;
+    while (padding-- > 0)
+    {
+        putc(pad_char);
+    }
+
+    while (--pos >= 0)
+    {
+        putc(buffer[pos]);
+    }
+
+    return argp;
 }
 
 int getch()

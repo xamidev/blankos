@@ -4,6 +4,7 @@
 #include "idt.h"
 #include "system.h"
 #include "paging.h"
+#include "../drivers/ata.h"
 
 char* ascii_title =
 "\n"
@@ -38,6 +39,8 @@ void kmain(unsigned int multiboot_info_address)
 
   init_paging();
   printf("Hello, paging world!\n");
+
+  //test_read_sector();
 
   uint32_t *ptr = (uint32_t*)0xA0000000;
   uint32_t do_page_fault = *ptr;

@@ -79,6 +79,7 @@ Two other documents are available to help you understand the project better. One
 - the Intel [64 and IA-32 Architectures Software Developer Manuals](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html)
 - [Bran's Kernel Development Tutorial](http://www.osdever.net/bkerndev/index.php)
 - Ralf Brown's Interrupt List
+- the [little book about OS development](https://littleosbook.github.io/) by Erik Helin and Adam Renberg
 
 ### ⚠️ Disclaimer
 
@@ -90,8 +91,9 @@ This is a hobbyist operating system kernel and it comes without any warranty wha
 - [X] Common basic structures (IDT, GDT, ISRs, IRQs)
 - [X] Common drivers (framebuffer, keyboard, serial, timer)
 - [X] Kernel-space utilities (shell, simple programs)
-- [ ] FAT32 filesystem
-- [ ] Paging/Page Frame Allocation
+- [ ] Filesystem (FAT32 or VFS ramdisk)
+- [ ] Changing the default VGA font
+- [X] Paging/Page Frame Allocation
 - [ ] TCP/IP Network stack
 - [ ] Getting to Ring-3 (userspace)
 - [ ] Multitasking (via round robin scheduling)
