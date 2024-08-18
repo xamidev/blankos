@@ -5,6 +5,25 @@
 #include "system.h"
 #include "paging.h"
 #include "../drivers/ata.h"
+#include "../libc/stdint.h" 
+
+typedef struct {
+    uint32_t type;
+    uint32_t size;
+    uint64_t framebuffer_addr;
+    uint32_t framebuffer_pitch;
+    uint32_t framebuffer_width;
+    uint32_t framebuffer_height;
+    uint8_t framebuffer_bpp;
+    uint8_t framebuffer_type;
+    uint16_t reserved;
+} multiboot2_tag_framebuffer;
+
+typedef struct {
+    uint32_t total_size;
+    uint32_t reserved;
+    uint8_t tags[0];
+} multiboot2_info;
 
 char* ascii_title =
 "\n"
@@ -17,10 +36,52 @@ char* ascii_title =
 
 unsigned int g_multiboot_info_address;
 
-void kmain(unsigned int multiboot_info_address)
+void kmain(multiboot2_info *mb_info)
 {
-  g_multiboot_info_address = multiboot_info_address;
 
+	multiboot2_tag_framebuffer *fb_info = NULL;
+
+uint8_t *tags = mb_info->tags;
+    while (1) {
+        uint32_t tag_type = *((uint32_t*) tags);
+        uint32_t tag_size = *((uint32_t*) (tags + 4));
+
+        if (tag_type == 0) break;
+        if (tag_type == 8) {
+            fb_info = (multiboot2_tag_framebuffer*) tags;
+        }
+
+        tags += ((tag_size + 7) & ~7);
+    }
+
+    serial_printf(3, "Framebuffer Address: 0x%x\r\n", fb_info->framebuffer_addr);
+serial_printf(3, "Framebuffer Width: %u\r\n", fb_info->framebuffer_width);
+serial_printf(3, "Framebuffer Height: %u\r\n", fb_info->framebuffer_height);
+serial_printf(3, "Framebuffer Pitch: %u\r\n", fb_info->framebuffer_pitch);
+serial_printf(3, "Framebuffer BPP: %u\r\n", fb_info->framebuffer_bpp);
+
+
+    if (fb_info) {
+	log("Entered fb_info\r\n", 3);
+        uint32_t *framebuffer = (uint32_t *) fb_info->framebuffer_addr;
+        uint32_t width = fb_info->framebuffer_width;
+        uint32_t height = fb_info->framebuffer_height;
+        uint32_t pitch = fb_info->framebuffer_pitch;
+        uint32_t bpp = fb_info->framebuffer_bpp;
+
+        for (uint32_t y = 0; y < 100; y++) {
+            for (uint32_t x = 0; x < 100; x++) {
+                framebuffer[y * (pitch / 4) + x] = 0xFF0000; // Rouge
+            }
+        }
+	log("Drew to framebuffer.\r\n", 3);
+    }
+    puts("This should NOT work.");
+
+    while (1);
+
+
+  /*
   init_serial();
   log("serial connection established\n", 3);
   gdt_install();
@@ -51,4 +112,5 @@ void kmain(unsigned int multiboot_info_address)
   serial_printf(2, "%d\tinitialized keyboard handler", global_ticks); 
   shell_install();
   serial_printf(2, "%d\tstarted system shell", global_ticks); 
+  */
 }

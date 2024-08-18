@@ -1,19 +1,45 @@
 global loader
 
-section .__mbHeader
+section .multiboot_header
 
-align 0x4
-section .text:
+align 8
 
-MAGIC_NUMBER      equ 0x1BADB002   ; multiboot magic 
-FLAGS             equ 0x0 
-CHECKSUM          equ -MAGIC_NUMBER
-KERNEL_STACK_SIZE equ 4096
+; ASM macros
 
-  dd MAGIC_NUMBER
-  dd FLAGS
+MAGIC_NUMBER      equ 0xe85250d6  ; multiboot2 magic 
+FLAGS             equ 0x0	  ; 32-bit protected mode for i386
+HEADER_LEN	  equ 44 	  ;  Tags=2+2+4+4+4+4+2+2+4=28
+CHECKSUM          equ -(MAGIC_NUMBER + FLAGS + HEADER_LEN)
+
+; Multiboot 2 header, according to specification (16bytes)
+
+  dd MAGIC_NUMBER		; dd = 4 bytes = 32bits = u32
+  dd FLAGS			
+  dd HEADER_LEN
   dd CHECKSUM
 
+; Tags? (28bytes)
+
+; Tag 1 : set graphics mode (only recommended, can be overriden by GRUB)
+
+  dw 5			; 2
+  dw 0			; 2
+  dd 20			; 4
+  dd 1920		; 4
+  dd 1080		; 4
+  dd 32			; 4
+
+; End of tags
+
+  dw 0			; 2
+  ;dw 0			; 2
+  dd 8			; 4
+
+; End of Multiboot 2 header
+
+section .text:
+
+KERNEL_STACK_SIZE equ 4096
 extern kmain
 
 loader:
