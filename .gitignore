@@ -1,6 +1,7 @@
 *.o
 build/
 kernel.elf
-blankos-fat.img
+blankos.iso
+iso/
 i386-elf-7.5.0-Linux-x86_64/
 i386-elf-7.5.0-Linux-x86_64.tar.xz

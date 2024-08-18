@@ -38,14 +38,17 @@ toolchain:
 	wget $(TOOLCHAIN_SRC)
 	tar xf $(TOOLCHAIN_FILE)
 
-blankos-fat.img:
-	sudo ./setup.sh
+iso: kernel.elf
+	mkdir -p iso/boot/grub
+	cp kernel.elf iso/boot/kernel.elf
+	cp grub.cfg iso/boot/grub/grub.cfg
+	grub-mkrescue iso -o blankos.iso	
 
-run: blankos-fat.img
-	qemu-system-i386 -drive file=blankos-fat.img,format=raw
+run: iso
+	qemu-system-i386 -drive file=blankos.iso,format=raw
 
 debug:
-	qemu-system-i386 -s -S -drive file=blankos-fat.img,format=raw
+	qemu-system-i386 -s -S -drive file=blankos.iso,format=raw
 
 clean:
-	rm -rf $(OBJ_DIR) kernel.elf blankos-fat.img $(TOOLCHAIN_FILE)
+	rm -rf $(OBJ_DIR) kernel.elf blankos.iso $(TOOLCHAIN_FILE)

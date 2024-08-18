@@ -27,7 +27,7 @@ The long-term goal of this OS is to be capable of running user programs and havi
 Download the latest BlankOS disk image from the "Releases" tab, and start it using the QEMU emulator:
 
 ```
-qemu-system-i386 blankOS-i386-0.3.45.img
+qemu-system-i386 blankOS-i386-0.3.55.iso
 ```
 
 ## Building from source
@@ -47,7 +47,7 @@ To run the OS on real hardware, you'll first need to have a BIOS-compatible comp
 
 Burn your image file onto a USB stick:
 ```
-sudo dd bs=4M if=blankos-fat.img of=/dev/sdX status=progress oflag=sync
+sudo dd bs=4M if=blankos.iso of=/dev/sdX status=progress oflag=sync
 ```
 
 Replace `sdX` with your USB drive name (you can find it by doing `sudo fdisk -l`).
@@ -56,7 +56,7 @@ Tada! You now have a working BlankOS USB stick. Go ahead and try it out!
 ## Debugging (QEMU w/ GDB)
 
 ```
-qemu-system-i386 -s -S -drive file=blankos-fat.img,format=raw
+qemu-system-i386 -s -S -drive file=blankos.iso,format=raw
 ```
 
 In another shell:
