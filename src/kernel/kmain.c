@@ -3,7 +3,7 @@
 #include "gdt.h"
 #include "idt.h"
 #include "system.h"
-//#include <stdarg.h>
+#include "paging.h"
 
 char* ascii_title =
 "\n"
@@ -35,6 +35,12 @@ void kmain(unsigned int multiboot_info_address)
   clear();
   colorputs(ascii_title, 10);
   colorputs("   by @xamidev - star the repo for a cookie!\n\n", 14);
+
+  init_paging();
+  printf("Hello, paging world!\n");
+
+  uint32_t *ptr = (uint32_t*)0xA0000000;
+  uint32_t do_page_fault = *ptr;
 
   timer_install();
   serial_printf(2, "%d\tinitialized timer handler", global_ticks); 

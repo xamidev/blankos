@@ -68,7 +68,7 @@ gdb kernel.elf
 
 ## Documentation
 
-Two other documents are available to help you understand the project better. One is the User's Manual, labelled [USERS.md](USERS.md), and the other one is the Developer's Manual, labelled [DEVELOPERS.md](DEVELOPERS.md). They are full of useful resources around Blank OS. You'll learn how to use the system and how to contribute to it.
+Two other documents are available to help you understand the project better. One is the User's Manual, labelled [USERS.md](docs/USERS.md), and the other one is the Developer's Manual, labelled [DEVELOPERS.md](docs/DEVELOPERS.md). They are full of useful resources around Blank OS. You'll learn how to use the system and how to contribute to it.
 
 ### Resources
 
