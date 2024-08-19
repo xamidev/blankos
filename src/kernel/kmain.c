@@ -6,6 +6,7 @@
 #include "paging.h"
 #include "../drivers/ata.h"
 #include "../libc/stdint.h" 
+#include "../drivers/framebuffer.h"
 
 typedef struct {
     uint32_t type;
@@ -36,6 +37,10 @@ char* ascii_title =
 
 unsigned int g_multiboot_info_address;
 
+uint32_t white = 0xFFFFFFFF;
+uint32_t black = 0x00000000;
+
+
 void kmain(multiboot2_info *mb_info)
 {
 
@@ -63,17 +68,27 @@ serial_printf(3, "Framebuffer BPP: %u\r\n", fb_info->framebuffer_bpp);
 
     if (fb_info) {
 	log("Entered fb_info\r\n", 3);
-        uint32_t *framebuffer = (uint32_t *) fb_info->framebuffer_addr;
+        uint32_t* framebuffer = (uint32_t *)(uintptr_t) fb_info->framebuffer_addr;
+
         uint32_t width = fb_info->framebuffer_width;
         uint32_t height = fb_info->framebuffer_height;
         uint32_t pitch = fb_info->framebuffer_pitch;
         uint32_t bpp = fb_info->framebuffer_bpp;
 
+	int y_offset = 0;
+	for (int c=0; c<512; c++)
+	{
+		draw_char(framebuffer, (int)pitch, (int)bpp, 50+(c-65)*16, 20+y_offset, c, white, black);
+		if (c%100 == 0) y_offset += 30;
+	}
+
+	/*
         for (uint32_t y = 0; y < 100; y++) {
             for (uint32_t x = 0; x < 100; x++) {
                 framebuffer[y * (pitch / 4) + x] = 0xFF0000; // Rouge
             }
         }
+	*/
 	log("Drew to framebuffer.\r\n", 3);
     }
     puts("This should NOT work.");

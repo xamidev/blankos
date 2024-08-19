@@ -19,4 +19,6 @@ typedef uint8_t bool;
 
 #define NULL ((void*)0)
 
+typedef unsigned int uintptr_t;
+
 #endif
