@@ -41,6 +41,9 @@ uint32_t white = 0xFFFFFFFF;
 uint32_t black = 0x00000000;
 uint32_t red   = 0x00FF0000;
 
+uint32_t* framebuffer;
+int scanline;
+
 void kmain(multiboot2_info *mb_info)
 {
 
@@ -68,25 +71,32 @@ serial_printf(3, "Framebuffer BPP: %u\r\n", fb_info->framebuffer_bpp);
 
     if (fb_info) {
 	log("Entered fb_info\r\n", 3);
-        uint32_t* framebuffer = (uint32_t *)(uintptr_t) fb_info->framebuffer_addr;
+        framebuffer = (uint32_t *)(uintptr_t) fb_info->framebuffer_addr;
 
         uint32_t width = fb_info->framebuffer_width;
         uint32_t height = fb_info->framebuffer_height;
         uint32_t pitch = fb_info->framebuffer_pitch;
         uint32_t bpp = fb_info->framebuffer_bpp;
 
+	scanline = width * (bpp/8);
+
+	draw_char('S', 2, 2, white, black);
+	draw_char('A', 3, 2, white, black);
+	draw_char('L', 4, 2, white, black);
+	draw_char('U', 5, 2, white, black);
+	draw_char('T', 6, 2, white, black);
 	
 	int y_offset = 0;
 	for (int c=0; c<512; c++)
 	{
-		draw_char(framebuffer, (int)pitch, (int)bpp, 20+(c-65)*16, 110+y_offset, c, white, black);
+		//draw_char(framebuffer, (int)pitch, (int)bpp, 20+(c-65)*16, 110+y_offset, c, white, black);
 		if (c%100 == 0) y_offset += 30;
 	}
 
 
-	
-        for (uint32_t y = 0; y < 100; y++) {
-            for (uint32_t x = 0; x < 100; x++) {
+		
+        for (uint32_t y = 0; y < 10; y++) {
+            for (uint32_t x = 0; x < 10; x++) {
                 putpixel(framebuffer, (int)pitch, (int)bpp, x, y, red);
 		//framebuffer[y * (pitch / 4) + x] = 0xFF0000; // Rouge
             }

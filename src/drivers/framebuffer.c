@@ -12,22 +12,44 @@ void putpixel(uint32_t* fb, int pitch, int bpp, int x, int y, uint32_t color) //
 	}
 }
 
-void draw_char(uint32_t* fb, int pitch, int bpp, int x, int y, char c, uint32_t fg_color, uint32_t bg_color)
-{
-	const unsigned char* glyph = font[(unsigned char)c];
-	//serial_printf(3, "glyph= %c\r\n", glyph);
-	int glyph_width = 16;
-	int glyph_height = 32;
+extern char* framebuffer;
+extern int scanline;
+extern char _binary_include_fonts_UniCyr_8x16_psf_start;
+uint16_t* unicode;
 
-	for (int py=0; py < glyph_height; py++)
+#define PIXEL uint32_t
+
+// Character, cursor X, cursor Y, foreground, background
+void draw_char(unsigned short int c, int cx, int cy, uint32_t fg, uint32_t bg)
+{
+	PSF_font *font = (PSF_font*)&_binary_include_fonts_UniCyr_8x16_psf_start;
+	int bytesperline=(font->width+7)/8;
+	if (unicode != NULL) {
+		c = unicode[c];
+	}
+
+	unsigned char* glyph = (unsigned char*)&_binary_include_fonts_UniCyr_8x16_psf_start + font->headersize + (c>0&&c<font->numglyph?c:0)*font->bytesperglyph;
+
+	int offs =
+		(cy * font->height * scanline) +
+		(cx * (font->width + 1) * sizeof(PIXEL));
+
+	unsigned int x, y;
+	int line, mask;
+
+	for (y=0; y<font->height; y++)
 	{
-		for (int px=0; px < glyph_width; px++)
+		line=offs;
+		mask=1<<(font->width-1);
+
+		for (x=0; x<font->width; x++)
 		{
-			if (glyph[py] & (0x80 >> px)) {
-				putpixel(fb, pitch, bpp, x+px, y+py, fg_color);
-			} else {
-				putpixel(fb, pitch, bpp, x+px, y+py, bg_color);
-			}
-		}	
+			*((PIXEL*)(framebuffer + line)) = *((unsigned int*)glyph) & mask ? fg : bg;
+			mask >>= 1;
+			line += sizeof(PIXEL);
+		}
+
+		glyph += bytesperline;
+		offs += scanline;
 	}
 }
