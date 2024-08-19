@@ -39,7 +39,7 @@ unsigned int g_multiboot_info_address;
 
 uint32_t white = 0xFFFFFFFF;
 uint32_t black = 0x00000000;
-
+uint32_t red   = 0x00FF0000;
 
 void kmain(multiboot2_info *mb_info)
 {
@@ -75,20 +75,23 @@ serial_printf(3, "Framebuffer BPP: %u\r\n", fb_info->framebuffer_bpp);
         uint32_t pitch = fb_info->framebuffer_pitch;
         uint32_t bpp = fb_info->framebuffer_bpp;
 
+	
 	int y_offset = 0;
 	for (int c=0; c<512; c++)
 	{
-		draw_char(framebuffer, (int)pitch, (int)bpp, 50+(c-65)*16, 20+y_offset, c, white, black);
+		draw_char(framebuffer, (int)pitch, (int)bpp, 20+(c-65)*16, 110+y_offset, c, white, black);
 		if (c%100 == 0) y_offset += 30;
 	}
 
-	/*
+
+	
         for (uint32_t y = 0; y < 100; y++) {
             for (uint32_t x = 0; x < 100; x++) {
-                framebuffer[y * (pitch / 4) + x] = 0xFF0000; // Rouge
+                putpixel(framebuffer, (int)pitch, (int)bpp, x, y, red);
+		//framebuffer[y * (pitch / 4) + x] = 0xFF0000; // Rouge
             }
         }
-	*/
+	
 	log("Drew to framebuffer.\r\n", 3);
     }
     puts("This should NOT work.");
