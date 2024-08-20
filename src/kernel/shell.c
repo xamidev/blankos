@@ -73,7 +73,7 @@ void shell_install()
   {
     char input_buffer[BUFFER_SIZE];
     char* argv[MAX_ARGS];
-    colorputs("blankos> ", 9);
+    //colorputs("blankos> ", 9);
     get_input(input_buffer, BUFFER_SIZE);
     puts("\n");
     

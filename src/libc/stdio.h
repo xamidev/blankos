@@ -14,14 +14,14 @@
 void move_cursor(int x, int y);
 void putchar(unsigned short int c, int x, int y, uint32_t fg, uint32_t bg);
 void puts(const char* str);
-void colorputs(const char* str, unsigned int color);
 void clear(void);
+void colorputs(const char* str, uint32_t fg, uint32_t bg);
 void putcolor(int x, int y, unsigned int color);
 char getchar(int x, int y);
 unsigned int getcolor(int x, int y);
 void scroll(int lines);
 void putc(char c);
-void colorputc(char c, unsigned int color);
+void colorputc(char c, uint32_t fg, uint32_t bg);
 
 #define PRINTF_STATE_START 		0
 #define PRINTF_STATE_LENGTH 		1
@@ -42,5 +42,15 @@ int getch();
 void get_input(char *buffer, int size);
 
 void dtostrf(double val, char *buffer, int precision);
+
+enum Colors
+{
+	// AARRGGBB?
+	white = 0xFFFFFFFF,
+	black = 0x00000000,
+	red   = 0x00FF0000,
+	green = 0x0000FF00,
+	blue  = 0x000000FF,
+};
 
 #endif

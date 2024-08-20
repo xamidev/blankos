@@ -32,7 +32,7 @@ void draw_char(unsigned short int c, int cx, int cy, uint32_t fg, uint32_t bg)
 
 	int offs =
 		(cy * font->height * scanline) +
-		(cx * (font->width + 1) * sizeof(PIXEL));
+		(cx * (font->width) * sizeof(PIXEL));
 
 	unsigned int x, y;
 	int line, mask;

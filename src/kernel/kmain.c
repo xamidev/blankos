@@ -28,12 +28,10 @@ typedef struct {
 
 char* ascii_title =
 "\n"
-"   oooooooooo o888                         oooo          ooooooo    oooooooo8\n"
-"   888    888 888   ooooooo   oo oooooo    888  ooooo o888   888o 888        \n"
-"   888oooo88  888   ooooo888   888   888   888o888    888     888  888oooooo \n"
-"   888    888 888 888    888   888   888   8888 88o   888o   o888         888\n"
-"   o888ooo888 o888o 88ooo88 8o o888o o888o o888o o888o   88ooo88   o88oooo888\n\n"
-"   --------------------------------- v0.3.55 --------------------------------\n\n";
+"*******************************\n"
+"| Blank OS version 0.3.68-dev |\n"
+"*******************************\n"
+"\n";
 
 unsigned int g_multiboot_info_address;
 
@@ -43,6 +41,7 @@ int scanline;
 // in characters, not pixels
 uint32_t VGA_WIDTH;
 uint32_t VGA_HEIGHT;
+
 
 void kmain(multiboot2_info *mb_info)
 {
@@ -105,8 +104,20 @@ serial_printf(3, "Framebuffer BPP: %u\r\n", fb_info->framebuffer_bpp);
 	
 	log("Drew to framebuffer.\r\n", 3);
     }
+    /*
     puts("This should work by now! Enter Graphics Mode.");
     printf("\nMy name is %s, and I'm %d. 0x%x", "Alan", 34, 0xdeadbeef);
+
+    for (int i=0; i<512; i++)
+    {
+	printf("%d ", i);
+    } 
+    */
+
+    //colorputs("Wow, such colorful output!", green, blue);
+
+    colorputs(ascii_title, green, black);
+
     while (1);
 
 

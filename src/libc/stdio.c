@@ -10,15 +10,6 @@ extern uint32_t VGA_WIDTH;
 extern uint32_t VGA_HEIGHT;
 unsigned int VGA_X = 0, VGA_Y = 0;
 
-enum Colors
-{
-	// AARRGGBB?
-	white = 0xFFFFFFFF,
-	black = 0x00000000,
-	red   = 0x00FF0000,
-	green = 0x0000FF00,
-	blue  = 0x000000FF,
-};
 
 void move_cursor(int x, int y)
 {
@@ -115,7 +106,7 @@ void putc(char c)
   move_cursor(VGA_X, VGA_Y);
 }
 
-void colorputc(char c, unsigned int color)
+void colorputc(char c, uint32_t fg, uint32_t bg)
 {
   switch(c)
   {
@@ -130,8 +121,7 @@ void colorputc(char c, unsigned int color)
       VGA_X += 4;
       break;
     default:
-      putchar(c, VGA_X, VGA_Y, white, black);
-      //putcolor(VGA_X, VGA_Y, color);
+      putchar(c, VGA_X, VGA_Y, fg, bg);
       VGA_X++;
       break;
   }
@@ -154,11 +144,11 @@ void puts(const char* str)
   }
 }
 
-void colorputs(const char* str, unsigned int color)
+void colorputs(const char* str, uint32_t fg, uint32_t bg)
 {
   while (*str)
   {
-    colorputc(*str, color);
+    colorputc(*str, fg, bg);
     str++;
   }
 }

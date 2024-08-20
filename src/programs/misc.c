@@ -18,7 +18,7 @@ void program_rainbow()
 
 	for (int i=0; i<COLORS; i++)
 	{
-		colorputs(input_buffer, i);
+		//colorputs(input_buffer, i);
 		puts("\n");
 	}	
 }
