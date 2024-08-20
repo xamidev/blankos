@@ -3,31 +3,33 @@
 #include "string.h"
 #include "stdint.h"
 #include "../kernel/system.h"
+#include "../drivers/framebuffer.h"
 
-char* fb = (char *) 0x000B8000;
-const unsigned VGA_WIDTH = 80;
-const unsigned VGA_HEIGHT = 25;
-const unsigned int COLOR = 0x7;
+extern uint32_t* framebuffer;
+extern uint32_t VGA_WIDTH; 
+extern uint32_t VGA_HEIGHT;
 unsigned int VGA_X = 0, VGA_Y = 0;
+
+enum Colors
+{
+	// AARRGGBB?
+	white = 0xFFFFFFFF,
+	black = 0x00000000,
+	red   = 0x00FF0000,
+	green = 0x0000FF00,
+	blue  = 0x000000FF,
+};
 
 void move_cursor(int x, int y)
 {
-  unsigned short pos = y*VGA_WIDTH+x; 
-
-  outb(FB_CMD_PORT, FB_HIGH_BYTE_CMD);
-  outb(FB_DATA_PORT, ((pos >> 8) & 0x00FF));
-  outb(FB_CMD_PORT, FB_LOW_BYTE_CMD);
-  outb(FB_DATA_PORT, pos & 0x00FF);
+	VGA_X = x;
+	VGA_Y = y;
 }
 
-void putchar(int x, int y, char c) 
+// stdio wrapper for draw_char in graphics mode
+void putchar(unsigned short int c, int x, int y, uint32_t fg, uint32_t bg)
 {
-  fb[2*(y*VGA_WIDTH+x)] = c;
-}
-
-void putcolor(int x, int y, unsigned int color)
-{
-  fb[2*(y*VGA_WIDTH+x)+1] = color;
+	draw_char(c, x, y, fg, bg);
 }
 
 void clear(void)
@@ -36,23 +38,10 @@ void clear(void)
   {
     for (unsigned int x=0; x<VGA_WIDTH; x++)
     {
-      putchar(x, y, '\0');
-      putcolor(x, y, COLOR);
+      putchar(' ', x, y, black, black);
     }
   }
-  VGA_X = 0;
-  VGA_Y = 0;
-  move_cursor(VGA_X, VGA_Y);
-}
-
-char getchar(int x, int y)
-{
-  return fb[2*(y*VGA_WIDTH+x)];
-}
-
-unsigned int getcolor(int x, int y)
-{
-  return fb[2*(y*VGA_WIDTH+x)+1];
+  move_cursor(0, 0);
 }
 
 void scroll(int lines)
@@ -63,8 +52,7 @@ void scroll(int lines)
   {
     for (unsigned int x = 0; x < VGA_WIDTH; x++)
     {
-      putchar(x, y, getchar(x, y+lines));
-      putcolor(x, y, getcolor(x, y+lines));
+      //putchar(getchar(x, y+lines), x, y, white, black);
     }
   }
 
@@ -72,8 +60,7 @@ void scroll(int lines)
   {
     for (unsigned int x = 0; x < VGA_WIDTH; x++)
     {
-      putchar(x, y, ' ');
-      putcolor(x, y, COLOR);
+      //putchar(' ', x, y, black, black);
     }
   }
 
@@ -110,10 +97,10 @@ void putc(char c)
 	      VGA_Y--;
 	      VGA_X = VGA_WIDTH-1;
       }
-      putchar(VGA_X, VGA_Y, ' ');
+      putchar(' ', VGA_X, VGA_Y, white, black);
       break;
     default:
-      putchar(VGA_X, VGA_Y, c);
+      putchar(c, VGA_X, VGA_Y, white, black);
       VGA_X++;
       break;
   }
@@ -143,8 +130,8 @@ void colorputc(char c, unsigned int color)
       VGA_X += 4;
       break;
     default:
-      putchar(VGA_X, VGA_Y, c);
-      putcolor(VGA_X, VGA_Y, color);
+      putchar(c, VGA_X, VGA_Y, white, black);
+      //putcolor(VGA_X, VGA_Y, color);
       VGA_X++;
       break;
   }

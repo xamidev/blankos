@@ -37,12 +37,12 @@ char* ascii_title =
 
 unsigned int g_multiboot_info_address;
 
-uint32_t white = 0xFFFFFFFF;
-uint32_t black = 0x00000000;
-uint32_t red   = 0x00FF0000;
-
 uint32_t* framebuffer;
 int scanline;
+
+// in characters, not pixels
+uint32_t VGA_WIDTH;
+uint32_t VGA_HEIGHT;
 
 void kmain(multiboot2_info *mb_info)
 {
@@ -78,34 +78,35 @@ serial_printf(3, "Framebuffer BPP: %u\r\n", fb_info->framebuffer_bpp);
         uint32_t pitch = fb_info->framebuffer_pitch;
         uint32_t bpp = fb_info->framebuffer_bpp;
 
-	scanline = width * (bpp/8);
+	//8x16 font padded with 1 for each char = 9px/char
+	VGA_WIDTH = width/9;
+	VGA_HEIGHT = height/9;
 
-	draw_char('S', 2, 2, white, black);
-	draw_char('A', 3, 2, white, black);
-	draw_char('L', 4, 2, white, black);
-	draw_char('U', 5, 2, white, black);
-	draw_char('T', 6, 2, white, black);
+	scanline = width * (bpp/8);	
+
 	
-	int y_offset = 0;
-	for (int c=0; c<512; c++)
+	/* TEST print charset
+	int y_offset = 2;
+	for (int i=0; i<512; i++)
 	{
-		//draw_char(framebuffer, (int)pitch, (int)bpp, 20+(c-65)*16, 110+y_offset, c, white, black);
-		if (c%100 == 0) y_offset += 30;
+		if (i%(width/9)==0) y_offset++;
+		draw_char(0+i, 0+i, y_offset, white, black);
 	}
-
-
-		
+	*/
+	
+	/* TEST print red square	
         for (uint32_t y = 0; y < 10; y++) {
             for (uint32_t x = 0; x < 10; x++) {
                 putpixel(framebuffer, (int)pitch, (int)bpp, x, y, red);
 		//framebuffer[y * (pitch / 4) + x] = 0xFF0000; // Rouge
             }
         }
+	*/
 	
 	log("Drew to framebuffer.\r\n", 3);
     }
-    puts("This should NOT work.");
-
+    puts("This should work by now! Enter Graphics Mode.");
+    printf("\nMy name is %s, and I'm %d. 0x%x", "Alan", 34, 0xdeadbeef);
     while (1);
 
 

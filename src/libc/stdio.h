@@ -12,7 +12,7 @@
 #define FB_LOW_BYTE_CMD   15
 
 void move_cursor(int x, int y);
-void putchar(int x, int y, char c);
+void putchar(unsigned short int c, int x, int y, uint32_t fg, uint32_t bg);
 void puts(const char* str);
 void colorputs(const char* str, unsigned int color);
 void clear(void);
