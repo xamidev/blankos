@@ -3,6 +3,7 @@
 #include "../libc/stdio.h"
 #include "../kernel/system.h"
 #include "../libc/string.h"
+#include "../drivers/framebuffer.h"
 
 // Print a rainbow colorful text for testing
 
@@ -29,7 +30,7 @@ void program_rainbow()
 
 void program_clear()
 {	
-	for (int i=0; i<ROWS; i++) scroll(1);
+	for (int i=0; i<ROWS; i++) scroll();
 }
 
 // Get uptime in ticks

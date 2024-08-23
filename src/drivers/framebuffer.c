@@ -1,6 +1,7 @@
 #include "../libc/stdint.h"
 #include "framebuffer.h"
 #include "serial.h"
+#include "../kernel/system.h"
 
 //extern uint32_t *g_framebuffer;
 
@@ -51,5 +52,42 @@ void draw_char(unsigned short int c, int cx, int cy, uint32_t fg, uint32_t bg)
 
 		glyph += bytesperline;
 		offs += scanline;
+	}
+}
+
+void scroll()
+{
+	serial_printf(3, "Scrolling...\r");
+	uint32_t bg_color = 0x00000000;
+	PSF_font *font = (PSF_font*)&_binary_include_fonts_UniCyr_8x16_psf_start;
+	
+	int line_size = font->height * scanline;
+	int framebuffer_size = scanline * font->height * (1080/font->height);
+
+	// Erasing first line
+	for (uint32_t y=0; y<font->height; y++)
+	{
+		for (uint32_t x=0; x<scanline/sizeof(PIXEL); x++)
+		{
+			*((PIXEL*)(framebuffer + y * scanline + x * sizeof(PIXEL))) = bg_color;
+		}
+	}
+
+	// Moving all lines up by 1 line
+	for (int y=1; y<(framebuffer_size/line_size); y++)
+	{
+		void* src = framebuffer + y*line_size;
+		void* dst = framebuffer + (y-1)*line_size;
+		memmove(dst, src, line_size);
+	}
+
+	// Erasing last line
+	int last_line_start = (framebuffer_size/line_size-1) * line_size;
+	for (uint32_t y=0; y<font->height; y++)
+	{
+		for (uint32_t x=0; x<scanline/sizeof(PIXEL); x++)
+		{
+			*((PIXEL*)(framebuffer + last_line_start + y * scanline + x * sizeof(PIXEL))) = bg_color;
+		}
 	}
 }

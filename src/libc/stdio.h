@@ -19,7 +19,6 @@ void colorputs(const char* str, uint32_t fg, uint32_t bg);
 void putcolor(int x, int y, unsigned int color);
 char getchar(int x, int y);
 unsigned int getcolor(int x, int y);
-void scroll(int lines);
 void putc(char c);
 void colorputc(char c, uint32_t fg, uint32_t bg);
 

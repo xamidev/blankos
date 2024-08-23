@@ -26,5 +26,6 @@ typedef struct {
 //extern const unsigned char font[512][64];
 void putpixel(uint32_t* fb, int pitch, int bpp, int x, int y, uint32_t color); 
 void draw_char(unsigned short int c, int cx, int cy, uint32_t fg, uint32_t bg);
+void scroll();
 
 #endif

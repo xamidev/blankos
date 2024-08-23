@@ -4,6 +4,7 @@
 #include "stdint.h"
 #include "../kernel/system.h"
 #include "../drivers/framebuffer.h"
+#include "../drivers/serial.h"
 
 extern uint32_t* framebuffer;
 extern uint32_t VGA_WIDTH; 
@@ -33,32 +34,6 @@ void clear(void)
     }
   }
   move_cursor(0, 0);
-}
-
-void scroll(int lines)
-{
-  if (lines <= 0 || (unsigned int)lines >= VGA_HEIGHT) return;
-
-  for (unsigned int y = 0; y < VGA_HEIGHT-lines; y++)
-  {
-    for (unsigned int x = 0; x < VGA_WIDTH; x++)
-    {
-      //putchar(getchar(x, y+lines), x, y, white, black);
-    }
-  }
-
-  for (unsigned int y = VGA_HEIGHT-lines; y<VGA_HEIGHT; y++)
-  {
-    for (unsigned int x = 0; x < VGA_WIDTH; x++)
-    {
-      //putchar(' ', x, y, black, black);
-    }
-  }
-
-  VGA_Y -= lines;
-  if ((int)VGA_Y < 0) {
-	  VGA_Y = 0;
-  }
 }
 
 void putc(char c)
@@ -101,7 +76,12 @@ void putc(char c)
     VGA_Y++;
     VGA_X = 0;
   }
-  if (VGA_Y >= VGA_HEIGHT) scroll(1);
+  if (VGA_Y >= VGA_HEIGHT) 
+  {
+	serial_printf(3, "VGA_Y=%d, VGA_HEIGHT=%d: Scrolling...\r", VGA_Y, VGA_HEIGHT);
+	scroll();
+  	VGA_Y = VGA_HEIGHT - 1;
+  }	  
 
   move_cursor(VGA_X, VGA_Y);
 }
@@ -131,7 +111,14 @@ void colorputc(char c, uint32_t fg, uint32_t bg)
     VGA_Y++;
     VGA_X = 0;
   }
-  if (VGA_Y >= VGA_HEIGHT) scroll(1);
+
+  if (VGA_Y >= VGA_HEIGHT) 
+  {
+	serial_printf(3, "VGA_Y=%d, VGA_HEIGHT=%d: Scrolling...\r", VGA_Y, VGA_HEIGHT);
+	scroll();
+  	VGA_Y = VGA_HEIGHT - 1;
+  }	
+
   move_cursor(VGA_X, VGA_Y);
 }
 

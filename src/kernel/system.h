@@ -6,6 +6,7 @@
 typedef int size_t;
 
 void *memset(void *dest, char val, size_t count);
+void *memmove(void* dest, const void* src, size_t n);
 
 struct regs
 {

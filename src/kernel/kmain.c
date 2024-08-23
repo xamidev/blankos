@@ -77,9 +77,9 @@ serial_printf(3, "Framebuffer BPP: %u\r\n", fb_info->framebuffer_bpp);
         uint32_t pitch = fb_info->framebuffer_pitch;
         uint32_t bpp = fb_info->framebuffer_bpp;
 
-	//8x16 font padded with 1 for each char = 9px/char
-	VGA_WIDTH = width/9;
-	VGA_HEIGHT = height/9;
+	//8x16 font, not padded 
+	VGA_WIDTH = width/8;
+	VGA_HEIGHT = height/16;
 
 	scanline = width * (bpp/8);	
 
@@ -113,6 +113,11 @@ serial_printf(3, "Framebuffer BPP: %u\r\n", fb_info->framebuffer_bpp);
 	printf("%d ", i);
     } 
     */
+
+    for (int i=0; i<100; i++)
+    {
+	printf("%d\n", i);
+    }
 
     //colorputs("Wow, such colorful output!", green, blue);
 
