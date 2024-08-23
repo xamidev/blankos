@@ -1,30 +1,31 @@
 ENTRY(loader)
 
 SECTIONS {
-  /* Address to load at; 1MB */
+  /* Address to load at; 2MB */
 
-  . = 0x00100000;
+  /*. = 2M;*/
 
-  .__mbHeader : {
-	  *(.__mbHeader)
+  .multiboot_header ALIGN(4K) : {
+  	*(.multiboot_header)
   }
-
   /* Align relevant sections at 4KB  */
 
-  .text ALIGN (0x1000) :
+  .text ALIGN (4K) :
   {
     *(.text)
     *(.rodata)
   }
 
-  .data ALIGN (0x1000) :
+  .data ALIGN (4K) :
   {
     *(.data)
   }
 
-  .bss ALIGN (0x1000) :
+  .bss ALIGN (4K) :
   {
     *(COMMON)
     *(.bss)
   }
+
+  end = .; _end = .; __end = .;
 }

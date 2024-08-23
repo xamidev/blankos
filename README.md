@@ -27,7 +27,7 @@ The long-term goal of this OS is to be capable of running user programs and havi
 Download the latest BlankOS disk image from the "Releases" tab, and start it using the QEMU emulator:
 
 ```
-qemu-system-i386 blankOS-i386-0.3.45.img
+qemu-system-i386 blankOS-i386-0.3.55.iso
 ```
 
 ## Building from source
@@ -47,7 +47,7 @@ To run the OS on real hardware, you'll first need to have a BIOS-compatible comp
 
 Burn your image file onto a USB stick:
 ```
-sudo dd bs=4M if=blankos-fat.img of=/dev/sdX status=progress oflag=sync
+sudo dd bs=4M if=blankos.iso of=/dev/sdX status=progress oflag=sync
 ```
 
 Replace `sdX` with your USB drive name (you can find it by doing `sudo fdisk -l`).
@@ -56,7 +56,7 @@ Tada! You now have a working BlankOS USB stick. Go ahead and try it out!
 ## Debugging (QEMU w/ GDB)
 
 ```
-qemu-system-i386 -s -S -drive file=blankos-fat.img,format=raw
+qemu-system-i386 -s -S -drive file=blankos.iso,format=raw
 ```
 
 In another shell:
@@ -68,7 +68,7 @@ gdb kernel.elf
 
 ## Documentation
 
-Two other documents are available to help you understand the project better. One is the User's Manual, labelled [USERS.md](USERS.md), and the other one is the Developer's Manual, labelled [DEVELOPERS.md](DEVELOPERS.md). They are full of useful resources around Blank OS. You'll learn how to use the system and how to contribute to it.
+Two other documents are available to help you understand the project better. One is the User's Manual, labelled [USERS.md](docs/USERS.md), and the other one is the Developer's Manual, labelled [DEVELOPERS.md](docs/DEVELOPERS.md). They are full of useful resources around Blank OS. You'll learn how to use the system and how to contribute to it.
 
 ### Resources
 
@@ -79,6 +79,7 @@ Two other documents are available to help you understand the project better. One
 - the Intel [64 and IA-32 Architectures Software Developer Manuals](https://www.intel.com/content/www/us/en/developer/articles/technical/intel-sdm.html)
 - [Bran's Kernel Development Tutorial](http://www.osdever.net/bkerndev/index.php)
 - Ralf Brown's Interrupt List
+- the [little book about OS development](https://littleosbook.github.io/) by Erik Helin and Adam Renberg
 
 ### ⚠️ Disclaimer
 
@@ -90,8 +91,9 @@ This is a hobbyist operating system kernel and it comes without any warranty wha
 - [X] Common basic structures (IDT, GDT, ISRs, IRQs)
 - [X] Common drivers (framebuffer, keyboard, serial, timer)
 - [X] Kernel-space utilities (shell, simple programs)
-- [ ] FAT32 filesystem
-- [ ] Paging/Page Frame Allocation
+- [ ] Filesystem (FAT32 or VFS ramdisk)
+- [ ] Changing the default VGA font
+- [X] Paging/Page Frame Allocation
 - [ ] TCP/IP Network stack
 - [ ] Getting to Ring-3 (userspace)
 - [ ] Multitasking (via round robin scheduling)

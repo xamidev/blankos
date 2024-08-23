@@ -130,6 +130,7 @@ void keyboard_handler()
 void keyboard_install()
 {
 	irq_install_handler(1, keyboard_handler);
+	printf("[keyboard] installed irq handler\n");
 }
 
 char keyboard_getchar()

@@ -1,5 +1,6 @@
 #include "idt.h"
 #include "system.h"
+#include "../libc/stdio.h"
 
 struct idt_entry
 {
@@ -39,4 +40,5 @@ void idt_install()
 	memset(&idt, 0, sizeof(struct idt_entry)*256);
 
 	idt_load();
+	printf("[kernel] loaded IDT at idt=0x%x\n", &idt);
 }

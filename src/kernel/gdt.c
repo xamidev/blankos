@@ -1,4 +1,5 @@
 #include "gdt.h"
+#include "../libc/stdio.h"
 
 struct gdt_entry
 {
@@ -40,9 +41,15 @@ void gdt_install()
 	gp.base = (unsigned int)&gdt;
 
 	gdt_set_gate(0, 0, 0, 0, 0);
-
+	
+	// Ring 0 code + data
 	gdt_set_gate(1, 0, 0xFFFFFFFF, 0x9A, 0xCF);
 	gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
 
+	// Ring 3
+	gdt_set_gate(3, 0, 0xFFFFFFFF, 0xFA, 0xCF);
+	gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF);
+
 	gdt_flush();
+	printf("[kernel] GDT gates set (ring 0 and 3), gdt=0x%x\n", &gdt);
 }

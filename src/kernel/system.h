@@ -1,9 +1,12 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
+#include "../libc/stdint.h"
+
 typedef int size_t;
 
 void *memset(void *dest, char val, size_t count);
+void *memmove(void* dest, const void* src, size_t n);
 
 struct regs
 {
@@ -13,6 +16,7 @@ struct regs
 	unsigned int eip, cs, eflags, useresp, ss;
 };
 
+void panic();
 void isr_install();
 void irq_install();
 void irq_install_handler(int irq, void (*handler)(struct regs *r));

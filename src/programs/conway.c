@@ -15,7 +15,7 @@ void print_grid(const unsigned char grid[X][Y])
 			//(grid[i][j] == LIVE) ? putc(42) : putc(32);
 			if (grid[i][j] == LIVE) {
 				serial_printf(3, "alive");
-			       colorputc(32, 120);
+			       //colorputc(32, 120);
 			} else {
 	       		       putc(32);
 			}		       
