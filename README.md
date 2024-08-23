@@ -30,6 +30,9 @@ Download the latest BlankOS disk image from the "Releases" tab, and start it usi
 qemu-system-i386 blankOS-i386-0.3.55.iso
 ```
 
+> [!NOTE]
+> Know that the latest release is not always up-to-date with the source code. To get the most up-to-date version, instead build from source as shown below.
+
 ## Building from source
 
 ```
@@ -56,7 +59,7 @@ Tada! You now have a working BlankOS USB stick. Go ahead and try it out!
 ## Debugging (QEMU w/ GDB)
 
 ```
-qemu-system-i386 -s -S -drive file=blankos.iso,format=raw
+make debug
 ```
 
 In another shell:
@@ -68,7 +71,7 @@ gdb kernel.elf
 
 ## Documentation
 
-Two other documents are available to help you understand the project better. One is the User's Manual, labelled [USERS.md](docs/USERS.md), and the other one is the Developer's Manual, labelled [DEVELOPERS.md](docs/DEVELOPERS.md). They are full of useful resources around Blank OS. You'll learn how to use the system and how to contribute to it.
+Two other documents are available to help you understand the project better. One is the User's Manual, labelled [USERS.md](docs/USERS.md), and the other one is the Developer's Manual, labelled [DEVELOPERS.md](docs/DEVELOPERS.md). They are full of useful resources around Blank OS. You'll learn how to use the system and how to contribute to it. *(The docs might not always be up-to-date)*
 
 ### Resources
 
@@ -80,10 +83,6 @@ Two other documents are available to help you understand the project better. One
 - [Bran's Kernel Development Tutorial](http://www.osdever.net/bkerndev/index.php)
 - Ralf Brown's Interrupt List
 - the [little book about OS development](https://littleosbook.github.io/) by Erik Helin and Adam Renberg
-
-### ⚠️ Disclaimer
-
-This is a hobbyist operating system kernel and it comes without any warranty whatsoever! It isn't capable of anything really. Feedback and contributions are highly appreciated!
 
 ### Roadmap
 
@@ -103,3 +102,6 @@ This is a hobbyist operating system kernel and it comes without any warranty wha
 - [ ] System calls
 - [ ] GUI
 - [ ] POSIX and ANSI specification compatibility
+
+> [!WARNING]
+> This is a hobbyist operating system, and it comes without any warranty whatsoever! See the license for more info. Feedback and contributions are highly appreciated.
