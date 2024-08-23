@@ -6,6 +6,12 @@ volatile unsigned long global_ticks = 0;
 void timer_handler()
 {
 	global_ticks++;
+	if (global_ticks % 20 == 0)
+	{
+		draw_cursor(white);
+	} else if (global_ticks % 20 == 10) {
+		erase_cursor();
+	}
 }
 
 void timer_install()

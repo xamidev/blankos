@@ -11,11 +11,32 @@ extern uint32_t VGA_WIDTH;
 extern uint32_t VGA_HEIGHT;
 unsigned int VGA_X = 0, VGA_Y = 0;
 
+#define CURSOR_WIDTH  8
+#define CURSOR_HEIGHT 16
+extern int scanline;
+
+void draw_cursor(uint32_t color)
+{
+	for (int y=12; y<CURSOR_HEIGHT; y++)
+	{
+		for (int x=0; x<CURSOR_WIDTH; x++)
+		{
+			putpixel(framebuffer, scanline, 32, VGA_X * CURSOR_WIDTH + x, VGA_Y * CURSOR_HEIGHT + y, color);
+		}
+	}
+}
+
+void erase_cursor()
+{
+	draw_cursor(black);
+}
 
 void move_cursor(int x, int y)
 {
+	erase_cursor();
 	VGA_X = x;
 	VGA_Y = y;
+	draw_cursor(white);
 }
 
 // stdio wrapper for draw_char in graphics mode
@@ -38,6 +59,7 @@ void clear(void)
 
 void putc(char c)
 {
+  erase_cursor();
   switch(c)
   {
     case '\n':
@@ -88,6 +110,7 @@ void putc(char c)
 
 void colorputc(char c, uint32_t fg, uint32_t bg)
 {
+  erase_cursor();
   switch(c)
   {
     case '\n':

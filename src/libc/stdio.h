@@ -11,6 +11,10 @@
 #define FB_HIGH_BYTE_CMD  14
 #define FB_LOW_BYTE_CMD   15
 
+
+void draw_cursor(uint32_t color);
+void erase_cursor();
+
 void move_cursor(int x, int y);
 void putchar(unsigned short int c, int x, int y, uint32_t fg, uint32_t bg);
 void puts(const char* str);
