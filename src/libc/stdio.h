@@ -49,11 +49,12 @@ void dtostrf(double val, char *buffer, int precision);
 enum Colors
 {
 	// AARRGGBB?
-	white = 0xFFFFFFFF,
-	black = 0x00000000,
-	red   = 0x00FF0000,
-	green = 0x0000FF00,
-	blue  = 0x000000FF,
+	white  = 0xFFFFFFFF,
+	black  = 0x00000000,
+	red    = 0x00FF0000,
+	green  = 0x0000FF00,
+	blue   = 0x000000FF,
+	yellow = 0x00FFFF00,
 };
 
 #endif

@@ -26,13 +26,6 @@ typedef struct {
     uint8_t tags[0];
 } multiboot2_info;
 
-char* ascii_title =
-"\n"
-"*******************************\n"
-"| Blank OS version 0.3.68-dev |\n"
-"*******************************\n"
-"\n";
-
 unsigned int g_multiboot_info_address;
 
 uint32_t* framebuffer;
@@ -73,7 +66,7 @@ uint8_t *tags = mb_info->tags;
 
         uint32_t width = fb_info->framebuffer_width;
         uint32_t height = fb_info->framebuffer_height;
-        uint32_t pitch = fb_info->framebuffer_pitch;
+        //uint32_t pitch = fb_info->framebuffer_pitch;
         uint32_t bpp = fb_info->framebuffer_bpp;
 
 	
@@ -94,28 +87,18 @@ uint8_t *tags = mb_info->tags;
 	*/
     }
 
-
+    printf("[kernel] multiboot2 info at 0x%x, size=%u\n", mb_info, mb_info->total_size);
     printf("[kernel] framebuffer discovered at 0x%x\n", fb_info->framebuffer_addr);
     printf("[kernel] fb0: width=%u, height=%u, pitch=%u, bpp=%u\n", fb_info->framebuffer_width, fb_info->framebuffer_height, fb_info->framebuffer_pitch, fb_info->framebuffer_bpp);
 
-    colorputs(ascii_title, green, black);
 
   init_serial();
-  log("serial connection established\n", 3);
   gdt_install();
-  log("initialized GDT entries\n", 2);
   idt_install();
-  log("initialized IDT\n", 2);
   isr_install();
-  log("initialized ISRs\n", 2);
   irq_install();
   __asm__ __volatile__("sti");
-  log("initialized IRQs\n", 2),
  
-  //clear();
-  //colorputs(ascii_title, 10);
-  //colorputs("   by @xamidev - star the repo for a cookie!\n\n", );
-
   //init_paging();
 
   //test_read_sector();
@@ -124,10 +107,8 @@ uint8_t *tags = mb_info->tags;
   //uint32_t do_page_fault = *ptr;
 
   timer_install();
-  serial_printf(2, "%d\tinitialized timer handler", global_ticks); 
-  keyboard_install(); 
-  serial_printf(2, "%d\tinitialized keyboard handler", global_ticks); 
+  keyboard_install();
+  printf("[kernel] spawning shell...\n"); 
   shell_install();
-  serial_printf(2, "%d\tstarted system shell", global_ticks); 
  
 }

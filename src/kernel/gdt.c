@@ -1,4 +1,5 @@
 #include "gdt.h"
+#include "../libc/stdio.h"
 
 struct gdt_entry
 {
@@ -50,4 +51,5 @@ void gdt_install()
 	gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF);
 
 	gdt_flush();
+	printf("[kernel] GDT gates set (ring 0 and 3), gdt=0x%x\n", &gdt);
 }

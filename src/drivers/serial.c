@@ -20,6 +20,7 @@ int init_serial()
   }
 
   outb(PORT+4, 0x0F);
+  puts("[serial] initialized i/o on port COM1\n");
   return 0;
 }
 

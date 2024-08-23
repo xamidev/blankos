@@ -1,6 +1,7 @@
 #include "system.h"
 #include "io.h"
 #include "idt.h"
+#include "../libc/stdio.h"
 
 extern void irq0();
 extern void irq1();
@@ -69,6 +70,7 @@ void irq_install()
 	idt_set_gate(45, (unsigned)irq13, 0x08, 0x8E);
 	idt_set_gate(46, (unsigned)irq14, 0x08, 0x8E);
 	idt_set_gate(47, (unsigned)irq15, 0x08, 0x8E);
+	printf("[kernel] installed irq 0-15\n");
 }
 
 void irq_handler(struct regs *r)

@@ -8,6 +8,16 @@
 #define MAX_COMMANDS 16
 #define MAX_ARGS 64
 
+
+char* ascii_title =
+"\n"
+"----------------------------------------------\n"
+"Blank OS version 0.3.71-dev\n"
+"Author: @xamidev - star the repo for a cookie!\n"
+"----------------------------------------------\n"
+"\n";
+
+
 typedef void (*command_func_t)(int argc, char *argv[]);
 
 typedef struct
@@ -53,7 +63,9 @@ int parse_input(char* input, char* argv[], int max_args)
 }
 
 void shell_install()
-{
+{ 
+  colorputs(ascii_title, yellow, black);
+  
   register_command("help", program_help);
   register_command("panic", program_panic);
   register_command("words", program_words);
@@ -73,7 +85,13 @@ void shell_install()
   {
     char input_buffer[BUFFER_SIZE];
     char* argv[MAX_ARGS];
-    //colorputs("blankos> ", 9);
+
+    // Prompt
+    colorputs("root", blue, black);
+    colorputs("@", white, black);
+    colorputs("blankos", green, black);
+    colorputs("~$ ", white, black);
+
     get_input(input_buffer, BUFFER_SIZE);
     puts("\n");
     

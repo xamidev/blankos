@@ -17,6 +17,7 @@ void timer_handler()
 void timer_install()
 {
 	irq_install_handler(0, timer_handler);
+	printf("[timer] initialized, starting g_ticks...\n");
 }
 
 void delay(int ticks)
