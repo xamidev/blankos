@@ -74,3 +74,32 @@ char* strtok(char* str, const char* delimiter)
 
 	return token_start;
 }
+
+int atoi(char* str)
+{
+	int result = 0;
+
+	for (int i=0; str[i] != '\0'; i++)
+	{
+		result = result*10 + str[i] - '0';
+	}
+
+	return result;
+}
+
+void strcat(char* dest, const char* src)
+{
+	while (*dest)
+	{
+		dest++;
+	}
+
+	while (*src)
+	{
+		*dest = *src;
+		dest++;
+		src++;
+	}
+
+	*dest = '\0';
+}

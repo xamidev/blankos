@@ -31,11 +31,11 @@ void kmain(multiboot2_info *mb_info)
         tags += ((tag_size + 7) & ~7);
     }
 
-    serial_printf(3, "Framebuffer Address: 0x%x\r", fb_info->framebuffer_addr);
-	serial_printf(3, "Framebuffer Width: %u\r\n", fb_info->framebuffer_width);
-	serial_printf(3, "Framebuffer Height: %u\r\n", fb_info->framebuffer_height);
-	serial_printf(3, "Framebuffer Pitch: %u\r\n", fb_info->framebuffer_pitch);
-	serial_printf(3, "Framebuffer BPP: %u\r\n", fb_info->framebuffer_bpp);
+    serial_printf(3, "Framebuffer Address: 0x%x", fb_info->framebuffer_addr);
+	serial_printf(3, "Framebuffer Width: %u", fb_info->framebuffer_width);
+	serial_printf(3, "Framebuffer Height: %u", fb_info->framebuffer_height);
+	serial_printf(3, "Framebuffer Pitch: %u", fb_info->framebuffer_pitch);
+	serial_printf(3, "Framebuffer BPP: %u", fb_info->framebuffer_bpp);
 
     if (fb_info) {
         framebuffer = (uint32_t *)(uintptr_t) fb_info->framebuffer_addr;
@@ -47,6 +47,7 @@ void kmain(multiboot2_info *mb_info)
         //8x16 font, not padded 
         VGA_WIDTH = width/8;
         VGA_HEIGHT = height/16;
+        serial_printf(3, "VGA_WIDTH=%d, VGA_HEIGHT=%d", VGA_WIDTH, VGA_HEIGHT);
         scanline = width * (bpp/8);	
     }
 

@@ -7,19 +7,47 @@
 #include "../libc/stdio.h"
 #include "../libc/string.h"
 #include "../programs/programs.h"
+#include "../libc/crypto.h"
 #include <stdint.h>
+#include "../drivers/rtc.h"
 
 #define BUFFER_SIZE 256
 #define MAX_COMMANDS 16
 #define MAX_ARGS     64
 
+// Splash screen: esthetic stuff.
+
 char* ascii_title =
 "\n"
 "----------------------------------------------\n"
-"Blank OS version 0.3.71-dev\n"
+"Blank OS version 0.3.84-alpha\n"
 "Author: @xamidev - star the repo for a cookie!\n"
 "----------------------------------------------\n"
 "\n";
+
+char* motd[] = 
+{
+	"Now in 2D!",
+	"Supercalifragilisticexpialidocious!",
+	"Tylko jedno w glowie mam!",
+};
+int motd_size = sizeof(motd)/sizeof(motd[0]);
+
+void splash()
+{ 
+	int random = randint(time_seed());
+	char* motd_pick = motd[random%motd_size];
+	cowsay(motd_pick, red, black);
+	colorputs("        blankOS 0.3.84-alpha", red, black);
+	puts("\n");
+	
+
+	puts("        Time: ");
+	rtc_time_t time;
+	rtc_read_time(&time);
+	print_time(&time);
+	puts("\n");
+}
 
 typedef void (*command_func_t)(int argc, char *argv[]);
 
@@ -66,8 +94,8 @@ int parse_input(char* input, char* argv[], int max_args)
 }
 
 void shell_install()
-{ 
-  colorputs(ascii_title, yellow, black);
+{
+  splash();	
   
   register_command("help", program_help);
   register_command("panic", program_panic);
@@ -83,6 +111,7 @@ void shell_install()
   register_command("conway", program_conway);
   register_command("rot13", program_rot13);
   register_command("morse", program_morse);
+  register_command("cowsay", program_cowsay);
 
   for (;;)
   {

@@ -282,5 +282,5 @@ void serial_printf(int errlevel, const char* fmt, ...)
     }
     fmt++;
   }
-  serial_puts("\n");
+  serial_puts("\r\n");
 }
