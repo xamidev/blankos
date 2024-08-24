@@ -2,6 +2,25 @@
 
 ## Getting started
 
+First, let me introduce you some features of this project.
+
+## Features
+
+- Serial port driver (output & debug)
+- Framebuffer driver (output)
+- PS/2 Keyboard and PIC driver (input)
+- PIT (system clock/timer) driver
+- Working IDT, GDT, ISRs, and IRQs
+- Kernel panicking (exception handling)
+- A kernel-space shell
+- Cool color output!!
+- Some small working kernel-space programs, such as...
+- A brainfuck interpreter
+- An arithmetic calculator
+- ROT13 and Morse cipher programs
+- Conway's Game of Life
+- And some more...
+
 ### Installation and emulation/execution
 
 Please refer to the relevant sections in the project `README.md` available in the root folder.
