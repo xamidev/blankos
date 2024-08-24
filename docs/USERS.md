@@ -43,7 +43,11 @@ Triggers a kernel panic by trying to divide four by zero.
 
 #### `words`
 
-Prints ten random words using an arbitrary dictionary that you can expand in `src/programs/words.c`.
+Prints random words using an arbitrary dictionary that you can expand in `src/programs/words.c`.
+
+Options:
+- `<nothing>` will default amount of words to 10
+- `<integer>` will set the amount of words to that number 
 
 #### `primes`
 
@@ -78,7 +82,7 @@ The classic echo command, that outputs your input.
 Outputs information about the current system (CPU and RAM).
  
 Options:
-- `nothing` will show basic info about the CPUid and lower/upper memory.
+- `<nothing>` will show basic info about the CPUid and lower/upper memory.
 - `-v` will output the CPUID, lower/upper memory, and the memory map.
 
 #### `conway`

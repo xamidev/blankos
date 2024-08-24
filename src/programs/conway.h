@@ -6,8 +6,8 @@
 #ifndef CONWAY_H
 #define CONWAY_H
 
-#define X 25
-#define Y 80
+#define X 66
+#define Y 240
 
 #define GENERATIONS 100
 #define DEAD 0
