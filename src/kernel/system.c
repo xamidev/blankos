@@ -1,5 +1,10 @@
+// System utilities and routines kernel module
+// Author: xamidev
+// Licensed under the Unlicense. See the repo below.
+// https://github.com/xamidev/blankos
+
 #include "system.h"
-#include "../libc/stdint.h"
+#include <stdint.h>
 
 void *memset(void *dest, char val, size_t count)
 {

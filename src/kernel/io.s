@@ -1,17 +1,22 @@
+; Raw CPU port I/O kernel module
+; Author: xamidev
+; Licensed under the Unlicense. See the repo below.
+; https://github.com/xamidev/blankos
+
 global outb
 
 outb:
-  mov al, [esp + 8]
-  mov dx, [esp + 4]
-  out dx, al
-  ret
+    mov al, [esp + 8]
+    mov dx, [esp + 4]
+    out dx, al
+    ret
 
 global inb
 
 inb:
-  mov dx, [esp + 4]
-  in al, dx
-  ret
+    mov dx, [esp + 4]
+    in al, dx
+    ret
 
 global x86_div64_32
 

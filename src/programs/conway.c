@@ -1,8 +1,13 @@
+// Conway's Game of Life program
+// Author: xamidev
+// Licensed under the Unlicense. See the repo below.
+// https://github.com/xamidev/blankos
+
 #include "conway.h"
 #include "../libc/stdio.h"
 #include "../kernel/system.h"
 #include "../libc/crypto.h"
-#include "../libc/stdint.h"
+#include <stdint.h>
 #include "../drivers/serial.h"
 #include "../libc/string.h"
 

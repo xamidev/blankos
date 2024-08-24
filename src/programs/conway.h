@@ -1,3 +1,8 @@
+// Conway's Game of Life program header
+// Author: xamidev
+// Licensed under the Unlicense. See the repo below.
+// https://github.com/xamidev/blankos
+
 #ifndef CONWAY_H
 #define CONWAY_H
 

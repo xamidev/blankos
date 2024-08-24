@@ -2,25 +2,8 @@
 
 # BlankOS
 
-Rewritten monolithic, ring 0, lower-half, singletasking kernel for the x86 processor architecture, using GRUB (eltorito) as bootloader. Emulation was tested on QEMU using Arch Linux 6.9.7-arch1-1, and on real hardware too.
+Rewritten monolithic, ring 0, lower-half, singletasking kernel for the x86 processor architecture, using GRUB 2 as bootloader. Emulation was tested on QEMU using Arch Linux 6.9.7-arch1-1, and on real hardware too.
 The long-term goal of this OS is to be capable of running user programs and having its own complete kernel C library so that users can write their own C programs and expand the system!
-
-## Features
-
-- Serial port driver (output & debug)
-- Framebuffer driver (output)
-- PS/2 Keyboard and PIC driver (input)
-- PIT (system clock/timer) driver
-- Working IDT, GDT, ISRs, and IRQs
-- Kernel panicking (exception handling)
-- A kernel-space shell
-- Cool color output!!
-- Some small working kernel-space programs, such as...
-- A brainfuck interpreter
-- An arithmetic calculator
-- ROT13 and Morse cipher programs
-- Conway's Game of Life
-- And some more...
 
 ## Usage
 
@@ -54,19 +37,6 @@ sudo dd bs=4M if=blankos.iso of=/dev/sdX status=progress oflag=sync
 Replace `sdX` with your USB drive name (you can find it by doing `sudo fdisk -l`).
 Tada! You now have a working BlankOS USB stick. Go ahead and try it out!
 
-## Debugging (QEMU w/ GDB)
-
-```
-make debug
-```
-
-In another shell:
-
-```
-gdb kernel.elf
-(gdb) target remote localhost:1234
-```
-
 ## Documentation
 
 Two other documents are available to help you understand the project better. One is the User's Manual, labelled [USERS.md](docs/USERS.md), and the other one is the Developer's Manual, labelled [DEVELOPERS.md](docs/DEVELOPERS.md). They are full of useful resources around Blank OS. You'll learn how to use the system and how to contribute to it. *(The docs might not always be up-to-date)*
@@ -82,7 +52,7 @@ Two other documents are available to help you understand the project better. One
 - Ralf Brown's Interrupt List
 - the [little book about OS development](https://littleosbook.github.io/) by Erik Helin and Adam Renberg
 
-### Roadmap
+### Features / Roadmap
 
 - [X] Booting with GRUB
 - [X] Common basic structures (IDT, GDT, ISRs, IRQs)
@@ -95,7 +65,7 @@ Two other documents are available to help you understand the project better. One
 - [ ] Getting to Ring-3 (userspace)
 - [ ] Multitasking (via round robin scheduling)
 - [ ] Advanced/other drivers (video, SB16, RTC, Ethernet)
-- [ ] UEFI support
+- [X] UEFI support
 - [ ] ELF parsing
 - [ ] System calls
 - [ ] GUI

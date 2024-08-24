@@ -1,21 +1,11 @@
+// Interrupt descriptor table setup
+// Author: xamidev
+// Licensed under the Unlicense. See the repo below.
+// https://github.com/xamidev/blankos
+
 #include "idt.h"
 #include "system.h"
 #include "../libc/stdio.h"
-
-struct idt_entry
-{
-	unsigned short base_lo;
-	unsigned short sel;
-	unsigned char always0;
-	unsigned char flags;
-	unsigned short base_hi;
-} __attribute__((packed));
-
-struct idt_ptr
-{
-	unsigned short limit;
-	unsigned int base;
-} __attribute__((packed));
 
 struct idt_entry idt[256];
 struct idt_ptr idtp;

@@ -1,6 +1,10 @@
-#include "kheap.h"
+// Kernel heap management
+// Author: xamidev
+// Licensed under the Unlicense. See the repo below.
+// https://github.com/xamidev/blankos
 
-#include "../libc/stdint.h"
+#include "kheap.h"
+#include <stdint.h>
 
 extern uint32_t end;
 uint32_t placement_address = (uint32_t)&end;

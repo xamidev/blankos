@@ -1,3 +1,7 @@
+// System information program
+// Author: xamidev
+// Licensed under the Unlicense. See the repo below.
+// https://github.com/xamidev/blankos
 
 #include "../kernel/sysinfo.h"
 #include "../libc/stdio.h"

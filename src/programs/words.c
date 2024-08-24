@@ -1,3 +1,7 @@
+// Pseudo-random word generation program
+// Author: xamidev
+// Licensed under the Unlicense. See the repo below.
+// https://github.com/xamidev/blankos
 
 #include "../libc/stdio.h"
 #include "../libc/crypto.h"
@@ -37,7 +41,7 @@ char* words[] =
 
 int words_size = sizeof(words)/sizeof(words[0]);
 
-// Generates 5 random words
+// Generates random words
 void program_words()
 {
 	for (int i=0; i<10; i++)

@@ -14,6 +14,19 @@ The source code is available in folder `src`. You will find subfolders correspon
 
 No system calls are available, as the OS runs in kernel-space.
 
+## Debugging the kernel (QEMU w/ GDB)
+
+```
+make debug
+```
+
+In another shell:
+
+```
+gdb kernel.elf
+(gdb) target remote localhost:1234
+```
+
 ## Making programs for the OS
 
 ### Step 1 - Making the program and the entry point

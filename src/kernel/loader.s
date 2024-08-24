@@ -1,3 +1,8 @@
+; Kernel loader assembly stub and multiboot2 header
+; Author: xamidev
+; Licensed under the Unlicense. See the repo below.
+; https://github.com/xamidev/blankos
+
 global loader
 
 section .multiboot_header
@@ -6,9 +11,9 @@ align 8
 
 ; ASM macros
 
-MAGIC_NUMBER      equ 0xe85250d6  ; multiboot2 magic 
-FLAGS             equ 0x0	  ; 32-bit protected mode for i386
-HEADER_LEN	  equ 44 	  ;  Tags=2+2+4+4+4+4+2+2+4=28
+MAGIC_NUMBER      equ 0xe85250d6  	; multiboot2 magic 
+FLAGS             equ 0x0	  		; 32-bit protected mode for i386
+HEADER_LEN	  	  equ 44 	  		; Tags=2+2+4+4+4+4+2+2+4=28
 CHECKSUM          equ -(MAGIC_NUMBER + FLAGS + HEADER_LEN)
 
 ; Multiboot 2 header, according to specification (16bytes)
@@ -43,14 +48,12 @@ KERNEL_STACK_SIZE equ 4096
 extern kmain
 
 loader:
-  cli
-  ; mov eax, 0xCAFEBABE
-  ; push dword 42
-  push ebx
-  call kmain
+  	cli
+  	push ebx
+  	call kmain
 
 .loop:
-  jmp .loop
+  	jmp .loop
 
 global gdt_flush
 extern gp
@@ -206,5 +209,5 @@ irq_common_stub:
 section .bss
 align 4 
 kernel_stack:
-  resb KERNEL_STACK_SIZE
-  mov esp, kernel_stack + KERNEL_STACK_SIZE
+  	resb KERNEL_STACK_SIZE
+  	mov esp, kernel_stack + KERNEL_STACK_SIZE
