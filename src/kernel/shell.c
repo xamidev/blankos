@@ -17,14 +17,6 @@
 
 // Splash screen: esthetic stuff.
 
-char* ascii_title =
-"\n"
-"----------------------------------------------\n"
-"Blank OS version 0.3.84-alpha\n"
-"Author: @xamidev - star the repo for a cookie!\n"
-"----------------------------------------------\n"
-"\n";
-
 char* motd[] = 
 {
 	"Now in 2D!",
@@ -38,7 +30,7 @@ void splash()
 	int random = randint(time_seed());
 	char* motd_pick = motd[random%motd_size];
 	cowsay(motd_pick, red, black);
-	colorputs("        blankOS 0.3.84-alpha", red, black);
+	colorputs("        blankOS 0.3.86-alpha", red, black);
 	puts("\n");
 	
 

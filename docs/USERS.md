@@ -105,3 +105,7 @@ Encode a string using the rot13 cipher.
 #### `morse`
 
 Convert a string to its morse equivalent.
+
+#### `cowsay`
+
+Makes a cow speak!
