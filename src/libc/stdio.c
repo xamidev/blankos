@@ -1,7 +1,7 @@
 // Standard input/output implementation for blankos/libc
 // Author: xamidev
 // Licensed under the Unlicense. See the repo below.
-// https//github.com/xamidev/blankos
+// https://github.com/xamidev/blankos
 
 #include "../kernel/io.h"
 #include "stdio.h"

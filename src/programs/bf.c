@@ -1,7 +1,7 @@
 // Simple brainfuck interpreter program
 // Author: xamidev
 // Licensed under the Unlicense. See the repo below.
-// https//github.com/xamidev/blankos
+// https://github.com/xamidev/blankos
 
 #include "../kernel/system.h"
 #include "../libc/stdio.h"

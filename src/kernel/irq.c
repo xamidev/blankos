@@ -1,7 +1,7 @@
 // Interrupt Requests setup
 // Author: xamidev
 // Licensed under the Unlicense. See the repo below.
-// https//github.com/xamidev/blankos
+// https://github.com/xamidev/blankos
 
 #include "system.h"
 #include "io.h"

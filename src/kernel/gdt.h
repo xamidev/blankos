@@ -1,7 +1,7 @@
 // Global descriptor table setup header
 // Author: xamidev
 // Licensed under the Unlicense. See the repo below.
-// https//github.com/xamidev/blankos
+// https://github.com/xamidev/blankos
 
 #ifndef GDT_H
 #define GDT_H

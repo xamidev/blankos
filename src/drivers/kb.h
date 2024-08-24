@@ -1,7 +1,7 @@
 // Keyboard driver header
 // Author: xamidev
 // Licensed under the Unlicense. See the repo below.
-// https//github.com/xamidev/blankos
+// https://github.com/xamidev/blankos
 
 #ifndef KB_H
 #define KB_H

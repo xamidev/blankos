@@ -1,7 +1,7 @@
 // Standard input/output implementation for blankos/libc header
 // Author: xamidev
 // Licensed under the Unlicense. See the repo below.
-// https//github.com/xamidev/blankos
+// https://github.com/xamidev/blankos
 
 #ifndef STDIO_H
 #define STDIO_H

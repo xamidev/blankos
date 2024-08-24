@@ -1,7 +1,7 @@
 // Basic shell and commands kernel module
 // Author: xamidev
 // Licensed under the Unlicense. See the repo below.
-// https//github.com/xamidev/blankos
+// https://github.com/xamidev/blankos
 
 #include "system.h"
 #include "../libc/stdio.h"

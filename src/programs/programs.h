@@ -1,7 +1,7 @@
 // Global program entry points header
 // Author: xamidev
 // Licensed under the Unlicense. See the repo below.
-// https//github.com/xamidev/blankos
+// https://github.com/xamidev/blankos
 
 #ifndef PROGRAMS_H
 #define PROGRAMS_H

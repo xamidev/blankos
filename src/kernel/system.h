@@ -1,7 +1,7 @@
 // System utilities and routines kernel module header
 // Author: xamidev
 // Licensed under the Unlicense. See the repo below.
-// https//github.com/xamidev/blankos
+// https://github.com/xamidev/blankos
 
 #ifndef SYSTEM_H
 #define SYSTEM_H

@@ -1,7 +1,7 @@
 // Framebuffer driver header
 // Author: xamidev
 // Licensed under the Unlicense. See the repo below.
-// https//github.com/xamidev/blankos
+// https://github.com/xamidev/blankos
 
 #ifndef FRAMEBUFFER_H
 #define FRAMEBUFFER_H

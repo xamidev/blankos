@@ -1,7 +1,7 @@
 // ATA PIO driver implementation
 // Author: xamidev
 // Licensed under the Unlicense. See the repo below.
-// https//github.com/xamidev/blankos
+// https://github.com/xamidev/blankos
 
 #include <stdint.h>
 #include "../kernel/io.h"
