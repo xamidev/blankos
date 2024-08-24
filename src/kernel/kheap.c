@@ -1,5 +1,9 @@
-#include "kheap.h"
+// Kernel heap management
+// Author: xamidev
+// Licensed under the Unlicense. See the repo below.
+// https//github.com/xamidev/blankos
 
+#include "kheap.h"
 #include <stdint.h>
 
 extern uint32_t end;

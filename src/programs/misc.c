@@ -1,4 +1,7 @@
 // Miscellaneous small programs
+// Author: xamidev
+// Licensed under the Unlicense. See the repo below.
+// https//github.com/xamidev/blankos
 
 #include "../libc/stdio.h"
 #include "../kernel/system.h"
@@ -30,7 +33,7 @@ void program_rainbow()
 
 void program_clear()
 {	
-	for (int i=0; i<ROWS; i++) scroll();
+	clear();
 }
 
 // Get uptime in ticks
@@ -38,7 +41,7 @@ void program_clear()
 void program_uptime()
 {
 	int ticks = uptime();
-	double seconds = ticks/18.2065; // PIC channel 0 freq
+	double seconds = ticks/18.2065; // PIT channel 0 freq
 	printf("%d ticks\t%f seconds\n", ticks, seconds);
 }
 

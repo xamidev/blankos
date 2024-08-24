@@ -1,5 +1,12 @@
+// Cipher programs
+// Author: xamidev
+// Licensed under the Unlicense. See the repo below.
+// https//github.com/xamidev/blankos
+
 #include "../libc/stdio.h"
 #include "ciphers.h"
+#include "../libc/string.h"
+#include <stdint.h>
 
 void rot13(char* input, char* output)
 {
@@ -31,9 +38,6 @@ void program_rot13()
 	rot13(input_buffer, output);
 	printf("\n%s\n", output);
 }
-
-#include "../libc/string.h"
-#include <stdint.h>
 
 const char* morse_alphabet[] = {
     ".-",   // A

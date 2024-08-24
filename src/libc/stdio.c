@@ -1,3 +1,8 @@
+// Standard input/output implementation for blankos/libc
+// Author: xamidev
+// Licensed under the Unlicense. See the repo below.
+// https//github.com/xamidev/blankos
+
 #include "../kernel/io.h"
 #include "stdio.h"
 #include "string.h"
@@ -10,9 +15,6 @@ extern uint32_t* framebuffer;
 extern uint32_t VGA_WIDTH; 
 extern uint32_t VGA_HEIGHT;
 unsigned int VGA_X = 0, VGA_Y = 0;
-
-#define CURSOR_WIDTH  8
-#define CURSOR_HEIGHT 16
 extern int scanline;
 
 void draw_cursor(uint32_t color)

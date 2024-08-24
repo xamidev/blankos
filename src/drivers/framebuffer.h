@@ -1,7 +1,18 @@
+// Framebuffer driver header
+// Author: xamidev
+// Licensed under the Unlicense. See the repo below.
+// https//github.com/xamidev/blankos
+
 #ifndef FRAMEBUFFER_H
 #define FRAMEBUFFER_H
 
 #include <stdint.h>
+
+extern int scanline;
+extern char _binary_include_fonts_UniCyr_8x16_psf_start;
+uint16_t* unicode;
+
+#define PIXEL uint32_t
 
 #define PSF1_FONT_MAGIC 0x0436
 
@@ -24,7 +35,6 @@ typedef struct {
     uint32_t width;         /* width in pixels */
 } PSF_font;
 
-//extern const unsigned char font[512][64];
 void putpixel(uint32_t* fb, int pitch, int bpp, int x, int y, uint32_t color); 
 void draw_char(unsigned short int c, int cx, int cy, uint32_t fg, uint32_t bg);
 void scroll();

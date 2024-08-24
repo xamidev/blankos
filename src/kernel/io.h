@@ -1,5 +1,10 @@
-#ifndef INCLUDE_IO_H
-#define INCLUDE_IO_H
+// Raw CPU port I/O kernel module header 
+// Author: xamidev
+// Licensed under the Unlicense. See the repo below.
+// https//github.com/xamidev/blankos
+
+#ifndef IO_H
+#define IO_H
 
 #include <stdint.h>
 

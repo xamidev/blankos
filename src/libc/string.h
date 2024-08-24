@@ -1,5 +1,10 @@
-#ifndef INCLUDE_STRING_H
-#define INCLUDE_STRING_H
+// String operations implementation for blankos/libc header
+// Author: xamidev
+// Licensed under the Unlicense. See the repo below.
+// https//github.com/xamidev/blankos
+
+#ifndef STRING_H
+#define STRING_H
 
 int strlen(const char* str);
 int strcmp(const char* str1, const char* str2);

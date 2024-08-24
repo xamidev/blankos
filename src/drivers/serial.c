@@ -1,3 +1,8 @@
+// Serial I/O driver
+// Author: xamidev
+// Licensed under the Unlicense. See the repo below.
+// https//github.com/xamidev/blankos
+
 #include "../kernel/io.h"
 #include "serial.h"
 #include "../libc/stdio.h"
@@ -279,4 +284,3 @@ void serial_printf(int errlevel, const char* fmt, ...)
   }
   serial_puts("\n");
 }
-

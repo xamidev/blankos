@@ -1,3 +1,8 @@
+// Global program entry points header
+// Author: xamidev
+// Licensed under the Unlicense. See the repo below.
+// https//github.com/xamidev/blankos
+
 #ifndef PROGRAMS_H
 #define PROGRAMS_H
 
@@ -22,4 +27,5 @@ void program_uptime();
 void program_panic();
 void program_help();
 void program_echo();
+
 #endif

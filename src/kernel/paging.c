@@ -1,17 +1,18 @@
+// Paging kernel module
+// Author: xamidev
+// Licensed under the Unlicense. See the repo below.
+// https//github.com/xamidev/blankos
+
 #include <stdint.h>
 #include "paging.h"
 #include "../libc/stdio.h"
 #include "system.h"
 #include "kheap.h"
 
-
 uint32_t *frames;
 uint32_t nframes;
 
 extern uint32_t placement_address;
-
-#define INDEX_FROM_BIT(a) (a/(8*4))
-#define OFFSET_FROM_BIT(a) (a%(8*4))
 
 static void set_frame(uint32_t frame_addr)
 {
