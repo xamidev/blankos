@@ -1,7 +1,7 @@
 #include "../kernel/io.h"
 #include "stdio.h"
 #include "string.h"
-#include "stdint.h"
+#include <stdint.h>
 #include "../kernel/system.h"
 #include "../drivers/framebuffer.h"
 #include "../drivers/serial.h"

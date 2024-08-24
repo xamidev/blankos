@@ -1,5 +1,5 @@
 #include "system.h"
-#include "../libc/stdint.h"
+#include <stdint.h>
 
 void *memset(void *dest, char val, size_t count)
 {

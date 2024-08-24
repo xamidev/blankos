@@ -1,7 +1,7 @@
 #ifndef KHEAP_H
 #define KHEAP_H
 
-#include "../libc/stdint.h"
+#include <stdint.h>
 
 uint32_t kmalloc_a(uint32_t sz);
 uint32_t kmalloc_p(uint32_t sz, uint32_t *phys);

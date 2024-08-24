@@ -5,7 +5,7 @@
 #include "system.h"
 #include "paging.h"
 #include "../drivers/ata.h"
-#include "../libc/stdint.h" 
+#include <stdint.h>
 #include "../drivers/framebuffer.h"
 
 typedef struct {

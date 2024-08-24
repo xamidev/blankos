@@ -1,6 +1,6 @@
 #include "kheap.h"
 
-#include "../libc/stdint.h"
+#include <stdint.h>
 
 extern uint32_t end;
 uint32_t placement_address = (uint32_t)&end;

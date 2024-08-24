@@ -1,7 +1,8 @@
 #ifndef INCLUDE_STDIO_H
 #define INCLUDE_STDIO_H
 
-#include "stdint.h"
+#include <stdint.h>
+#include <stdbool.h>
 
 #define FB_GREEN      2
 #define FB_DARK_GREY  8

@@ -1,4 +1,4 @@
-#include "../libc/stdint.h"
+#include <stdint.h>
 #include "../libc/stdio.h"
 #include "../kernel/system.h"
 

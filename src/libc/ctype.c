@@ -1,5 +1,6 @@
 
-#include "stdint.h"
+#include <stdint.h>
+#include <stdbool.h>
 
 bool isdigit(char c)
 {

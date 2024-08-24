@@ -1,5 +1,5 @@
 #include "crypto.h"
-#include "../libc/stdint.h"
+#include <stdint.h>
 
 int lcg(int seed)
 {

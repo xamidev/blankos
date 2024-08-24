@@ -1,6 +1,6 @@
 // Math expression lexer and parser
 
-#include "../libc/stdint.h"
+#include <stdint.h>
 #include "../kernel/system.h"
 #include "../libc/stdio.h"
 #include "../libc/ctype.h"

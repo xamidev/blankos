@@ -1,4 +1,5 @@
-#include "stdint.h"
+#include <stdint.h>
+#include "../kernel/system.h"
 
 int strlen(const char* str)
 {

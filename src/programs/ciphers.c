@@ -33,7 +33,7 @@ void program_rot13()
 }
 
 #include "../libc/string.h"
-#include "../libc/stdint.h"
+#include <stdint.h>
 
 const char* morse_alphabet[] = {
     ".-",   // A

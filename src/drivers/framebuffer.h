@@ -1,6 +1,8 @@
 #ifndef FRAMEBUFFER_H
 #define FRAMEBUFFER_H
 
+#include <stdint.h>
+
 #define PSF1_FONT_MAGIC 0x0436
 
 typedef struct {
@@ -8,7 +10,6 @@ typedef struct {
     uint8_t fontMode; // PSF font mode.
     uint8_t characterSize; // PSF character size.
 } PSF1_Header;
-
 
 #define PSF_FONT_MAGIC 0x864ab572
 

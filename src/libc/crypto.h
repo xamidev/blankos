@@ -3,7 +3,7 @@
 
 #define RAND_MAX 1024
 
-#include "../libc/stdint.h"
+#include <stdint.h>
 
 int lcg(int seed);
 int randint(int seed);

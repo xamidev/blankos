@@ -2,7 +2,7 @@
 #define PAGING_H
 
 #include "system.h"
-#include "../libc/stdint.h"
+#include <stdint.h>
 typedef struct
 {
 	uint32_t present	: 1;

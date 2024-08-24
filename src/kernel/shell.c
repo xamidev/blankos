@@ -2,7 +2,7 @@
 #include "../libc/stdio.h"
 #include "../libc/string.h"
 #include "../programs/programs.h"
-#include "../libc/stdint.h"
+#include <stdint.h>
 
 #define BUFFER_SIZE 256
 #define MAX_COMMANDS 16

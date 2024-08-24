@@ -1,9 +1,10 @@
 #ifndef SYSTEM_H
 #define SYSTEM_H
 
-#include "../libc/stdint.h"
+#include <stdint.h>
 
 typedef int size_t;
+#define NULL ((void*)0)
 
 void *memset(void *dest, char val, size_t count);
 void *memmove(void* dest, const void* src, size_t n);
