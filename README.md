@@ -46,9 +46,7 @@ The `toolchain` target will download the appropriate cross-compiling tools, and 
 
 ## Running on real hardware
 
-To run the OS on real hardware, you'll first need to have a BIOS-compatible computer. Some of the new laptops with graphical "BIOSes" only support UEFI now. So make sure to get a computer that can boot into BIOS mode. You'll have to switch the boot mode to "Legacy" in your BIOS/UEFI utility.
-
-Burn your image file onto a USB stick:
+The OS is now both UEFI and BIOS compatible! Burn your image file onto a USB stick:
 ```
 sudo dd bs=4M if=blankos.iso of=/dev/sdX status=progress oflag=sync
 ```
