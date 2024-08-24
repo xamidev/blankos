@@ -51,7 +51,11 @@ Options:
 
 #### `primes`
 
-Computes prime numbers up to `PRIMES_MAX`, defined in `src/programs/primes.c`.
+Computes prime numbers.
+
+Options:
+- `<nothing>` will default to `PRIMES_MAX` (a million)
+- `<integer>` will compute primes up to that number
 
 #### `rainbow`
 

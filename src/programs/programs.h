@@ -15,6 +15,8 @@ void program_sysinfo();
 void get_cpuid();
 void get_meminfo(unsigned int multiboot_info_address);
 void program_conway();
+void program_cowsay();
+void cowsay(); // Splash screen
 
 // Ciphers
 void program_rot13();

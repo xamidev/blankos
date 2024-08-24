@@ -6,6 +6,7 @@
 #include <stdint.h>
 #include "../libc/stdio.h"
 #include "../kernel/system.h"
+#include "../libc/string.h"
 
 #define PRIMES_MAX 1000000
 
@@ -16,15 +17,25 @@ bool isPrime(int n)
 	return true;
 }
 
-void program_primes()
+void program_primes(int argc, char* argv[])
 {
-	for (long long x=0; x<PRIMES_MAX; x++)
+	int primes_max;
+	
+	if (argc == 1)
+	{
+		primes_max = PRIMES_MAX;
+	} else if (argc == 2)
+	{
+		primes_max = atoi(argv[1]);
+	}
+
+	for (long long x=0; x<primes_max; x++)
 	{	
 		if (isPrime(x))
 		{
 				printf("%d ", x);	
 		}
-		delay(2);
+		delay(1);
 	}
 	puts("\n");
 }

@@ -7,11 +7,14 @@
 #include "../libc/stdio.h"
 #include "../libc/string.h"
 #include "../programs/programs.h"
+#include "../libc/crypto.h"
 #include <stdint.h>
 
 #define BUFFER_SIZE 256
 #define MAX_COMMANDS 16
 #define MAX_ARGS     64
+
+// Splash screen: esthetic stuff.
 
 char* ascii_title =
 "\n"
@@ -20,6 +23,22 @@ char* ascii_title =
 "Author: @xamidev - star the repo for a cookie!\n"
 "----------------------------------------------\n"
 "\n";
+
+char* motd[] = 
+{
+	"Now in 2D!",
+	"Supercalifragilisticexpialidocious!",
+	"Tylko jedno w głowie mam!",
+};
+int motd_size = sizeof(motd)/sizeof(motd[0]);
+
+void splash()
+{ // Change that seed to something RTC-related (need RTC driver)
+	int random = randint(global_ticks);
+	char* motd_pick = motd[random%motd_size];
+	cowsay(motd_pick, red, black);
+	puts("\n");	
+}
 
 typedef void (*command_func_t)(int argc, char *argv[]);
 
@@ -66,8 +85,8 @@ int parse_input(char* input, char* argv[], int max_args)
 }
 
 void shell_install()
-{ 
-  colorputs(ascii_title, yellow, black);
+{
+  splash();	
   
   register_command("help", program_help);
   register_command("panic", program_panic);
@@ -83,6 +102,7 @@ void shell_install()
   register_command("conway", program_conway);
   register_command("rot13", program_rot13);
   register_command("morse", program_morse);
+  register_command("cowsay", program_cowsay);
 
   for (;;)
   {
