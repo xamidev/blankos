@@ -29,14 +29,27 @@ void rot13(char* input, char* output)
 	output[i] = '\0';
 }
 
-void program_rot13()
+void program_rot13(int argc, char* argv[])
 {
-	char input_buffer[BUFFER_SIZE];
-	char output[BUFFER_SIZE];
-	puts("String? ");
-	get_input(input_buffer, BUFFER_SIZE);
+	if (argc < 2)
+	{
+		printf("Usage: %s <string>\n", argv[0]);
+		return;
+	}
+
+	char input_buffer[BUFFER_SIZE] = {0};
+	char output[BUFFER_SIZE] = {0};
+
+	for (int i=1; i<argc; i++)
+	{
+		strcat(input_buffer, argv[i]);
+		if (i<argc-1)
+		{
+			strcat(input_buffer, " ");
+		}
+	}
 	rot13(input_buffer, output);
-	printf("\n%s\n", output);
+	printf("%s\n", output);
 }
 
 const char* morse_alphabet[] = {
@@ -121,12 +134,27 @@ void to_morse(const char* input, char* output) {
     }
 }
 
-void program_morse() {
+void program_morse(int argc, char* argv[]) {
+    
+    if (argc < 2)
+    {
+	printf("Usage: %s <string>\n", argv[0]);
+	return;
+    }
+	
     char output[512]; 
-    char input_buffer[BUFFER_SIZE];
-    puts("String? ");
-    get_input(input_buffer, BUFFER_SIZE);
-    to_morse(input_buffer, output);
-    printf("\n%s\n", output);
+    char message[BUFFER_SIZE];
+
+    for (int i=1; i<argc; i++)
+    {
+	strcat(message, argv[i]);
+	if (i < argc-1)
+	{
+		strcat(message, " ");
+	}
+    }
+
+    to_morse(message, output);
+    printf("%s\n", output);
 }
 

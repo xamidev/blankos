@@ -12,7 +12,7 @@
 #include "../drivers/rtc.h"
 
 #define BUFFER_SIZE 256
-#define MAX_COMMANDS 16
+#define MAX_COMMANDS 64
 #define MAX_ARGS     64
 
 // Splash screen: esthetic stuff.
@@ -24,6 +24,8 @@ char* motd[] =
 	"Tylko jedno w glowie mam!",
 };
 int motd_size = sizeof(motd)/sizeof(motd[0]);
+
+bool do_splash = true;
 
 void splash()
 { 
@@ -87,7 +89,11 @@ int parse_input(char* input, char* argv[], int max_args)
 
 void shell_install()
 {
-  splash();	
+  if (do_splash == true)
+  {
+	do_splash = false;
+  	splash();
+  }
   
   register_command("help", program_help);
   register_command("panic", program_panic);
@@ -104,6 +110,9 @@ void shell_install()
   register_command("rot13", program_rot13);
   register_command("morse", program_morse);
   register_command("cowsay", program_cowsay);
+  register_command("time", program_time);
+  register_command("read", program_read);
+  register_command("reboot", program_reboot);
 
   for (;;)
   {

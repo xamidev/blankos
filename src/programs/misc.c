@@ -7,22 +7,46 @@
 #include "../kernel/system.h"
 #include "../libc/string.h"
 #include "../drivers/framebuffer.h"
+#include "../drivers/ata.h"
+#include "../drivers/rtc.h"
+#include "../kernel/io.h"
 
 // Print a rainbow colorful text for testing
 
 #define BUF_SIZE 256
 #define COLORS 20
 
-void program_rainbow()
+void program_rainbow(int argc, char* argv[])
 {
-	char input_buffer[BUF_SIZE];
-	puts("What to print? ");
-	get_input(input_buffer, BUF_SIZE);	
-	puts("\n");
-
-	for (int i=0; i<COLORS; i++)
+	if (argc < 2)
 	{
-		//colorputs(input_buffer, i);
+		printf("Usage: %s <string>\n", argv[0]);
+		return;
+	}
+	
+	char input_buffer[BUF_SIZE] = {0};
+	for (int i=1; i<argc; i++)
+	{
+		strcat(input_buffer, argv[i]);
+		if (i<argc-1)
+		{
+			strcat(input_buffer, " ");
+		}
+	}
+
+	enum Colors colors[] = {
+        	white, black, red, green, blue, yellow,
+        	cyan, magenta, orange, purple, brown,
+        	gray, pink, lime, navy, teal, maroon,
+        	olive, silver, gold, indigo, violet,
+        	coral, turquoise, salmon, chocolate,
+        	khaki, lavender, beige
+    	};
+	int colors_count = sizeof(colors)/sizeof(colors[0]);
+
+	for (int i=0; i<colors_count-1; i++)
+	{
+		colorputs(input_buffer, colors[i], colors[i+1]);
 		puts("\n");
 	}	
 }
@@ -49,7 +73,7 @@ void program_uptime()
 
 void program_help()
 {
-	printf("help\tpanic\twords\tprimes\trainbow\tclear\nmath\tbf\t   uptime   echo\t  sysinfo\tconway\nrot13   morse\tcowsay\n");
+	printf("help\tpanic\twords\tprimes\trainbow\tclear\nmath\tbf\t   uptime   echo\t  sysinfo\tconway\nrot13   morse\tcowsay   time\t  read\t   reboot\n");
 }
 
 // Panic
@@ -71,4 +95,51 @@ void program_echo(int argc, char* argv[])
 		}
 	}
 	puts("\n");
+}
+
+// Get current RTC time
+
+void program_time()
+{
+	rtc_time_t time;
+	rtc_read_time(&time);
+	puts("Current RTC time: ");
+	print_time(&time);
+	puts("\n");
+}
+
+// Read a sector
+
+void program_read(int argc, char* argv[])
+{
+	if (argc < 2)
+	{
+		printf("Usage: %s <sector>\n", argv[0]);
+	} else if (argc == 2)
+	{
+		uint8_t buffer[512];
+		ata_read_sector(atoi(argv[1]), buffer);
+		
+		for (int i=0; i<512; i++)
+		{
+			if (i%50==0) puts("\n"); // hardcoded = bad
+			printf("%02x ", buffer[i]);
+		}
+		puts("\n");
+	} else
+	{
+		puts("Invalid argument number\n");
+	}
+}
+
+// Reboots the machine (might just shutdown)
+
+void program_reboot()
+{
+	puts("Rebooting...\n");
+	
+	while(inb(0x64) & 0x02);
+	outb(0x64, 0xFE);
+
+	while (1) asm volatile("hlt");
 }

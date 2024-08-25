@@ -26,7 +26,7 @@ CHECKSUM          equ -(MAGIC_NUMBER + FLAGS + HEADER_LEN)
 ; Tags? (28bytes)
 
 ; Tag 1 : set graphics mode (only recommended, can be overriden by GRUB)
-
+  align 8
   dw 5			; 2
   dw 0			; 2
   dd 20			; 4
@@ -36,8 +36,9 @@ CHECKSUM          equ -(MAGIC_NUMBER + FLAGS + HEADER_LEN)
 
 ; End of tags
 
+  align 8
   dw 0			; 2
-  ;dw 0			; 2
+  dw 0			; 2
   dd 8			; 4
 
 ; End of Multiboot 2 header
