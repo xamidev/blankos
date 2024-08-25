@@ -9,6 +9,7 @@
 #include "../drivers/framebuffer.h"
 #include "../drivers/ata.h"
 #include "../drivers/rtc.h"
+#include "../kernel/io.h"
 
 // Print a rainbow colorful text for testing
 
@@ -51,7 +52,7 @@ void program_uptime()
 
 void program_help()
 {
-	printf("help\tpanic\twords\tprimes\trainbow\tclear\nmath\tbf\t   uptime   echo\t  sysinfo\tconway\nrot13   morse\tcowsay   time\t  read\n");
+	printf("help\tpanic\twords\tprimes\trainbow\tclear\nmath\tbf\t   uptime   echo\t  sysinfo\tconway\nrot13   morse\tcowsay   time\t  read\t   reboot\n");
 }
 
 // Panic
@@ -108,4 +109,16 @@ void program_read(int argc, char* argv[])
 	{
 		puts("Invalid argument number\n");
 	}
+}
+
+// Reboots the machine (might just shutdown)
+
+void program_reboot()
+{
+	puts("Rebooting...\n");
+	
+	while(inb(0x64) & 0x02);
+	outb(0x64, 0xFE);
+
+	while (1) asm volatile("hlt");
 }

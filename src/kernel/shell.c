@@ -106,6 +106,7 @@ void shell_install()
   register_command("cowsay", program_cowsay);
   register_command("time", program_time);
   register_command("read", program_read);
+  register_command("reboot", program_reboot);
 
   for (;;)
   {

@@ -31,5 +31,6 @@ void program_help();
 void program_echo();
 void program_time();
 void program_read();
+void program_reboot();
 
 #endif
