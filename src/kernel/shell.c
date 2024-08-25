@@ -25,6 +25,8 @@ char* motd[] =
 };
 int motd_size = sizeof(motd)/sizeof(motd[0]);
 
+bool do_splash = true;
+
 void splash()
 { 
 	int random = randint(time_seed());
@@ -87,7 +89,11 @@ int parse_input(char* input, char* argv[], int max_args)
 
 void shell_install()
 {
-  splash();	
+  if (do_splash == true)
+  {
+	do_splash = false;
+  	splash();
+  }
   
   register_command("help", program_help);
   register_command("panic", program_panic);

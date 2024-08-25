@@ -56,12 +56,35 @@ void dtostrf(double val, char *buffer, int precision);
 enum Colors
 {
 	// AARRGGBB?
-	white  = 0xFFFFFFFF,
-	black  = 0x00000000,
-	red    = 0x00FF0000,
-	green  = 0x0000FF00,
-	blue   = 0x000000FF,
-	yellow = 0x00FFFF00,
+	white       = 0xFFFFFFFF,
+	black       = 0x00000000,
+	red         = 0x00FF0000,
+	green       = 0x0000FF00,
+	blue        = 0x000000FF,
+	yellow      = 0x00FFFF00,
+	cyan   	    = 0x0000FFFF,
+    	magenta     = 0x00FF00FF,
+    	orange      = 0x00FFA500,
+    	purple      = 0x00800080,
+    	brown       = 0x00A52A2A,
+    	gray        = 0x00808080,
+    	pink        = 0x00FFC0CB,
+    	lime        = 0x00BFFF00,
+    	navy        = 0x00000080,
+    	teal        = 0x00008080,
+    	maroon      = 0x00800000,
+    	olive       = 0x00808000,
+    	silver      = 0x00C0C0C0,
+    	gold        = 0x00FFD700,
+    	indigo      = 0x004B0082,
+    	violet      = 0x00EE82EE,
+    	coral       = 0x00FF7F50,
+    	turquoise   = 0x0040E0D0,
+    	salmon      = 0x00FA8072,
+    	chocolate   = 0x00D2691E,
+    	khaki       = 0x00F0E68C,
+    	lavender    = 0x00E6E6FA,
+    	beige       = 0x00F5F5DC
 };
 
 #endif

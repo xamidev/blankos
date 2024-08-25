@@ -1,5 +1,12 @@
 # Blank OS Developer's Manual
 
+## Table of Contents
+
+- [Getting Started](#getting-started)
+- [Writing programs for BlankOS](#writing-programs)
+- [Changing the TTY font](#changing-font)
+
+<a name="getting-started"/>
 ## Getting Started
 
 ### System description
@@ -27,7 +34,10 @@ gdb kernel.elf
 (gdb) target remote localhost:1234
 ```
 
-## Making programs for the OS
+<a name="getting-started"/>
+## Writing programs for BlankOS
+
+Be warned, these are not actual programs in the sense you'd expect. These are indeed functions that are called from the shell, and embedded in the kernel ELF binary. Real programs apart from the kernel are not yet a thing here, but might be one day.
 
 ### Step 1 - Making the program and the entry point
 
@@ -86,4 +96,19 @@ The linking process should be taken care of by the appropriate Linker script `li
 
 If you're proud of what you've made, you can clone the repo, make your changes, open a pull request and maybe your program will be added to the main BlankOS repo, and later distributed in the new ISOs!
 
+<a name="changing-font"/>
+## Changing the TTY font
 
+In order to change the default font, first get your hands on a 8x16 `.psf` (PC Screen Font 2) formatted font. Then, put it in `include/fonts` and remove the default one (`UniCyr_8x16.psf`).
+
+Go ahead and run `make` one time. The compilation/linking will fail because of unresolved symbols, but an object file should have been created in `build/fonts` with your custom font's name.
+
+Read the symbols in that object file:
+
+```
+readelf -s -W build/fonts/YOUR_FONT_8x16.o
+```
+
+Get the symbol name that ends with `_start` and replace all occurences of it in the `src/drivers/framebuffer.c` file.
+
+Then, run `make` again and the font should have changed properly.

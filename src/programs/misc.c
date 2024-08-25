@@ -16,16 +16,37 @@
 #define BUF_SIZE 256
 #define COLORS 20
 
-void program_rainbow()
+void program_rainbow(int argc, char* argv[])
 {
-	char input_buffer[BUF_SIZE];
-	puts("What to print? ");
-	get_input(input_buffer, BUF_SIZE);	
-	puts("\n");
-
-	for (int i=0; i<COLORS; i++)
+	if (argc < 2)
 	{
-		//colorputs(input_buffer, i);
+		printf("Usage: %s <string>\n", argv[0]);
+		return;
+	}
+	
+	char input_buffer[BUF_SIZE] = {0};
+	for (int i=1; i<argc; i++)
+	{
+		strcat(input_buffer, argv[i]);
+		if (i<argc-1)
+		{
+			strcat(input_buffer, " ");
+		}
+	}
+
+	enum Colors colors[] = {
+        	white, black, red, green, blue, yellow,
+        	cyan, magenta, orange, purple, brown,
+        	gray, pink, lime, navy, teal, maroon,
+        	olive, silver, gold, indigo, violet,
+        	coral, turquoise, salmon, chocolate,
+        	khaki, lavender, beige
+    	};
+	int colors_count = sizeof(colors)/sizeof(colors[0]);
+
+	for (int i=0; i<colors_count-1; i++)
+	{
+		colorputs(input_buffer, colors[i], colors[i+1]);
 		puts("\n");
 	}	
 }
