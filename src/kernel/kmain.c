@@ -8,7 +8,6 @@
 #include "gdt.h"
 #include "idt.h"
 #include "system.h"
-#include "paging.h"
 #include "../drivers/ata.h"
 #include <stdint.h>
 #include "../drivers/framebuffer.h"
@@ -62,10 +61,7 @@ void kmain(multiboot2_info *mb_info)
     irq_install();
     __asm__ __volatile__("sti");
  
-    //init_paging();
     //test_read_sector();
-    //uint32_t *ptr = (uint32_t*)0xA0000000;
-    //uint32_t do_page_fault = *ptr;
 
     timer_install();
     keyboard_install();

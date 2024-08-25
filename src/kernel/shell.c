@@ -12,7 +12,7 @@
 #include "../drivers/rtc.h"
 
 #define BUFFER_SIZE 256
-#define MAX_COMMANDS 16
+#define MAX_COMMANDS 64
 #define MAX_ARGS     64
 
 // Splash screen: esthetic stuff.
@@ -104,6 +104,8 @@ void shell_install()
   register_command("rot13", program_rot13);
   register_command("morse", program_morse);
   register_command("cowsay", program_cowsay);
+  register_command("time", program_time);
+  register_command("read", program_read);
 
   for (;;)
   {

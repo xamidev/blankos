@@ -29,5 +29,7 @@ void program_uptime();
 void program_panic();
 void program_help();
 void program_echo();
+void program_time();
+void program_read();
 
 #endif

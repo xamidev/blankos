@@ -7,6 +7,8 @@
 #include "../kernel/system.h"
 #include "../libc/string.h"
 #include "../drivers/framebuffer.h"
+#include "../drivers/ata.h"
+#include "../drivers/rtc.h"
 
 // Print a rainbow colorful text for testing
 
@@ -49,7 +51,7 @@ void program_uptime()
 
 void program_help()
 {
-	printf("help\tpanic\twords\tprimes\trainbow\tclear\nmath\tbf\t   uptime   echo\t  sysinfo\tconway\nrot13   morse\tcowsay\n");
+	printf("help\tpanic\twords\tprimes\trainbow\tclear\nmath\tbf\t   uptime   echo\t  sysinfo\tconway\nrot13   morse\tcowsay   time\t  read\n");
 }
 
 // Panic
@@ -71,4 +73,39 @@ void program_echo(int argc, char* argv[])
 		}
 	}
 	puts("\n");
+}
+
+// Get current RTC time
+
+void program_time()
+{
+	rtc_time_t time;
+	rtc_read_time(&time);
+	puts("Current RTC time: ");
+	print_time(&time);
+	puts("\n");
+}
+
+// Read a sector
+
+void program_read(int argc, char* argv[])
+{
+	if (argc < 2)
+	{
+		printf("Usage: %s <sector>\n", argv[0]);
+	} else if (argc == 2)
+	{
+		uint8_t buffer[512];
+		ata_read_sector(atoi(argv[1]), buffer);
+		
+		for (int i=0; i<512; i++)
+		{
+			if (i%50==0) puts("\n"); // hardcoded = bad
+			printf("%02x ", buffer[i]);
+		}
+		puts("\n");
+	} else
+	{
+		puts("Invalid argument number\n");
+	}
 }
