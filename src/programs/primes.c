@@ -31,9 +31,12 @@ void program_primes(int argc, char* argv[])
 
 	for (long long x=0; x<primes_max; x++)
 	{	
-		if (isPrime(x))
+		if (isPrime(x) && x != 3301)
 		{
 				printf("%d ", x);	
+		} else if(x == 3301)
+		{
+				colorputs("3301 ", red, black);
 		}
 		delay(1);
 	}

@@ -16,13 +16,35 @@
 #define MAX_ARGS     64
 
 // Splash screen: esthetic stuff.
-
-char* motd[] = 
+char* motd[] =
 {
+	"I should be root, really.",
+	"Not watching you!",
 	"Now in 2D!",
 	"Supercalifragilisticexpialidocious!",
 	"Tylko jedno w glowie mam!",
+	"Greetings, magic poppy!",
+	"I'm stuck in this kernel's shell, get me out!",
+	"And now, solve that equation!",
+	"Powered by TCC Incorporated.",
+	"Compiled at 69, CoquaineBaule Ave.",
+	"Shouldn't we be, uh, doing something?",
+	"We are the florists, we pick the plants!",
+	"Lalalalala, I pick the plants!",
+	"Woah, we're half-way there...",
+	"The CROU will never die!",
+	"Technoblade never dies!",
+	"Hi. My name is Guitar.",
+	"space station No. 9",
+	"May the orange juice be with you !",
+	"Bloody grated carrots!",
+	"Good night, kiddos...",
+	"I like trains",
+	"I fear planes",
+	"Bruteforce.exe",
+	"Ohayogozaimasu!",
 };
+
 int motd_size = sizeof(motd)/sizeof(motd[0]);
 
 bool do_splash = true;
@@ -113,6 +135,7 @@ void shell_install()
   register_command("time", program_time);
   register_command("read", program_read);
   register_command("reboot", program_reboot);
+  register_command("pi", program_pi);
 
   for (;;)
   {

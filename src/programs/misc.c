@@ -73,7 +73,7 @@ void program_uptime()
 
 void program_help()
 {
-	printf("help\tpanic\twords\tprimes\trainbow\tclear\nmath\tbf\t   uptime   echo\t  sysinfo\tconway\nrot13   morse\tcowsay   time\t  read\t   reboot\n");
+	printf("help\tpanic\twords\tprimes\trainbow\tclear\nmath\tbf\t   uptime   echo\t  sysinfo\tconway\nrot13   morse\tcowsay   time\t  read\t   reboot\npi\n");
 }
 
 // Panic
