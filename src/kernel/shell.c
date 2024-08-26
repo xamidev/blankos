@@ -54,7 +54,7 @@ void splash()
 	int random = randint(time_seed());
 	char* motd_pick = motd[random%motd_size];
 	cowsay(motd_pick, red, black);
-	colorputs("        blankOS 0.3.86-alpha", red, black);
+	colorputs("        blankOS 0.3.97-alpha", red, black);
 	puts("\n");
 	
 
