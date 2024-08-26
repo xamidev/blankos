@@ -39,7 +39,7 @@ Shows all of the available commands, which are explained here.
 
 #### `panic`
 
-Triggers a kernel panic by trying to divide four by zero.
+Triggers a kernel panic by reserved exception.
 
 #### `words`
 
@@ -57,7 +57,7 @@ Options:
 - `<nothing>` will default to `PRIMES_MAX` (a million)
 - `<integer>` will compute primes up to that number
 
-#### `rainbow`
+#### `rainbow <string>`
 
 Asks for text and then outputs it with different vibrant colors.
 
@@ -77,11 +77,11 @@ A brainfuck interpreter with every instruction and default tape size (30k cells)
 
 Gets system uptime from the timer in ticks. Ticks are incremented at a rate of 18.222Hz (18.222 ticks per second).
 
-#### `echo`
+#### `echo <string>`
 
 The classic echo command, that outputs your input.
 
-#### `sysinfo`
+#### `sysinfo [option]`
 
 Outputs information about the current system (CPU and RAM).
  
@@ -89,7 +89,7 @@ Options:
 - `<nothing>` will show basic info about the CPUid and lower/upper memory.
 - `-v` will output the CPUID, lower/upper memory, and the memory map.
 
-#### `conway`
+#### `conway [option]`
 
 A classic Game of Life implementation with standard rules and 100 generations.
 
@@ -98,14 +98,18 @@ Options:
 - `-g` will spawn a classic glider
 - `-l` will spawn a lightweight spaceship
 
-#### `rot13`
+#### `rot13 <string>`
 
 Encode a string using the rot13 cipher.
 
-#### `morse`
+#### `morse <string>`
 
 Convert a string to its morse equivalent.
 
-#### `cowsay`
+#### `cowsay <string>`
 
 Makes a cow speak!
+
+#### `pi <terms>`
+
+Computes Pi up to a couple of digits using the Leibniz series; takes one integer argument, the number of terms of the series to compute.

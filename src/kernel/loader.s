@@ -7,13 +7,14 @@ global loader
 
 section .multiboot_header
 
+mb_start:
 align 8
 
 ; ASM macros
 
 MAGIC_NUMBER      equ 0xe85250d6  	; multiboot2 magic 
 FLAGS             equ 0x0	  		; 32-bit protected mode for i386
-HEADER_LEN	  	  equ 44 	  		; Tags=2+2+4+4+4+4+2+2+4=28
+HEADER_LEN	  equ mb_end-mb_start
 CHECKSUM          equ -(MAGIC_NUMBER + FLAGS + HEADER_LEN)
 
 ; Multiboot 2 header, according to specification (16bytes)
@@ -42,6 +43,7 @@ CHECKSUM          equ -(MAGIC_NUMBER + FLAGS + HEADER_LEN)
   dd 8			; 4
 
 ; End of Multiboot 2 header
+mb_end:
 
 section .text:
 

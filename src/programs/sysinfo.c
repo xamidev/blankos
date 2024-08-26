@@ -40,6 +40,7 @@ void get_cpuid()
 	printf("CPU information\n\tvendor:   %s\n\tfamily:   %u\n\tmodel:    %u\n\tfeatures: 0x%x\n", vendor, family, model, edx);
 }
 
+// Not really working anymore as it was made for multiboot1, now using multiboot2
 void get_meminfo(unsigned int multiboot_info_address, int verbose)
 {
 	// RAM
@@ -56,13 +57,15 @@ void get_meminfo(unsigned int multiboot_info_address, int verbose)
 
 		while ((unsigned int)mmap < multiboot_info_address + *((unsigned int*)(multiboot_info_address + 40)))
 		{
+			/*	
 			if (mmap->length_high != 0 && mmap->length_low != 0)
-			{
+			{*/
 				printf("0x%x%x | 0x%x%x | %u\n",
 					mmap->base_addr_high, mmap->base_addr_low,
 					mmap->length_high, mmap->length_low,
 					mmap->type);
-			}
+			//}
+			
 			mmap = (multiboot_memory_map_t*)((unsigned int)mmap + mmap->size + sizeof(unsigned int));
 		}
 	}
