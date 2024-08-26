@@ -1,8 +1,12 @@
-![showcase](https://github.com/user-attachments/assets/96539af5-2af9-40a1-96f4-43da1f369c36)
+![Screenshot_20240826_160940](https://github.com/user-attachments/assets/a4d2af98-7c7e-4a7f-a64c-31b0325d99d7)
+
+> [!WARNING]
+> The project is currently paused, after months of work around the subject. I've had enough for now, and I'll surely come back in some time to implement the more advanced stuff I had planned. For now, enjoy the latest alpha version.
+> This is a hobbyist operating system, and it comes without any warranty whatsoever! See the license for more info. Feedback and contributions are highly appreciated.
 
 # BlankOS
 
-Rewritten monolithic, ring 0, lower-half, singletasking kernel for the x86 processor architecture, using GRUB 2 as bootloader. Emulation was tested on QEMU using Arch Linux 6.9.7-arch1-1, and on real hardware too.
+Rewritten monolithic, ring 0, lower-half, singletasking kernel for the x86 processor architecture, using GRUB 2 as bootloader. Emulation was tested on QEMU using Arch Linux 6.9.7-arch1-1, and on real hardware (UEFI and BIOS).
 The long-term goal of this OS is to be capable of running user programs and having its own complete kernel C library so that users can write their own C programs and expand the system!
 
 ## Usage
@@ -36,6 +40,7 @@ sudo dd bs=4M if=blankos.iso of=/dev/sdX status=progress oflag=sync
 
 Replace `sdX` with your USB drive name (you can find it by doing `sudo fdisk -l`).
 Tada! You now have a working BlankOS USB stick. Go ahead and try it out!
+(*Might not work properly on monitors that aren't Full HD*)
 
 ## Documentation
 
@@ -71,6 +76,3 @@ Two other documents are available to help you understand the project better. One
 - [ ] System calls
 - [ ] GUI
 - [ ] POSIX and ANSI specification compatibility
-
-> [!WARNING]
-> This is a hobbyist operating system, and it comes without any warranty whatsoever! See the license for more info. Feedback and contributions are highly appreciated.
