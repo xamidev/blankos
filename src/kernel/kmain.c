@@ -12,10 +12,12 @@
 #include <stdint.h>
 #include "../drivers/framebuffer.h"
 #include "kmain.h"
+#include "multiboot2.h"
 
 void kmain(multiboot2_info *mb_info)
 {
 	multiboot2_tag_framebuffer *fb_info = NULL;
+	struct multiboot_tag_mmap *mmap_tag = NULL;
 
     uint8_t *tags = mb_info->tags;
     while (1) {
@@ -23,9 +25,12 @@ void kmain(multiboot2_info *mb_info)
         uint32_t tag_size = *((uint32_t*) (tags + 4));
 
         if (tag_type == 0) break;
-        if (tag_type == 8) {
+        if (tag_type == MULTIBOOT_TAG_TYPE_FRAMEBUFFER) {
             fb_info = (multiboot2_tag_framebuffer*) tags;
         }
+	if (tag_type == MULTIBOOT_TAG_TYPE_MMAP) {
+		mmap_tag = (struct multiboot_tag_mmap*) tags;
+	}
 
         tags += ((tag_size + 7) & ~7);
     }
@@ -53,6 +58,27 @@ void kmain(multiboot2_info *mb_info)
     printf("[kernel] multiboot2 info at 0x%x, size=%u\n", mb_info, mb_info->total_size);
     printf("[kernel] framebuffer discovered at 0x%x\n", fb_info->framebuffer_addr);
     printf("[kernel] fb0: width=%u, height=%u, pitch=%u, bpp=%u\n", fb_info->framebuffer_width, fb_info->framebuffer_height, fb_info->framebuffer_pitch, fb_info->framebuffer_bpp);
+
+    if (mmap_tag)
+    {
+	printf("[kernel] found memory map tag by multiboot2\n");
+	struct multiboot_mmap_entry *mmap = mmap_tag->entries;
+
+	while ((uint8_t*) mmap < tags + mmap_tag->size)
+	{
+		if (mmap->addr != 0)
+		{
+			printf("[debug] base addr=0x%x%x, length=0x%x%x, type=%u\n",
+				(uint32_t) (mmap->addr >> 32),
+				(uint32_t) (mmap->addr & 0xFFFFFFFF),
+				(uint32_t) (mmap->len >> 32),
+				(uint32_t) (mmap->len & 0xFFFFFFFF),
+				mmap->type);
+		}
+
+		mmap = (struct multiboot_mmap_entry*) ((uint8_t*)mmap + mmap_tag->entry_size);
+	}
+    }
 
     init_serial();
     gdt_install();
