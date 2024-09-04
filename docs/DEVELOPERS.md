@@ -3,6 +3,8 @@
 ## Table of Contents
 
 - Getting Started
+- Debugging the kernel
+- Emulated booting in UEFI mode
 - Writing programs for BlankOS
 - Changing the TTY font
 
@@ -31,6 +33,14 @@ In another shell:
 ```
 gdb kernel.elf
 (gdb) target remote localhost:1234
+```
+
+## Emulated booting in UEFI mode (QEMU w/ OVMF)
+
+Install the OVMF firmware package by doing `sudo pacman -S ovmf` or the equivalent for your distro. Then, you can emulate the OS as if it was ran using an UEFI machine:
+
+```
+sudo qemu-system-i386 -drive if=pflash,format=raw,readonly=on,file=/usr/share/OVMF/ia32/OVMF_CODE.fd -drive if=pflash,format=raw,file=/usr/share/OVMF/ia32/OVMF_VARS.fd -drive file=blankos.iso,format=raw -m 4098
 ```
 
 ## Writing programs for BlankOS

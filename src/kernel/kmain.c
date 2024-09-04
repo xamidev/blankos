@@ -13,6 +13,7 @@
 #include "../drivers/framebuffer.h"
 #include "kmain.h"
 #include "multiboot2.h"
+#include "kheap.h"
 
 void kmain(multiboot2_info *mb_info)
 {
@@ -66,14 +67,17 @@ void kmain(multiboot2_info *mb_info)
 
 	while ((uint8_t*) mmap < tags + mmap_tag->size)
 	{
+		
 		if (mmap->addr != 0)
 		{
+			/*
 			printf("[debug] base addr=0x%x%x, length=0x%x%x, type=%u\n",
 				(uint32_t) (mmap->addr >> 32),
 				(uint32_t) (mmap->addr & 0xFFFFFFFF),
 				(uint32_t) (mmap->len >> 32),
 				(uint32_t) (mmap->len & 0xFFFFFFFF),
 				mmap->type);
+			*/
 		}
 
 		mmap = (struct multiboot_mmap_entry*) ((uint8_t*)mmap + mmap_tag->entry_size);
@@ -86,8 +90,11 @@ void kmain(multiboot2_info *mb_info)
     isr_install();
     irq_install();
     __asm__ __volatile__("sti");
- 
-    //test_read_sector();
+
+    init_alloc();
+    void* ptr1 = malloc(256);
+    void* ptr2 = malloc(512);
+    free(ptr2); 
 
     timer_install();
     keyboard_install();

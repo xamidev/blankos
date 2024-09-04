@@ -5,42 +5,60 @@
 
 #include "kheap.h"
 #include <stdint.h>
+#include "system.h"
 
-extern uint32_t end;
-uint32_t placement_address = (uint32_t)&end;
+// Free list allocator
 
-uint32_t kmalloc_int(uint32_t sz, int align, uint32_t *phys)
+static uint8_t heap[HEAP_SIZE];
+static block_t* free_list = NULL;
+
+void init_alloc()
 {
-	if (align == 1 && (placement_address & 0x00000FFF))
+	free_list = (block_t*)heap;
+	free_list->size = HEAP_SIZE-sizeof(block_t);
+	free_list->next = NULL;
+}
+
+void* malloc(size_t size)
+{
+	block_t* prev = NULL;
+	block_t* curr = free_list;
+
+	while (curr != NULL)
 	{
-		placement_address &= 0xFFFFF000;
-		placement_address += 0x1000;
+		if (curr->size >= size)
+		{
+			if (curr->size > (size_t)(size + sizeof(block_t)))
+			{
+				block_t* new_block = (block_t*)((uint8_t*)curr + sizeof(block_t) + size);
+				new_block->size = curr->size - size - sizeof(block_t);
+				new_block->next = curr->next;
+				curr->size = size;
+				curr->next = new_block;
+			}
+
+			if (prev == NULL)
+			{
+				free_list = curr->next;
+			} else {
+				prev->next = curr->next;
+			}
+
+			return (void*)((uint8_t*)curr + sizeof(block_t));
+		}
+
+		prev = curr;
+		curr = curr->next;
 	}
-	if (phys)
-	{
-		*phys = placement_address;
-	}
-	uint32_t tmp = placement_address;
-	placement_address += sz;
-	return tmp;
+
+	return NULL;
 }
 
-uint32_t kmalloc_a(uint32_t sz)
+void free(void* ptr)
 {
-	return kmalloc_int(sz, 1, 0);
-}
+	if (ptr == NULL) return;
 
-uint32_t kmalloc_p(uint32_t sz, uint32_t *phys)
-{
-	return kmalloc_int(sz, 0, phys);
-}
-
-uint32_t kmalloc_ap(uint32_t sz, uint32_t *phys)
-{
-	return kmalloc_int(sz, 1, phys);
-}
-
-uint32_t kmalloc(uint32_t sz)
-{
-	return kmalloc_int(sz, 0, 0);
+	block_t* block_to_free = (block_t*)((uint8_t*)ptr - sizeof(block_t));
+	block_to_free->next = free_list;
+	free_list = block_to_free;
 }

@@ -7,10 +7,19 @@
 #define KHEAP_H
 
 #include <stdint.h>
+#include "system.h"
 
-uint32_t kmalloc_a(uint32_t sz);
-uint32_t kmalloc_p(uint32_t sz, uint32_t *phys);
-uint32_t kmalloc_ap(uint32_t sz, uint32_t *phys);
-uint32_t kmalloc(uint32_t sz);
+typedef struct block
+{
+	size_t size;
+	struct block* next;
+} block_t;
+
+#define HEAP_SIZE 1024*1024	// 1MB malloc-able
+
+
+void init_alloc();
+void* malloc(size_t size);
+void free(void* ptr);
 
 #endif
