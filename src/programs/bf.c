@@ -5,6 +5,8 @@
 
 #include "../kernel/system.h"
 #include "../libc/stdio.h"
+#include "../kernel/kmain.h"
+#include "../kernel/initrd.h"
 
 #define BUF_SIZE 256
 
@@ -48,12 +50,25 @@ void brainfuck(char* input)
 	}
 }
 
-void program_bf()
+void program_bf(int argc, char* argv[])
 {
-	char input_buffer[BUF_SIZE];
-	puts("Brainfuck code? ");
-	get_input(input_buffer, BUF_SIZE);
-	brainfuck(input_buffer);
-	//brainfuck(",[.[-],]");
-	puts("\n");
+	if (argc == 1)
+	{
+		char input_buffer[BUF_SIZE];
+		puts("Brainfuck code? ");
+		get_input(input_buffer, BUF_SIZE);
+		brainfuck(input_buffer);
+		puts("\n");
+	} else if (argc == 2) {
+		// Read file content into buffer, then interpret it
+		char input_buffer[BUF_SIZE];
+		int read = tar_file_to_buffer((uint8_t*)initrd_addr, argv[1], input_buffer);
+		if (read == 0)
+		{
+			brainfuck(input_buffer);
+			puts("\n");
+		} else {
+			printf("Could not find file '%s'\n", argv[1]);
+		}
+	}
 }

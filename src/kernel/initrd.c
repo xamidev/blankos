@@ -102,3 +102,33 @@ void cat_initrd(uint8_t* initrd, const char* filename)
 
 	printf("File '%s' not found\n", filename);
 }
+
+int tar_file_to_buffer(uint8_t* initrd, const char* filename, char* buffer)
+{
+	uint8_t* current_block = initrd;
+
+	while (1)
+	{
+		if (current_block[0] == '\0')
+		{
+			//puts("[tar] EOF\n");
+			return -1;
+		}
+
+		const char* file_name = (const char*)current_block;
+		uint32_t file_size = tar_parse_size((const char*)(current_block+124));
+
+		if (strcmp(file_name, filename) == 0)
+		{
+			uint8_t* file_data = current_block + TAR_BLOCK_SIZE;
+			memcpy(buffer, file_data, file_size);
+			buffer[file_size] = '\0';
+			return 0;
+		}
+
+		uint32_t total_size = ((file_size + TAR_BLOCK_SIZE - 1) / TAR_BLOCK_SIZE) * TAR_BLOCK_SIZE;
+		current_block += TAR_BLOCK_SIZE + total_size;
+	}
+	printf("[tar] file '%s' not found\n", filename);
+	return -1;
+}

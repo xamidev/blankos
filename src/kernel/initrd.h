@@ -33,5 +33,6 @@ typedef struct
 void tar_find_file(uint8_t *tar_start, const char* filename);
 void ls_initrd(uint8_t* initrd);
 void cat_initrd(uint8_t* initrd, const char* filename);
+int tar_file_to_buffer(uint8_t* initrd, const char* filename, char* buffer);
 
 #endif

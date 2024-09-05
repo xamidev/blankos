@@ -13,6 +13,7 @@ typedef int size_t;
 
 void *memset(void *dest, char val, size_t count);
 void *memmove(void* dest, const void* src, size_t n);
+void *memcpy(void* dest, const void* src, uint32_t n);
 
 struct regs
 {

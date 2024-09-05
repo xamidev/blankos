@@ -69,9 +69,9 @@ Clears the screen by scrolling (screen height) times.
 
 A math lexer & parser that can calculate simple arithmetic operations. Adding, subtracting, multiplying, dividing, and factoring are supported. (I plan to get support for trigonometric functions maybe)
 
-#### `bf`
+#### `bf <optional: file>`
 
-A brainfuck interpreter with every instruction and default tape size (30k cells).
+A brainfuck interpreter with every instruction and default tape size (30k cells). Takes an optional argument, the filename for a Brainfuck source file.
 
 #### `uptime`
 
