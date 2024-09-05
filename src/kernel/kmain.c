@@ -19,6 +19,7 @@ void kmain(multiboot2_info *mb_info)
 {
 	multiboot2_tag_framebuffer *fb_info = NULL;
 	struct multiboot_tag_mmap *mmap_tag = NULL;
+	struct multiboot_tag_module *initrd_module = NULL;
 
     uint8_t *tags = mb_info->tags;
     while (1) {
@@ -32,6 +33,9 @@ void kmain(multiboot2_info *mb_info)
 	if (tag_type == MULTIBOOT_TAG_TYPE_MMAP) {
 		mmap_tag = (struct multiboot_tag_mmap*) tags;
 	}
+	if (tag_type == MULTIBOOT_TAG_TYPE_MODULE) {
+		initrd_module = (struct multiboot_tag_module*) tags;
+	}
 
         tags += ((tag_size + 7) & ~7);
     }
@@ -42,7 +46,7 @@ void kmain(multiboot2_info *mb_info)
 	serial_printf(3, "Framebuffer Pitch: %u", fb_info->framebuffer_pitch);
 	serial_printf(3, "Framebuffer BPP: %u", fb_info->framebuffer_bpp);
 
-    if (fb_info) {
+    if (fb_info) { // fb setup
         framebuffer = (uint32_t *)(uintptr_t) fb_info->framebuffer_addr;
 
         uint32_t width = fb_info->framebuffer_width;
@@ -60,7 +64,7 @@ void kmain(multiboot2_info *mb_info)
     printf("[kernel] framebuffer discovered at 0x%x\n", fb_info->framebuffer_addr);
     printf("[kernel] fb0: width=%u, height=%u, pitch=%u, bpp=%u\n", fb_info->framebuffer_width, fb_info->framebuffer_height, fb_info->framebuffer_pitch, fb_info->framebuffer_bpp);
 
-    if (mmap_tag)
+    if (mmap_tag) // memmap debug print
     {
 	printf("[kernel] found memory map tag by multiboot2\n");
 	struct multiboot_mmap_entry *mmap = mmap_tag->entries;
@@ -84,6 +88,16 @@ void kmain(multiboot2_info *mb_info)
 	}
     }
 
+    if (initrd_module) {
+	uint32_t initrd_start = initrd_module->mod_start;
+	uint32_t initrd_end = initrd_module->mod_end;
+	uint32_t initrd_size = initrd_end - initrd_start;
+
+	printf("[kernel] TAR initrd module found at 0x%x, size=%u bytes\n", initrd_start, initrd_size);
+    } else {
+	puts("[kernel] TAR initrd module not found\n");
+    }
+
     init_serial();
     gdt_install();
     idt_install();
@@ -94,7 +108,8 @@ void kmain(multiboot2_info *mb_info)
     init_alloc();
     void* ptr1 = malloc(256);
     void* ptr2 = malloc(512);
-    free(ptr2); 
+    printf("[debug] malloc test ptr1=0x%x, ptr2=0x%x\n", ptr1, ptr2); 
+    free(ptr1); free(ptr2);
 
     timer_install();
     keyboard_install();

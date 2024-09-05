@@ -6,7 +6,7 @@
 
 # BlankOS
 
-Rewritten monolithic, ring 0, lower-half, singletasking kernel for the x86 processor architecture, using GRUB 2 as bootloader. Emulation was tested on QEMU using Arch Linux 6.9.7-arch1-1, and on real hardware (UEFI and BIOS).
+Rewritten megalithic, ring 0, lower-half, singletasking kernel for the x86 processor architecture (using 32-bit protected mode), with GRUB 2 as bootloader. Emulation was tested on QEMU using Arch Linux 6.9.7-arch1-1, and on real hardware (UEFI and BIOS).
 The long-term goal of this OS is to be capable of running user programs and having its own complete kernel C library so that users can write their own C programs and expand the system!
 
 ## Usage
@@ -65,7 +65,7 @@ Two other documents are available to help you understand the project better. One
 - [X] Kernel-space utilities (shell, simple programs)
 - [ ] Filesystem (FAT32 or VFS ramdisk)
 - [ ] Changing the default VGA font
-- [ ] Dynamic memory allocator (get memmap from GRUB?)
+- [X] Dynamic memory allocator (get memmap from GRUB?)
 - [ ] Paging/Page Frame Allocation
 - [ ] TCP/IP Network stack
 - [ ] Getting to Ring-3 (userspace)
