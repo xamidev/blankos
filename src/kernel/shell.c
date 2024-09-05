@@ -136,6 +136,8 @@ void shell_install()
   register_command("read", program_read);
   register_command("reboot", program_reboot);
   register_command("pi", program_pi);
+  register_command("ls", program_ls);
+  register_command("cat", program_cat);
 
   for (;;)
   {

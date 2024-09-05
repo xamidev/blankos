@@ -28,6 +28,7 @@ unsigned int g_multiboot_info_address;
 
 uint32_t* framebuffer;
 int scanline;
+uint32_t initrd_addr;
 
 // in characters, not pixels
 uint32_t VGA_WIDTH;

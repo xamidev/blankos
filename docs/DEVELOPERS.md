@@ -7,6 +7,7 @@
 - Emulated booting in UEFI mode
 - Writing programs for BlankOS
 - Changing the TTY font
+- Changing the initial ramdisk content
 
 ## Getting Started
 
@@ -119,3 +120,10 @@ readelf -s -W build/fonts/YOUR_FONT_8x16.o
 Get the symbol name that ends with `_start` and replace all occurences of it in the `src/drivers/framebuffer.c` file.
 
 Then, run `make` again and the font should have changed properly.
+
+## Changing the initial ramdisk content
+
+The system loads an initial ramdisk as a simple TAR file located in `iso/boot/initrd.tar`.
+You can add, delete, or modify this file's contents by doing that in the `src/initrd` folder. Anything in that folder will be added to the initial ramdisk and will therefore be loaded into the system.
+
+The ramdisk gets loaded as a GRUB2 module.

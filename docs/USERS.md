@@ -113,3 +113,15 @@ Makes a cow speak!
 #### `pi <terms>`
 
 Computes Pi up to a couple of digits using the Leibniz series; takes one integer argument, the number of terms of the series to compute.
+
+### Initrd utilities
+
+You can browse the (really) simple TAR filesystem with the following commands:
+
+#### `ls`
+
+Lists all files present in `initrd.tar`.
+
+#### `cat <file>`
+
+Prints file content to terminal. Filename must be specified the same way as it is outputted when using `ls`.

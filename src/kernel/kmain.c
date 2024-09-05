@@ -14,6 +14,7 @@
 #include "kmain.h"
 #include "multiboot2.h"
 #include "kheap.h"
+#include "initrd.h"
 
 void kmain(multiboot2_info *mb_info)
 {
@@ -89,11 +90,15 @@ void kmain(multiboot2_info *mb_info)
     }
 
     if (initrd_module) {
+	initrd_addr = initrd_module->mod_start;
+
 	uint32_t initrd_start = initrd_module->mod_start;
 	uint32_t initrd_end = initrd_module->mod_end;
 	uint32_t initrd_size = initrd_end - initrd_start;
 
 	printf("[kernel] TAR initrd module found at 0x%x, size=%u bytes\n", initrd_start, initrd_size);
+	//tar_find_file((uint8_t*)initrd_start, "./hello.txt");
+
     } else {
 	puts("[kernel] TAR initrd module not found\n");
     }
