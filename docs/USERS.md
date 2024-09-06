@@ -114,6 +114,10 @@ Makes a cow speak!
 
 Computes Pi up to a couple of digits using the Leibniz series; takes one integer argument, the number of terms of the series to compute.
 
+#### `bmp <file>`
+
+Shows information about a 24-bit BMP image and renders it in the terminal.
+
 ### Initrd utilities
 
 You can browse the (really) simple TAR filesystem with the following commands:

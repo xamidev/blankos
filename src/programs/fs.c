@@ -6,10 +6,16 @@
 #include "../kernel/initrd.h"
 #include "../kernel/kmain.h"
 #include "../libc/stdio.h"
+#include "../libc/string.h"
 
-void program_ls()
+void program_ls(int argc, char* argv[])
 {
-	ls_initrd((uint8_t*)initrd_addr);
+	if (argc == 1)
+	{
+		ls_initrd((uint8_t*)initrd_addr, 0);
+	} else if (argc == 2 && strcmp(argv[1], "-l") == 0) {
+		ls_initrd((uint8_t*)initrd_addr, 1);
+	}
 }
 
 // Basic cat just to read, no concatenation here
