@@ -15,6 +15,7 @@
 #include "multiboot2.h"
 #include "kheap.h"
 #include "initrd.h"
+#include "../programs/programs.h"
 
 void kmain(multiboot2_info *mb_info)
 {
@@ -41,24 +42,25 @@ void kmain(multiboot2_info *mb_info)
         tags += ((tag_size + 7) & ~7);
     }
 
-    serial_printf(3, "Framebuffer Address: 0x%x", fb_info->framebuffer_addr);
-	serial_printf(3, "Framebuffer Width: %u", fb_info->framebuffer_width);
-	serial_printf(3, "Framebuffer Height: %u", fb_info->framebuffer_height);
-	serial_printf(3, "Framebuffer Pitch: %u", fb_info->framebuffer_pitch);
-	serial_printf(3, "Framebuffer BPP: %u", fb_info->framebuffer_bpp);
-
     if (fb_info) { // fb setup
         framebuffer = (uint32_t *)(uintptr_t) fb_info->framebuffer_addr;
 
         uint32_t width = fb_info->framebuffer_width;
         uint32_t height = fb_info->framebuffer_height;
-        uint32_t bpp = fb_info->framebuffer_bpp;
+        bpp = fb_info->framebuffer_bpp;
+	pitch = fb_info->framebuffer_pitch;
 
         //8x16 font, not padded 
         VGA_WIDTH = width/8;
         VGA_HEIGHT = height/16;
         serial_printf(3, "VGA_WIDTH=%d, VGA_HEIGHT=%d", VGA_WIDTH, VGA_HEIGHT);
         scanline = width * (bpp/8);	
+
+    	serial_printf(3, "Framebuffer Address: 0x%x", fb_info->framebuffer_addr);
+	serial_printf(3, "Framebuffer Width: %u", fb_info->framebuffer_width);
+	serial_printf(3, "Framebuffer Height: %u", fb_info->framebuffer_height);
+	serial_printf(3, "Framebuffer Pitch: %u", fb_info->framebuffer_pitch);
+	serial_printf(3, "Framebuffer BPP: %u", fb_info->framebuffer_bpp);
     }
 
     printf("[kernel] multiboot2 info at 0x%x, size=%u\n", mb_info, mb_info->total_size);
@@ -115,6 +117,11 @@ void kmain(multiboot2_info *mb_info)
     void* ptr2 = malloc(512);
     printf("[debug] malloc test ptr1=0x%x, ptr2=0x%x\n", ptr1, ptr2); 
     free(ptr1); free(ptr2);
+
+
+    //display_bmp(framebuffer, pitch, bpp, (uint8_t*)initrd_addr);
+
+    //putpixel(framebuffer, pitch, bpp, i, j, yellow);
 
     timer_install();
     keyboard_install();

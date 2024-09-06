@@ -6,6 +6,8 @@
 #ifndef KMAIN_H
 #define KMAIN_H
 
+#include <stdint.h>
+
 typedef struct {
     uint32_t type;
     uint32_t size;
@@ -33,5 +35,8 @@ uint32_t initrd_addr;
 // in characters, not pixels
 uint32_t VGA_WIDTH;
 uint32_t VGA_HEIGHT;
+
+uint32_t bpp;
+uint32_t pitch;
 
 #endif

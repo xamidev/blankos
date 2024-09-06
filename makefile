@@ -50,12 +50,12 @@ toolchain:
 	tar xf $(TOOLCHAIN_FILE)
 
 iso: kernel.elf initrd
-	mkdir -p iso/boot/grub
 	cp kernel.elf iso/boot/kernel.elf
 	cp grub.cfg iso/boot/grub/grub.cfg
 	grub-mkrescue iso -o blankos.iso	
 
 initrd:
+	mkdir -p iso/boot/grub
 	tar -cf $(OBJ_DIR)/initrd.tar -C $(SRC_DIR)/initrd .
 	cp $(OBJ_DIR)/initrd.tar iso/boot
 
