@@ -31,7 +31,7 @@ typedef struct
 } tar_header_t;
 
 void tar_find_file(uint8_t *tar_start, const char* filename);
-void ls_initrd(uint8_t* initrd);
+void ls_initrd(uint8_t* initrd, int verbose);
 void cat_initrd(uint8_t* initrd, const char* filename);
 int tar_file_to_buffer(uint8_t* initrd, const char* filename, char* buffer);
 

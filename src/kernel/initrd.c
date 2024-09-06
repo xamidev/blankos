@@ -67,15 +67,25 @@ void tar_find_file(uint8_t *tar_start, const char* filename)
 	printf("[tar] file '%s' not found\n", filename);
 }
 
-void ls_initrd(uint8_t* initrd)
+void ls_initrd(uint8_t* initrd, int verbose)
 {
 	tar_header_t *header = (tar_header_t*)initrd;
 	
+	if (verbose)
+	{
+		puts("Size       Type  Filename\n");
+	}
+
 	while (header->filename[0] != '\0')
 	{
-		printf("%s\n", header->filename);
-		uint32_t size = tar_parse_size(header->size);
+		if (!verbose)
+		{
+			printf("%s\n", header->filename);
+		} else {
+			printf("%7d\t%c\t %s\n", header->size, header->typeflag, header->filename);
+		}
 
+		uint32_t size = tar_parse_size(header->size);
 		uint32_t next_file_offset = ((size+TAR_BLOCK_SIZE-1)/TAR_BLOCK_SIZE)*TAR_BLOCK_SIZE;
 		header = (tar_header_t*)((uint8_t*)header + next_file_offset + TAR_BLOCK_SIZE);
 	}
