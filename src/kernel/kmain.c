@@ -118,11 +118,6 @@ void kmain(multiboot2_info *mb_info)
     printf("[debug] malloc test ptr1=0x%x, ptr2=0x%x\n", ptr1, ptr2); 
     free(ptr1); free(ptr2);
 
-
-    //display_bmp(framebuffer, pitch, bpp, (uint8_t*)initrd_addr);
-
-    //putpixel(framebuffer, pitch, bpp, i, j, yellow);
-
     timer_install();
     keyboard_install();
     printf("[kernel] spawning shell...\n"); 

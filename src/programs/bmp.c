@@ -8,7 +8,9 @@
 #include "../kernel/initrd.h"
 #include "../drivers/framebuffer.h"
 #include "../libc/stdio.h"
+#include "../drivers/serial.h"
 
+#pragma pack(push, 1)
 typedef struct
 {
 	uint16_t bfType;
@@ -32,15 +34,20 @@ typedef struct
 	uint32_t biClrUsed;
 	uint32_t biClrImportant;
 } BMPInfoHeader;
+#pragma pack(pop)
 
-void display_bmp(uint32_t* fb, int pitch, int bpp, uint8_t* initrd)
+void display_bmp(uint32_t* fb, int pitch, int bpp, uint8_t* initrd, const char* filename)
 {
-	char buffer[1024*1024];
-	int file_status = tar_file_to_buffer(initrd, "./flower.bmp", buffer);
+	// Should use dynamic allocation when heap works
+	// Cannot go more than ~500k size for buffer
+	// Fail zone 450k->470k
+	// So right now the max should be 400kb img size
+	char buffer[400*1000];
+	int file_status = tar_file_to_buffer(initrd, filename, buffer);
 
 	if (file_status != 0)
 	{
-		puts("Error loading BMP\n");
+		printf("Error loading file '%s'\n", filename);
 		return;
 	}
 
@@ -49,7 +56,7 @@ void display_bmp(uint32_t* fb, int pitch, int bpp, uint8_t* initrd)
 
 	if (bmp_header->bfType != 0x4D42)
 	{
-		puts("Not a valid BMP\n");
+		printf("'%s' is not a valid BMP file\n", filename);
 		return;
 	}
 
@@ -57,25 +64,37 @@ void display_bmp(uint32_t* fb, int pitch, int bpp, uint8_t* initrd)
 	int height = bmp_info->biHeight;
 	int pixel_offset = bmp_header->bfOffBits;
 
-	if (bmp_info->biBitCount != 24)
-	{
-		puts("Not a 24-bit BMP\n");
-		return;
-	}
-
+	printf("%d-bit BMP, width: %d, height: %d, pixel offset: %d\n", bmp_info->biBitCount, bmp_info->biWidth, bmp_info->biHeight, bmp_header->bfOffBits);	
+	erase_cursor();
 	uint8_t* pixel_data = (uint8_t*)(buffer + pixel_offset);
 
-	for (int y=0; y<height; y++)
+	int cursor_y = (get_cursor_y()+1)*16;
+	serial_printf(3, "cursor_y=%d\n", cursor_y);
+
+	for (int y=cursor_y; y<height+cursor_y; y++)
 	{
 		for (int x=0; x<width; x++)
 		{
-			int index = (x+(height-y-1)*width)*3;
+			int index = (x+(height-y-1+cursor_y)*width)*3;
 			uint8_t blue = pixel_data[index];
 			uint8_t green = pixel_data[index+1];
 			uint8_t red = pixel_data[index+2];
 
-			uint32_t color = (red << 16) | (green << 8) | blue;
+			uint32_t color = (0xFF << 24) | (red << 16) | (green << 8) | blue;
 			putpixel(fb, pitch, bpp, x, y, color);
 		}
 	}
+
+	// Update cursor pos after image drawing
+	move_cursor(get_cursor_x(), get_cursor_y()+(height/16)+2);
+}
+
+void program_bmp(int argc, char* argv[])
+{
+	if (argc < 2)
+	{
+		puts("Usage: bmp <file>\n"); 
+		return;
+	}
+	display_bmp(framebuffer, pitch, bpp, (uint8_t*)initrd_addr, argv[1]);
 }

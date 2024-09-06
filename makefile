@@ -63,7 +63,7 @@ run: iso
 	qemu-system-i386 -drive file=blankos.iso,format=raw
 
 debug:
-	qemu-system-i386 -s -S -drive file=blankos.iso,format=raw
+	./debug.sh
 
 clean:
 	rm -rf $(OBJ_DIR) kernel.elf blankos.iso $(TOOLCHAIN_FILE)

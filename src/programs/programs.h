@@ -38,6 +38,6 @@ void program_reboot();
 void program_ls();
 void program_cat();
 
-void display_bmp(uint32_t* fb, int pitch, int bpp, uint8_t* initrd);
+void program_bmp();
 
 #endif

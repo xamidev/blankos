@@ -87,4 +87,7 @@ enum Colors
     	beige       = 0x00F5F5DC
 };
 
+int get_cursor_x();
+int get_cursor_y();
+
 #endif

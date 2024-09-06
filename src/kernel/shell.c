@@ -138,6 +138,7 @@ void shell_install()
   register_command("pi", program_pi);
   register_command("ls", program_ls);
   register_command("cat", program_cat);
+  register_command("bmp", program_bmp);
 
   for (;;)
   {
