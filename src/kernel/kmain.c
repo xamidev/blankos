@@ -77,14 +77,14 @@ void kmain(multiboot2_info *mb_info)
 		
 		if (mmap->addr != 0)
 		{
-			/*
-			printf("[debug] base addr=0x%x%x, length=0x%x%x, type=%u\n",
+			
+			serial_printf(3, "base addr=0x%x%x, length=0x%x%x, type=%u\n",
 				(uint32_t) (mmap->addr >> 32),
 				(uint32_t) (mmap->addr & 0xFFFFFFFF),
 				(uint32_t) (mmap->len >> 32),
 				(uint32_t) (mmap->len & 0xFFFFFFFF),
 				mmap->type);
-			*/
+			
 		}
 
 		mmap = (struct multiboot_mmap_entry*) ((uint8_t*)mmap + mmap_tag->entry_size);
@@ -99,7 +99,6 @@ void kmain(multiboot2_info *mb_info)
 	uint32_t initrd_size = initrd_end - initrd_start;
 
 	printf("[kernel] TAR initrd module found at 0x%x, size=%u bytes\n", initrd_start, initrd_size);
-	//tar_find_file((uint8_t*)initrd_start, "./hello.txt");
 
     } else {
 	puts("[kernel] TAR initrd module not found\n");

@@ -1,0 +1,37 @@
+***********************
+* Welcome to BlankOS! *
+***********************
+
+Congratulations, you've entered my small world!
+
+You can try all the commands, try tweaking stuff like explained
+in the DEVELOPERS.md file, and even contribute if you got the
+guts. lol.
+
+Don't look too much at the code, it's badly designed, but hey,
+that's my first OS project so I find it kinda cool.
+
+There's no paging, ring 3, processes... I am not smart enough
+for all this modern stuff. Let's keep it simple and stay in 
+ring0, without processes, maybe one day there'll be more
+advanced features, but not today.
+
+** Why am I doing this?
+
+I wanted to explore the world of low-level programing.
+As I had only 1 year of experience in C, it was super challenging
+especially at the beginning, and I needed much time to understand
+even the most basic things around OSDev.
+
+I'll backup the project on archival media once it'll be at a good
+enough point; I think it's cool to leave a trace of my passage on
+Earth.
+
+** Easter eggs
+
+To make the exploration a bit funnier, I hid some easter eggs
+around. You can try to find them if you have time to lose.
+
+** Ravtzn
+
+Jub xabjf? Znlor fbzrguvat'f uvqqra va gurer...

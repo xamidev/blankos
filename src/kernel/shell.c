@@ -10,6 +10,7 @@
 #include "../libc/crypto.h"
 #include <stdint.h>
 #include "../drivers/rtc.h"
+#include "kmain.h"
 
 #define BUFFER_SIZE 256
 #define MAX_COMMANDS 64
@@ -54,7 +55,10 @@ void splash()
 	int random = randint(time_seed());
 	char* motd_pick = motd[random%motd_size];
 	cowsay(motd_pick, red, black);
-	colorputs("        blankOS 0.3.97-alpha", red, black);
+	puts("        ");
+	colorputs("blankOS", black, white);
+	puts(" ");
+	colorputs(BLANK_VERSION, red, black);
 	puts("\n");
 	
 

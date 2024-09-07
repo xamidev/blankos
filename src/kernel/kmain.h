@@ -6,6 +6,8 @@
 #ifndef KMAIN_H
 #define KMAIN_H
 
+#define BLANK_VERSION "0.3.107-alpha"
+
 #include <stdint.h>
 
 typedef struct {
