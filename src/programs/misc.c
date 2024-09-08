@@ -10,6 +10,7 @@
 #include "../drivers/ata.h"
 #include "../drivers/rtc.h"
 #include "../kernel/io.h"
+#include "../drivers/pci.h"
 
 // Print a rainbow colorful text for testing
 
@@ -73,7 +74,7 @@ void program_uptime()
 
 void program_help()
 {
-	printf("help\tpanic\twords\tprimes\trainbow\tclear\nmath\tbf\t   uptime   echo\t  sysinfo\tconway\nrot13   morse\tcowsay   time\t  read\t   reboot\npi\t  ls\t   cat\t  bmp\n");
+	printf("help\tpanic\twords\tprimes\trainbow\tclear\nmath\tbf\t   uptime   echo\t  sysinfo\tconway\nrot13   morse\tcowsay   time\t  read\t   reboot\npi\t  ls\t   cat\t  bmp\t   lspci\n");
 }
 
 // Panic
@@ -142,4 +143,11 @@ void program_reboot()
 	outb(0x64, 0xFE);
 
 	while (1) asm volatile("hlt");
+}
+
+// List PCI buses and devices
+
+void program_lspci()
+{
+	scan_pci_bus();
 }

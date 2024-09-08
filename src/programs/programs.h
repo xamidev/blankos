@@ -39,5 +39,6 @@ void program_ls();
 void program_cat();
 
 void program_bmp();
+void program_lspci();
 
 #endif
