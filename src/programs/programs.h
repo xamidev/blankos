@@ -14,7 +14,6 @@ void program_sysinfo();
 
 void get_cpuid();
 void get_meminfo(unsigned int multiboot_info_address); // to be fixed: cannot get full memory map (sysinfo -v)
-void program_conway();
 void program_cowsay();
 void cowsay(); // Splash screen
 void program_pi();
@@ -39,5 +38,10 @@ void program_ls();
 void program_cat();
 
 void program_bmp();
+void program_lspci();
+
+// Games
+void program_navalbattle();
+void program_conway();
 
 #endif
