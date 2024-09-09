@@ -144,6 +144,7 @@ void shell_install()
   register_command("cat", program_cat);
   register_command("bmp", program_bmp);
   register_command("lspci", program_lspci);
+  register_command("naval", program_navalbattle);
 
   for (;;)
   {

@@ -12,5 +12,4 @@ char* strtok(char* str, const char* delimiter);
 int atoi(char* str);
 void strcat(char* dest, const char* src);
 
-
 #endif

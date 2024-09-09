@@ -69,7 +69,8 @@ void scan_pci_bus()
                 pci_device_t dev = pci_get_device(bus, device, function);
                 
                 if (dev.vendor_id != 0xFFFF) {
-
+			
+		    // Maybe put that in a database in initrd.tar?
 		    char* vendor_string;
 		    switch(dev.vendor_id)
 		    {
@@ -87,9 +88,6 @@ void scan_pci_bus()
 		    char* device_string;
 		    switch(dev.device_id)
 		    {
-			case 0x1237:
-				device_string = "440FX - 82441FX PMC";
-				break;
 			default:
 				device_string = "Unknown";
 				break;
