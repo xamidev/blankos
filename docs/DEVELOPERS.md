@@ -13,11 +13,11 @@
 
 ### System description
 
-Blank OS runs on a monolithic kernel booted by a 3rd party bootloader; GRUB (whose executable is named `stage2_eltorito`). The kernel is compiled in ELF format. The target processor architecture is 32-bit x86. Blank OS is BIOS-independent which means it does not use Real mode BIOS functions as its routines. It rather uses in and out port communication to communicate with hardware directly (such as the keyboard) and it uses specific memory locations (for example the framebuffer to manage the screen in text mode).
+Blank OS is a megalithic kernel booted by a 3rd party bootloader, GRUB2, using the Multiboot2 specification. The kernel is compiled in ELF format. The target processor architecture is 32-bit x86. Blank OS is BIOS-independent which means it does not use Real mode BIOS functions as its routines. It rather uses in and out port communication to communicate with hardware directly (such as the keyboard) and it uses specific memory locations (for example the framebuffer to manage the screen in text mode). A linear framebuffer is requested in 1920x1080x32 mode via Multiboot and GRUB. It cannot run on other screen resolutions for now. The keyboard layout is QWERTY.
 
 ### Code structure
 
-The source code is available in folder `src`. You will find subfolders corresponding to appropriate system parts, such as the kernel, the C library (including drivers) and programs.
+The source code is available in folder `src`. You will find subfolders corresponding to appropriate system parts, such as the kernel, the C library (including drivers) and "programs", which are really just functions embedded in the kernel.
 
 ### System calls
 
@@ -27,13 +27,6 @@ No system calls are available, as the OS runs in kernel-space.
 
 ```
 make debug
-```
-
-In another shell:
-
-```
-gdb kernel.elf
-(gdb) target remote localhost:1234
 ```
 
 ## Emulated booting in UEFI mode (QEMU w/ OVMF)
