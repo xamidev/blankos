@@ -22,6 +22,7 @@ typedef struct
 #define BUFFER_SIZE   16
 
 void init_battlefield(grid_t* grid[SIZE][SIZE]);
+void free_grid(grid_t* grid[SIZE][SIZE]);
 void show_ally_battlefield(grid_t* grid[SIZE][SIZE]);
 void placing_ally_ships(grid_t* grid[SIZE][SIZE]);
 void placing_enemy_ships(grid_t* grid[SIZE][SIZE]);

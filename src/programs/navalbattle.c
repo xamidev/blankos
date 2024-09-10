@@ -42,6 +42,9 @@ void program_navalbattle()
 		show_game_stats(grid, enemyGrid);
 	} while (check_victory(grid, enemyGrid) == 0);
 
+	free_grid(grid);
+	free_grid(enemyGrid);
+
 	return;	
 }
 
@@ -52,11 +55,22 @@ void init_battlefield(grid_t* grid[SIZE][SIZE])
 		for (size_t j=0; j<SIZE; j++)
 		{
 			grid[i][j] = (grid_t*)malloc(sizeof(grid_t));
-			serial_printf(3, "malloc'd x=%d y=%d at 0x%x", i, j, grid[i][j]);
 			grid[i][j]->x = i;
 			grid[i][j]->y = j;
 			grid[i][j]->role = 0;
 			grid[i][j]->state = -2;
+		}
+	}
+}
+
+// To avoid memory leaks..
+void free_grid(grid_t* grid[SIZE][SIZE])
+{
+	for (size_t i=0; i<SIZE; i++)
+	{
+		for (size_t j=0; j<SIZE; j++)
+		{
+			free(grid[i][j]);
 		}
 	}
 }
