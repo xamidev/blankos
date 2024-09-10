@@ -33,6 +33,8 @@ char getchar(int x, int y);
 unsigned int getcolor(int x, int y);
 void putc(char c);
 void colorputc(char c, uint32_t fg, uint32_t bg);
+void colorprintf(uint32_t fg, uint32_t bg, const char* fmt, ...);
+int* colorprintf_number(int* argp, int length, bool sign, int radix, int width, char pad_char, uint32_t fg, uint32_t bg);
 
 #define PRINTF_STATE_START 			0
 #define PRINTF_STATE_LENGTH 		1
