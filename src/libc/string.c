@@ -103,3 +103,32 @@ void strcat(char* dest, const char* src)
 
 	*dest = '\0';
 }
+
+size_t strnlen(const char* str, size_t max_len)
+{
+	size_t len = 0;
+	while (*str && len < max_len)
+	{
+		len++;
+		str++;
+	}
+	return len;
+}
+
+void strncat(char* dest, const char* src, size_t n)
+{
+	while (*dest)
+	{
+		dest++;
+	}
+
+	while (*src && n > 0)
+	{
+		*dest = *src;
+		dest++;
+		src++;
+		n--;
+	}
+
+	*dest = '\0';
+}

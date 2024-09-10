@@ -36,9 +36,9 @@ void gdt_install()
 	gdt_set_gate(2, 0, 0xFFFFFFFF, 0x92, 0xCF);
 
 	// Ring 3
-	gdt_set_gate(3, 0, 0xFFFFFFFF, 0xFA, 0xCF);
-	gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF);
+	//gdt_set_gate(3, 0, 0xFFFFFFFF, 0xFA, 0xCF);
+	//gdt_set_gate(4, 0, 0xFFFFFFFF, 0xF2, 0xCF);
 
 	gdt_flush();
-	printf("[kernel] GDT gates set (ring 0 and 3), gdt=0x%x\n", &gdt);
+	printf("[kernel] GDT gates set (ring 0), gdt=0x%x\n", (unsigned int)&gdt);
 }

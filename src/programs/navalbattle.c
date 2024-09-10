@@ -129,7 +129,7 @@ void placing_ally_ships(grid_t* grid[SIZE][SIZE])
 
 		do
 		{
-			printf("Ship %d\n------\n", i);
+			printf("Ship %d\n------\n", (int)i);
 			puts("X coord: ");
 			char input_buffer[BUFFER_SIZE];
 			get_input(input_buffer, BUFFER_SIZE);
@@ -179,7 +179,7 @@ void show_enemy_battlefield(grid_t* grid[SIZE][SIZE])
 
 	for (size_t i=0; i<SIZE; i++)
 	{
-		printf("%d ", i);
+		printf("%d ", (int)i);
 		for (size_t j=0; j<SIZE; j++)
 		{
 			char roleChar = 0;
