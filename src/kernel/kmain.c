@@ -65,12 +65,12 @@ void kmain(multiboot2_info *mb_info)
     }
 
     printf("[kernel] multiboot2 info at 0x%x, size=%u\n", mb_info, mb_info->total_size);
-    printf("[kernel] framebuffer discovered at 0x%x\n", fb_info->framebuffer_addr);
+    printf("[kernel] framebuffer discovered at 0x%x\n", (unsigned int)fb_info->framebuffer_addr);
     printf("[kernel] fb0: width=%u, height=%u, pitch=%u, bpp=%u\n", fb_info->framebuffer_width, fb_info->framebuffer_height, fb_info->framebuffer_pitch, fb_info->framebuffer_bpp);
 
     if (mmap_tag) // memmap debug print
     {
-	printf("[kernel] found memory map tag by multiboot2\n");
+	puts("[kernel] found memory map tag by multiboot2\n");
 	struct multiboot_mmap_entry *mmap = mmap_tag->entries;
 
 	while ((uint8_t*) mmap < tags + mmap_tag->size)
@@ -115,7 +115,7 @@ void kmain(multiboot2_info *mb_info)
     init_alloc();
     void* ptr1 = malloc(256);
     void* ptr2 = malloc(512);
-    printf("[debug] malloc test ptr1=0x%x, ptr2=0x%x\n", ptr1, ptr2); 
+    printf("[debug] malloc test ptr1=0x%x, ptr2=0x%x\n", (unsigned int)ptr1, (unsigned int)ptr2); 
     free(ptr1); free(ptr2);
 
     timer_install();

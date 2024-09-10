@@ -33,7 +33,7 @@ void program_primes(int argc, char* argv[])
 	{	
 		if (isPrime(x) && x != 3301)
 		{
-				printf("%d ", x);	
+				printf("%d ", (int)x);	
 		} else if(x == 3301)
 		{
 				colorputs("3301 ", red, black);

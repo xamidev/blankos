@@ -30,5 +30,5 @@ void idt_install()
 	memset(&idt, 0, sizeof(struct idt_entry)*256);
 
 	idt_load();
-	printf("[kernel] loaded IDT at idt=0x%x\n", &idt);
+	printf("[kernel] loaded IDT at idt=0x%x\n", (unsigned int)&idt);
 }

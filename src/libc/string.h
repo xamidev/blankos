@@ -6,6 +6,8 @@
 #ifndef STRING_H
 #define STRING_H
 
+#include "../kernel/system.h"
+
 int strlen(const char* str);
 int strcmp(const char* str1, const char* str2);
 char* strtok(char* str, const char* delimiter);

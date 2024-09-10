@@ -82,7 +82,7 @@ void ls_initrd(uint8_t* initrd, int verbose)
 		{
 			printf("%s\n", header->filename);
 		} else {
-			printf("%7d\t%c\t %s\n", header->size, header->typeflag, header->filename);
+			printf("%7d\t%c\t %s\n", (int)header->size, header->typeflag, header->filename);
 		}
 
 		uint32_t size = tar_parse_size(header->size);

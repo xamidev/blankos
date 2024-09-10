@@ -62,7 +62,7 @@ void display_bmp(uint32_t* fb, int pitch, int bpp, uint8_t* initrd, const char* 
 	int height = bmp_info->biHeight;
 	int pixel_offset = bmp_header->bfOffBits;
 
-	printf("%d-bit BMP, width: %d, height: %d, pixel offset: %d\n", bmp_info->biBitCount, bmp_info->biWidth, bmp_info->biHeight, bmp_header->bfOffBits);	
+	printf("%d-bit BMP, width: %d, height: %d, pixel offset: %d\n", bmp_info->biBitCount, bmp_info->biWidth, bmp_info->biHeight, (int)bmp_header->bfOffBits);	
 	erase_cursor();
 	uint8_t* pixel_data = (uint8_t*)(buffer + pixel_offset);
 
