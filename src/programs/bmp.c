@@ -9,6 +9,7 @@
 #include "../drivers/framebuffer.h"
 #include "../libc/stdio.h"
 #include "../drivers/serial.h"
+#include "../kernel/kheap.h"
 
 #pragma pack(push, 1)
 typedef struct
@@ -38,11 +39,8 @@ typedef struct
 
 void display_bmp(uint32_t* fb, int pitch, int bpp, uint8_t* initrd, const char* filename)
 {
-	// Should use dynamic allocation when heap works
-	// Cannot go more than ~500k size for buffer
-	// Fail zone 450k->470k
-	// So right now the max should be 400kb img size
-	char buffer[400*1000];
+	uint32_t buf_size = tar_get_file_size(initrd, filename);
+	char* buffer = (char*)malloc(buf_size);
 	int file_status = tar_file_to_buffer(initrd, filename, buffer);
 
 	if (file_status != 0)
@@ -87,6 +85,7 @@ void display_bmp(uint32_t* fb, int pitch, int bpp, uint8_t* initrd, const char* 
 
 	// Update cursor pos after image drawing
 	move_cursor(get_cursor_x(), get_cursor_y()+(height/16)+2);
+	free(buffer);
 }
 
 void program_bmp(int argc, char* argv[])

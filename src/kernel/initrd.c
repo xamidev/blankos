@@ -131,14 +131,46 @@ int tar_file_to_buffer(uint8_t* initrd, const char* filename, char* buffer)
 		if (strcmp(file_name, filename) == 0)
 		{
 			uint8_t* file_data = current_block + TAR_BLOCK_SIZE;
-			memcpy(buffer, file_data, file_size);
-			buffer[file_size] = '\0';
-			return 0;
+			if (sizeof(buffer) >= sizeof(file_data))
+			{
+				memcpy(buffer, file_data, file_size);
+				buffer[file_size] = '\0';
+				return 0;
+			} else {
+				printf("Invalid destination buffer size %d bytes < %d bytes\n", sizeof(buffer), sizeof(file_data));
+				return -1;
+			}
+			return -1;
 		}
 
 		uint32_t total_size = ((file_size + TAR_BLOCK_SIZE - 1) / TAR_BLOCK_SIZE) * TAR_BLOCK_SIZE;
 		current_block += TAR_BLOCK_SIZE + total_size;
 	}
 	printf("[tar] file '%s' not found\n", filename);
+	return -1;
+}
+
+uint32_t tar_get_file_size(uint8_t* initrd, const char* filename)
+{
+	uint8_t* current_block = initrd;
+
+	while (1)
+	{
+		if (current_block[0] == '\0')
+		{
+			return -1;
+		}
+
+		const char* file_name = (const char*)current_block;
+		uint32_t file_size = tar_parse_size((const char*)(current_block+124));
+
+		if (strcmp(file_name, filename) == 0)
+		{
+			return file_size;
+		}
+
+		uint32_t total_size = ((file_size + TAR_BLOCK_SIZE - 1) / TAR_BLOCK_SIZE) * TAR_BLOCK_SIZE;
+		current_block += TAR_BLOCK_SIZE + total_size;
+	}
 	return -1;
 }

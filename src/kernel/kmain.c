@@ -79,7 +79,7 @@ void kmain(multiboot2_info *mb_info)
 		if (mmap->addr != 0)
 		{
 			
-			serial_printf(3, "base addr=0x%x%x, length=0x%x%x, type=%u\n",
+			serial_printf(3, "base addr=0x%x%x, length=0x%x%x, type=%u",
 				(uint32_t) (mmap->addr >> 32),
 				(uint32_t) (mmap->addr & 0xFFFFFFFF),
 				(uint32_t) (mmap->len >> 32),
