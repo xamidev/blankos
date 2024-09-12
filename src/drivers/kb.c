@@ -140,3 +140,19 @@ char keyboard_getchar()
 	keyboard_buffer_start = (keyboard_buffer_start+1) % KEYBOARD_BUFFER_SIZE;
 	return c;
 }
+
+int keyboard_has_input()
+{
+	return keyboard_buffer_start != keyboard_buffer_end;
+}
+
+char keyboard_getchar_non_blocking()
+{
+	if (keyboard_has_input())
+	{
+		char c = keyboard_buffer[keyboard_buffer_start];
+		keyboard_buffer_start = (keyboard_buffer_start+1)%KEYBOARD_BUFFER_SIZE;
+		return c;
+	}
+	return 0;
+}

@@ -43,5 +43,6 @@ void program_lspci();
 // Games
 void program_navalbattle();
 void program_conway();
+void program_snake();
 
 #endif
