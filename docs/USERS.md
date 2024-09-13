@@ -129,3 +129,17 @@ Lists all files present in `initrd.tar`.
 #### `cat <file>`
 
 Prints file content to terminal. Filename must be specified the same way as it is outputted when using `ls`.
+
+### Games
+
+#### `naval`
+
+Starts a simplified naval battle game with 5 ships, one position each.
+
+#### `snake <ticks>`
+
+Starts a simplified and buggy snake game. You can choose the speed by setting the `ticks` argument, or let it default to a normal speed.
+
+Controls:
+- `q` to quit
+- `wasd` to move

@@ -39,6 +39,25 @@ void draw_cursor(uint32_t color)
 	}
 }
 
+void draw_pixel(int x, int y, uint32_t color) //high level wrapper for putpixel
+{
+	putpixel(framebuffer, scanline, 32, x, y, color);
+}
+
+void draw_square(int x, int y, uint32_t color, int size)
+{
+	int startx = x*size;
+	int starty = y*size;
+
+	for (int i=0; i<size; i++)
+	{
+		for (int j=0; j<size; j++)
+		{
+			draw_pixel(startx+i, starty+j, color);
+		}
+	}
+}
+
 void erase_cursor()
 {
 	draw_cursor(black);

@@ -22,8 +22,10 @@
 
 void draw_cursor(uint32_t color);
 void erase_cursor();
-
 void move_cursor(int x, int y);
+
+void draw_pixel(int x, int y, uint32_t color);
+void draw_square(int x, int y, uint32_t color, int size);
 void putchar(unsigned short int c, int x, int y, uint32_t fg, uint32_t bg);
 void puts(const char* str);
 void clear(void);
