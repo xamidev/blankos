@@ -6,7 +6,7 @@
 #ifndef KMAIN_H
 #define KMAIN_H
 
-#define BLANK_VERSION "0.3.120-alpha"
+#define BLANK_VERSION "0.3.123-alpha"
 
 #include <stdint.h>
 
