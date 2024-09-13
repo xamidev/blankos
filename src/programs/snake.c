@@ -10,13 +10,13 @@
 #include "../libc/string.h"
 #include "../libc/crypto.h"
 
-#define WIDTH        25
-#define HEIGHT 	     25
-#define PIXEL_SIZE   20
-
+#define WIDTH        	 25
+#define HEIGHT 	     	 25
+#define PIXEL_SIZE   	 20
+#define MAX_SNAKE_LENGTH 256
 // to add:
-// score
 // sound
+// optimization (shit)
 
 typedef struct
 {
@@ -26,7 +26,7 @@ typedef struct
 
 typedef struct
 {
-	SnakeSegment segments[100];
+	SnakeSegment segments[MAX_SNAKE_LENGTH];
 	int length;
 	int dx;
 	int dy;
@@ -40,6 +40,8 @@ typedef struct
 
 Snake snake;
 Food food;
+int score = 0;
+bool onSnake;
 
 int is_snake(int x, int y);
 
@@ -57,7 +59,6 @@ void init_game()
 
 void draw_board()
 {
-	erase_cursor();
 	for (int y=0; y<=HEIGHT; y++)
 	{
 		for (int x=0; x<=WIDTH; x++)
@@ -75,6 +76,15 @@ void draw_board()
 			}
 		}
 	}
+
+	move_cursor(WIDTH+42, 2);
+	colorputs("Snake Game!", black, green);
+	move_cursor(WIDTH+42, 4);
+	colorprintf(yellow, black, "Score: %d", score);
+	move_cursor(WIDTH+42, 5);
+	puts("Use WASD keys to move");
+	move_cursor(WIDTH+42, 6);
+	puts("Press Q to quit");
 }
 
 int is_snake(int x, int y)
@@ -107,9 +117,38 @@ void move_snake()
 	if (snake.segments[0].x == food.x && snake.segments[0].y == food.y)
 	{
 		snake.length++;
-		food.x = rand() % (WIDTH-1);
-		food.y = rand() % (HEIGHT-1);
+		score++;
+
+		do
+		{
+			onSnake = false;
+			food.x = rand() % (WIDTH-1) + 1;
+			food.y = rand() % (HEIGHT-1) + 1;
+			
+			for (int i=0; i<snake.length; i++)
+			{
+				if (snake.segments[i].x == food.x && snake.segments[i].y == food.y)
+				{
+					onSnake = true;
+					break;
+				}
+			}
+
+		} while (onSnake);
 	}
+
+	for (int i=1; i<snake.length; i++)
+	{
+		if (snake.segments[0].x == snake.segments[i].x && snake.segments[0].y == snake.segments[i].y)
+		{
+
+			move_cursor(WIDTH+42, 8);
+			colorputs("Game Over!\n", white, red);
+			move_cursor(0, HEIGHT+10);
+			shell_install();
+		}
+	}
+	
 }
 
 void handle_input(char key)
@@ -127,7 +166,7 @@ void handle_input(char key)
 		snake.dx = 1;
 		snake.dy = 0;
 	} else if (key =='q') {
-		clear();
+		move_cursor(0, HEIGHT+10);
 		shell_install();
 	} 
 }
