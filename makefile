@@ -7,14 +7,14 @@ ASFLAGS = -f elf
 SRC_DIR = src
 KERNEL_DIR = $(SRC_DIR)/kernel
 LIBC_DIR = $(SRC_DIR)/libc
-PROGRAMS_DIR = $(SRC_DIR)/programs
+UTILS_DIR = $(SRC_DIR)/utils
 DRIVERS_DIR = $(SRC_DIR)/drivers
 INCLUDE_DIR = include
 FONTS_DIR = $(INCLUDE_DIR)/fonts
 OBJ_DIR = build
 
-C_SOURCES = $(wildcard $(KERNEL_DIR)/*.c) $(wildcard $(LIBC_DIR)/*.c) $(wildcard $(PROGRAMS_DIR)/*.c) $(wildcard $(DRIVERS_DIR)/*.c)
-ASM_SOURCES = $(wildcard $(KERNEL_DIR)/*.s) $(wildcard $(LIBC_DIR)/*.s) $(wildcard $(PROGRAMS_DIR)/*.s) $(wildcard $(DRIVERS_DIR)/*.s)
+C_SOURCES = $(wildcard $(KERNEL_DIR)/*.c) $(wildcard $(LIBC_DIR)/*.c) $(wildcard $(UTILS_DIR)/*.c) $(wildcard $(DRIVERS_DIR)/*.c)
+ASM_SOURCES = $(wildcard $(KERNEL_DIR)/*.s) $(wildcard $(LIBC_DIR)/*.s) $(wildcard $(UTILS_DIR)/*.s) $(wildcard $(DRIVERS_DIR)/*.s)
 
 OBJECTS = $(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%, $(C_SOURCES:.c=.o) $(ASM_SOURCES:.s=.o)) 
 
@@ -28,7 +28,7 @@ all: $(OBJ_DIR) kernel.elf
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
-	mkdir -p $(OBJ_DIR)/kernel $(OBJ_DIR)/libc $(OBJ_DIR)/programs $(OBJ_DIR)/drivers $(OBJ_DIR)/fonts
+	mkdir -p $(OBJ_DIR)/kernel $(OBJ_DIR)/libc $(OBJ_DIR)/utils $(OBJ_DIR)/drivers $(OBJ_DIR)/fonts
 
 kernel.elf: $(OBJECTS) $(FONT_OBJ)
 	ld $(LDFLAGS) $(OBJECTS) $(FONT_OBJ) -o kernel.elf

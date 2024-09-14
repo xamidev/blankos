@@ -3,8 +3,8 @@
 // Licensed under the Unlicense. See the repo below.
 // https://github.com/xamidev/blankos
 
-#ifndef PROGRAMS_H
-#define PROGRAMS_H
+#ifndef UTILS_H
+#define UTILS_H
 
 void program_words();
 void program_primes();
