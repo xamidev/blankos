@@ -78,14 +78,14 @@ void kmain(multiboot2_info *mb_info)
 		
 		if (mmap->addr != 0)
 		{
-			
+			/*
 			serial_printf(3, "base addr=0x%x%x, length=0x%x%x, type=%u",
 				(uint32_t) (mmap->addr >> 32),
 				(uint32_t) (mmap->addr & 0xFFFFFFFF),
 				(uint32_t) (mmap->len >> 32),
 				(uint32_t) (mmap->len & 0xFFFFFFFF),
 				mmap->type);
-			
+			*/
 		}
 
 		mmap = (struct multiboot_mmap_entry*) ((uint8_t*)mmap + mmap_tag->entry_size);
@@ -127,6 +127,9 @@ void kmain(multiboot2_info *mb_info)
     } else {
 	printf("LOADED!\n");
     }
+
+    void (*program_entry)() = (void (*)())binary_file;
+    program_entry();
 
     timer_install();
     keyboard_install();

@@ -1,6 +1,8 @@
 #include "../libc/stdio.h"
+#include "../drivers/serial.h"
 
 void main()
 {
-	printf("Hello, world, from a PROGRAM!\n");
+	serial_printf(3, "Hello, world, from a PROGRAM!\n");
+	return;
 }
