@@ -8,6 +8,7 @@
 - Writing programs for BlankOS
 - Changing the TTY font
 - Changing the initial ramdisk content
+- Changing the framebuffer resolution
 
 ## Getting Started
 
@@ -120,3 +121,19 @@ The system loads an initial ramdisk as a simple TAR file located in `iso/boot/in
 You can add, delete, or modify this file's contents by doing that in the `src/initrd` folder. Anything in that folder will be added to the initial ramdisk and will therefore be loaded into the system.
 
 The ramdisk gets loaded as a GRUB2 module.
+
+## Changing the framebuffer resolution
+
+Locate the framebuffer request tag from the Multiboot2 header in `src/kernel/loader.s`. It should look like this:
+
+```
+  align 8
+  dw 5			; 2
+  dw 0			; 2
+  dd 20			; 4
+  dd 1920		; 4
+  dd 1080		; 4
+  dd 32			; 4
+```
+
+Change the `1920` and `1080` values with the resolution you want, according to your screen. Be aware that this might break some programs that rely on the hardcoded Full HD framebuffer value (1920x1080x32). You can also try switching the value under that,`32`, but it will break the display because the kernel is made for 32bpp.
