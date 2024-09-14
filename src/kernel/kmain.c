@@ -118,6 +118,16 @@ void kmain(multiboot2_info *mb_info)
     printf("[debug] malloc test ptr1=0x%x, ptr2=0x%x\n", (unsigned int)ptr1, (unsigned int)ptr2); 
     free(ptr1); free(ptr2);
 
+    // usually the place where i do testing
+
+    void* binary_file = load_file_from_initrd((uint8_t*)initrd_addr, "./hello.bin");
+    if (binary_file == NULL)
+    {
+	printf("NOT LOADED...\n");
+    } else {
+	printf("LOADED!\n");
+    }
+
     timer_install();
     keyboard_install();
     printf("[kernel] spawning shell...\n"); 
