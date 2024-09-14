@@ -51,6 +51,7 @@ KERNEL_STACK_SIZE equ 4096
 extern kmain
 
 loader:
+	mov esp, kernel_stack + KERNEL_STACK_SIZE
   	cli
   	push ebx
   	call kmain
@@ -211,6 +212,6 @@ irq_common_stub:
 
 section .bss
 align 4 
+
+resb KERNEL_STACK_SIZE
 kernel_stack:
-  	resb KERNEL_STACK_SIZE
-  	mov esp, kernel_stack + KERNEL_STACK_SIZE

@@ -3,7 +3,7 @@ ENTRY(loader)
 SECTIONS {
   /* Address to load at; 2MB */
 
-  /*. = 2M;*/
+  . = 2M;
 
   .multiboot_header ALIGN(4K) : {
   	*(.multiboot_header)
