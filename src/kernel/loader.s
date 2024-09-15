@@ -213,5 +213,5 @@ irq_common_stub:
 section .bss
 align 4 
 
-resb KERNEL_STACK_SIZE
 kernel_stack:
+	resb KERNEL_STACK_SIZE
