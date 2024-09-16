@@ -210,6 +210,37 @@ irq_common_stub:
 	add esp, 8
 	iret
 
+; we'll be placing the syscall_common_stub here.
+; push everything, then call syscall_handler (be sure to define it extern)
+; then pop back everything and iret
+extern syscall_handler
+
+global syscall_common_stub
+syscall_common_stub:
+	pusha
+	push ds
+	push es
+	push fs
+	push gs
+	
+	mov eax, ds
+	push eax	; save ds
+	mov ax, 0x10	; kernel segment
+	mov ds, ax
+	mov es, ax
+	
+	call syscall_handler
+
+	pop eax
+	mov ds, eax	; restore ds
+
+	pop gs
+	pop fs
+	pop es
+	pop ds
+	popa
+	iret
+
 section .bss
 align 4 
 

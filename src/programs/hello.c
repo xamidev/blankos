@@ -1,9 +1,10 @@
-void user_printf(const char* format) {
-    asm volatile ("int $0x80" : : "a"(1), "b"(format));
+void user_syscall(int syscall_no) {
+	asm volatile ("mov %0, %%eax" : : "r"(syscall_no));
+	asm volatile ("int $0x80"); 
 }
 
 void main()
 {
-	user_printf("Hello, world, from a PROGRAM!\n");
+	user_syscall(1);
 	return;
 }
