@@ -29,14 +29,11 @@ TOOLCHAIN_FILE = i386-elf-7.5.0-Linux-x86_64.tar.xz
 FONT_OBJ = $(OBJ_DIR)/fonts/UniCyr_8x16.o
 FONT_SRC = $(FONTS_DIR)/UniCyr_8x16.psf
 
-all: $(OBJ_DIR) lib kernel.elf programs
+all: $(OBJ_DIR) kernel.elf programs
 
 $(OBJ_DIR):
 	mkdir -p $(OBJ_DIR)
 	mkdir -p $(OBJ_DIR)/kernel $(OBJ_DIR)/libc $(OBJ_DIR)/utils $(OBJ_DIR)/drivers $(OBJ_DIR)/fonts $(OBJ_DIR)/programs
-
-lib: $(OBJECTS) $(FONT_OBJ)
-	$(AR) rcs $(OBJ_DIR)/lib.a $(OBJECTS) $(FONT_OBJ)
 	
 kernel.elf: $(OBJECTS) $(FONT_OBJ)
 	$(LD) $(LDFLAGS) $(OBJECTS) $(FONT_OBJ) -o kernel.elf
@@ -45,7 +42,7 @@ programs: $(PROGRAM_OBJECTS)
 	@mkdir -p $(SRC_DIR)/initrd
 	@for prog in $(PROGRAM_OBJECTS); do \
 		base=$$(basename $$prog .o); \
-		$(LD) -melf_i386 -T program.ld $$prog $(OBJ_DIR)/lib.a -o $(SRC_DIR)/initrd/$$base.bin; \
+		$(LD) -melf_i386 -T program.ld $$prog -o $(SRC_DIR)/initrd/$$base.bin; \
 	done
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c
