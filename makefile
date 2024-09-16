@@ -1,5 +1,5 @@
 CC = i386-elf-7.5.0-Linux-x86_64/bin/i386-elf-gcc
-CFLAGS = -ffreestanding -g -Wall -Wextra -Wno-builtin-declaration-mismatch -mno-sse -mno-mmx -mno-avx -march=i386 -c -I src/
+CFLAGS = -ffreestanding -g -Wall -Wextra -mno-sse -mno-mmx -mno-avx -march=i386 -c -I src/
 LD = ld
 LDFLAGS = -T link.ld -melf_i386
 AS = nasm

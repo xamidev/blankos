@@ -6,6 +6,7 @@
 #include "kheap.h"
 #include <stdint.h>
 #include "system.h"
+#include "../libc/stdio.h"
 
 // Free list allocator
 
@@ -17,6 +18,7 @@ void init_alloc()
 	free_list = (block_t*)heap;
 	free_list->size = HEAP_SIZE-sizeof(block_t);
 	free_list->next = NULL;
+	printf("[kernel] initialized heap and allocator, start=0x%x\n", heap);
 }
 
 void* malloc(size_t size)

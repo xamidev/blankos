@@ -123,9 +123,9 @@ void kmain(multiboot2_info *mb_info)
     void* binary_file = load_file_from_initrd((uint8_t*)initrd_addr, "./hello.bin");
     if (binary_file == NULL)
     {
-	printf("NOT LOADED...\n");
+	printf("[debug] Failed to load test program!\n");
     } else {
-	printf("LOADED!\n");
+	printf("[debug] Test program loaded!\n");
     }
 
     void (*program_entry)() = (void (*)())binary_file;

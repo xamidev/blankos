@@ -232,7 +232,7 @@ void* load_file_from_initrd(uint8_t* initrd, const char* filename)
 	void* file_content = tar_get_file_content(file);
 	memcpy(file_data, file_content, file_size);
 
-	printf("Loaded '%s' at 0x%x, size=%u\n", filename, (unsigned int)file_data, file_size);
+	printf("[initrd] Loaded '%s' at 0x%x, size=%u\n", filename, (unsigned int)file_data, file_size);
 
 	return file_data;
 }
