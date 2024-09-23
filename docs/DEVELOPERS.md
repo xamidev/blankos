@@ -42,6 +42,8 @@ sudo qemu-system-i386 -drive if=pflash,format=raw,readonly=on,file=/usr/share/OV
 
 Be warned, these are not actual programs in the sense you'd expect. These are indeed functions that are called from the shell, and embedded in the kernel ELF binary. Real programs apart from the kernel are not yet a thing here, but might be one day.
 
+(Now, there is a 'beginning' of something that we could call real programs, but I still suck at making the syscalls work. One day, one day...)
+
 ### Step 1 - Making the program and the entry point
 
 To make a program for the OS, first create the appropriate C source file and header file in the `src/programs` subfolder. Name it appropriately, for example `myprogram.c`.

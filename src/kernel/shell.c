@@ -146,6 +146,7 @@ void shell_install()
   register_command("lspci", program_lspci);
   register_command("naval", program_navalbattle);
   register_command("snake", program_snake);
+  register_command("exec", program_exec);
 
   for (;;)
   {

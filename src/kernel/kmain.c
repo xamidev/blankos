@@ -120,17 +120,6 @@ void kmain(multiboot2_info *mb_info)
 
     // usually the place where i do testing
 
-    void* binary_file = load_file_from_initrd((uint8_t*)initrd_addr, "./hello.bin");
-    if (binary_file == NULL)
-    {
-	printf("[debug] Failed to load test program!\n");
-    } else {
-	printf("[debug] Test program loaded!\n");
-    }
-
-    void (*program_entry)() = (void (*)())binary_file;
-    program_entry();
-
     timer_install();
     keyboard_install();
     printf("[kernel] spawning shell...\n"); 

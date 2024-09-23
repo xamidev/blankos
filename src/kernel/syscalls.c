@@ -5,7 +5,7 @@
 
 #include "../libc/stdio.h"
 
-void handle_syscall(int syscall_number, void* arg)
+void handle_syscall(int syscall_number)
 {
 	switch(syscall_number)
 	{
@@ -29,5 +29,5 @@ void syscall_handler()
 
 	printf("[syscall] syscall_number=%d, arg=%p\n", syscall_number, arg);
 
-	handle_syscall(syscall_number, arg);
+	handle_syscall(syscall_number);
 }

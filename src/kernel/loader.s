@@ -225,7 +225,7 @@ syscall_common_stub:
 	
 	mov eax, ds
 	push eax	; save ds
-	mov ax, 0x10	; kernel segment
+	mov ax, 0x01	; kernel segment YES I CHEATED I KNOW THIS SUCKS
 	mov ds, ax
 	mov es, ax
 	

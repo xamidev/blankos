@@ -11,6 +11,8 @@
 #include "../drivers/rtc.h"
 #include "../kernel/io.h"
 #include "../drivers/pci.h"
+#include "../kernel/initrd.h"
+#include "../kernel/kmain.h"
 
 // Print a rainbow colorful text for testing
 
@@ -74,7 +76,7 @@ void program_uptime()
 
 void program_help()
 {
-	printf("help\tpanic\twords\tprimes\trainbow\tclear\nmath\tbf\t   uptime   echo\t  sysinfo\tconway\nrot13   morse\tcowsay   time\t  read\t   reboot\npi\t  ls\t   cat\t  bmp\t   lspci\t  naval\nsnake\n");
+	printf("help\tpanic\twords\tprimes\trainbow\tclear\nmath\tbf\t   uptime   echo\t  sysinfo\tconway\nrot13   morse\tcowsay   time\t  read\t   reboot\npi\t  ls\t   cat\t  bmp\t   lspci\t  naval\nsnake   exec\n");
 }
 
 // Panic
@@ -133,7 +135,7 @@ void program_read(int argc, char* argv[])
 	}
 }
 
-// Reboots the machine (might just shutdown)
+// Reboots the machine (might just shutdown) (or do nothing if youre lucky)
 
 void program_reboot()
 {
@@ -150,4 +152,25 @@ void program_reboot()
 void program_lspci()
 {
 	scan_pci_bus();
+}
+
+// Executes binary file
+
+void program_exec(int argc, char* argv[])
+{
+	if (argc < 2)
+	{
+		puts("Usage: exec <binary>\n");
+		return;
+	} 
+	void* binary_file = load_file_from_initrd((uint8_t*)initrd_addr, argv[1]); 
+
+	if (binary_file == NULL)
+	{
+		printf("[exec] Failed to load program '%s'.\n", argv[1]);
+		return;
+	} 
+
+	void (*program_entry)() = (void (*)())binary_file;
+	program_entry();
 }
