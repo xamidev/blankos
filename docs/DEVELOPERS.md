@@ -46,7 +46,7 @@ Be warned, these are not actual programs in the sense you'd expect. These are in
 
 ### Step 1 - Making the program and the entry point
 
-To make a program for the OS, first create the appropriate C source file and header file in the `src/programs` subfolder. Name it appropriately, for example `myprogram.c`.
+To make a program for the OS, first create the appropriate C source file and header file in the `src/utils` subfolder. Name it appropriately, for example `myprogram.c`.
 
 In this file, you will put the functions your program will use. The entry point for the program should be a void function named `program_<PROGRAM_NAME>`. The entry point can either take no arguments, or use the classic argc/argv structure. 
 
@@ -67,7 +67,7 @@ Now that your program is done, you will need to make it a part of the OS.
 
 #### General program header file registering
 
-To make the entry point function reachable from the shell, you first have to include it in the general programs header file located in `src/programs/programs.h`.
+To make the entry point function reachable from the shell, you first have to include it in the general programs header file located in `src/utils/programs.h`.
 
 Put the entry point function prototype in that file. A valid example might be:
 
@@ -89,7 +89,7 @@ Don't make your command name too long, preferably a few characters, like the oth
 
 #### Help utility registering (optional)
 
-Finally, you can add your command to the list of available commands by adding it to the `printf` call in the `src/programs/misc.c` source file, in the function `program_help()`.
+Finally, you can add your command to the list of available commands by adding it to the `printf` call in the `src/utils/misc.c` source file, in the function `program_help()`.
 
 If possible make sure that the new command name is aligned with the other ones.
 
