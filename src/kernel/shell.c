@@ -147,6 +147,7 @@ void shell_install()
   register_command("naval", program_navalbattle);
   register_command("snake", program_snake);
   register_command("exec", program_exec);
+  register_command("uhex", program_uhex);
 
   for (;;)
   {

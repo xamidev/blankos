@@ -48,4 +48,6 @@ void program_snake();
 // Binaries loading and execution
 void program_exec();
 
+void program_uhex();
+
 #endif

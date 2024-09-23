@@ -147,3 +147,7 @@ Controls:
 #### `exec <binary>`
 
 Executes a binary file. Warning: this is highly broken and syscalls aren't working. It's written in a childish manner. Help is always appreciated (lol).
+
+#### `uhex <file>`
+
+Prints the hex and ASCII contents of a file.
