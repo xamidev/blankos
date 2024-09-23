@@ -35,5 +35,6 @@ void ls_initrd(uint8_t* initrd, int verbose);
 void cat_initrd(uint8_t* initrd, const char* filename);
 int tar_file_to_buffer(uint8_t* initrd, const char* filename, char* buffer);
 uint32_t tar_get_file_size(uint8_t* initrd, const char* filename);
+void* load_file_from_initrd(uint8_t* initrd, const char* filename);
 
 #endif

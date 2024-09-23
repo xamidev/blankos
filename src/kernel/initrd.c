@@ -8,6 +8,7 @@
 #include "../libc/string.h"
 #include "initrd.h"
 #include "system.h"
+#include "kheap.h"
 
 static unsigned int octal_to_int(const char* str, size_t size)
 {
@@ -27,6 +28,18 @@ uint32_t tar_parse_size(const char* in)
 	{
 		size = (size*8) + (*in - '0');
 		in++;
+	}
+	return size;
+}
+
+uint32_t tar_get_size(tar_header_t* header)
+{
+	uint32_t size = 0;
+	char* size_str = header->size;
+
+	for (int i=0; i<11 && size_str[i] != '\0'; i++)
+	{
+		size = size*8 + (size_str[i]-'0');
 	}
 	return size;
 }
@@ -185,4 +198,53 @@ uint32_t tar_get_file_size(uint8_t* initrd, const char* filename)
 		current_block += TAR_BLOCK_SIZE + total_size;
 	}
 	return -1;
+}
+
+tar_header_t* tar_find(uint8_t* initrd, const char* filename)
+{
+	tar_header_t* header = (tar_header_t*)initrd;
+	while (header->filename[0] != '\0')
+	{
+		if (strcmp(header->filename, filename) == 0)
+		{
+			return header;
+		}
+
+		uint32_t file_size = tar_get_size(header);
+		uint32_t file_blocks = (file_size + 511)/512;
+		header = (tar_header_t*) ((uintptr_t)header+(file_blocks+1)*512);
+	}
+
+	return NULL;
+}
+
+void* tar_get_file_content(tar_header_t* header)
+{
+	return (void*) ((uintptr_t)header+512);
+}
+
+void* load_file_from_initrd(uint8_t* initrd, const char* filename)
+{
+	tar_header_t* file = tar_find(initrd, filename);
+	if (file == NULL)
+	{
+		printf("'%s' not found\n", filename);
+		return NULL;
+	}
+
+	uint32_t file_size = tar_get_size(file);
+
+	void* file_data = malloc(file_size);
+	if (file_data == NULL)
+	{
+		printf("Malloc error for file '%s'\n", filename);
+		return NULL;
+	}
+
+	void* file_content = tar_get_file_content(file);
+	memcpy(file_data, file_content, file_size);
+
+	printf("[initrd] Loaded '%s' at 0x%x, size=%u\n", filename, (unsigned int)file_data, file_size);
+
+	return file_data;
 }

@@ -39,5 +39,7 @@ extern volatile unsigned long global_ticks;
 
 extern unsigned int g_multiboot_info_address;
 
+void syscall_handler();
+
 #endif
 

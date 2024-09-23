@@ -5,3 +5,4 @@ blankos.iso
 iso/
 i386-elf-7.5.0-Linux-x86_64/
 i386-elf-7.5.0-Linux-x86_64.tar.xz
+src/initrd/*.bin

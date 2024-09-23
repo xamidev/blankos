@@ -143,3 +143,7 @@ Starts a simplified and buggy snake game. You can choose the speed by setting th
 Controls:
 - `q` to quit
 - `wasd` to move
+
+#### `exec <binary>`
+
+Executes a binary file. Warning: this is highly broken and syscalls aren't working. It's written in a childish manner. Help is always appreciated (lol).

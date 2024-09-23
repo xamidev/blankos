@@ -17,7 +17,6 @@ typedef struct block
 
 #define HEAP_SIZE 1024*1024	// 1MB malloc-able
 
-
 void init_alloc();
 void* malloc(size_t size);
 void free(void* ptr);
