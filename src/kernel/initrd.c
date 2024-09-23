@@ -80,9 +80,21 @@ void ls_initrd(uint8_t* initrd, int verbose)
 	{
 		if (!verbose)
 		{
-			printf("%s\n", header->filename);
+			if (header->typeflag == '5')
+			{
+				colorprintf(cyan, black, "%s\n", header->filename);
+			} else {
+				printf("%s\n", header->filename);
+			}
 		} else {
-			printf("%7d\t%c\t %s\n", (int)header->size, header->typeflag, header->filename);
+			if (header->typeflag == '5')
+			{
+				printf("%7d\t%c\t", (int)header->size, header->typeflag);
+				colorprintf(cyan, black, " %s\n", header->filename);
+			} else {
+
+				printf("%7d\t%c\t %s\n", (int)header->size, header->typeflag, header->filename);
+			}
 		}
 
 		uint32_t size = tar_parse_size(header->size);

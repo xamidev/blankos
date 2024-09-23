@@ -1,8 +1,8 @@
 ![BlankOSshowcase](https://github.com/user-attachments/assets/63aae4ae-1633-4981-875d-8e2627ccc25c)
 
 > [!WARNING]
-> The project is currently paused, after months of work around the subject. I've had enough for now, and I'll surely come back in some time to implement the more advanced stuff I had planned. For now, enjoy the latest alpha version.
-> This is a hobbyist operating system, and it comes without any warranty whatsoever! See the license for more info. Feedback and contributions are highly appreciated.
+> This is free and unencumbered software released into the public domain. Many things might be (are) broken.
+> The project is a hobbyist operating system, and it comes without any warranty whatsoever! See the license for more info. Feedback and contributions are highly appreciated.
 
 # BlankOS
 
