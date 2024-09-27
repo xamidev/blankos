@@ -10,8 +10,11 @@
 
 extern int scanline;
 
-extern char _binary_include_fonts_viscii10_8x16_psfu_start;
-extern char _binary_include_fonts_viscii10_8x16_psfu_end;
+#define FONT_START _binary_include_fonts_viscii10_8x16_psfu_start 
+#define FONT_END _binary_include_fonts_viscii10_8x16_psfu_start
+
+extern char FONT_START;
+extern char FONT_END;
 uint16_t* unicode;
 #define PIXEL uint32_t
 
