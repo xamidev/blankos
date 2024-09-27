@@ -26,8 +26,8 @@ PROGRAM_OBJECTS = $(patsubst $(SRC_DIR)/%, $(OBJ_DIR)/%, $(PROGRAM_SOURCES:.c=.o
 TOOLCHAIN_SRC = https://newos.org/toolchains/i386-elf-7.5.0-Linux-x86_64.tar.xz
 TOOLCHAIN_FILE = i386-elf-7.5.0-Linux-x86_64.tar.xz
 
-FONT_OBJ = $(OBJ_DIR)/fonts/UniCyrExt_8x16.o
-FONT_SRC = $(FONTS_DIR)/UniCyrExt_8x16.psf
+FONT_OBJ = $(OBJ_DIR)/fonts/viscii10-8x16.o
+FONT_SRC = $(FONTS_DIR)/viscii10-8x16.psfu
 
 all: $(OBJ_DIR) kernel.elf programs
 

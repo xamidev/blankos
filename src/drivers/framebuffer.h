@@ -9,11 +9,13 @@
 #include <stdint.h>
 
 extern int scanline;
-extern char _binary_include_fonts_UniCyrExt_8x16_psf_start;
-uint16_t* unicode;
 
+extern char _binary_include_fonts_viscii10_8x16_psfu_start;
+extern char _binary_include_fonts_viscii10_8x16_psfu_end;
+uint16_t* unicode;
 #define PIXEL uint32_t
 
+#define USHRT_MAX 10000
 #define PSF1_FONT_MAGIC 0x0436
 
 typedef struct {
@@ -38,5 +40,6 @@ typedef struct {
 void putpixel(uint32_t* fb, int pitch, int bpp, int x, int y, uint32_t color); 
 void draw_char(unsigned short int c, int cx, int cy, uint32_t fg, uint32_t bg);
 void scroll();
+void psf_init();
 
 #endif

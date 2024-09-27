@@ -63,7 +63,7 @@ void kmain(multiboot2_info *mb_info)
 	serial_printf(3, "Framebuffer Pitch: %u", fb_info->framebuffer_pitch);
 	serial_printf(3, "Framebuffer BPP: %u", fb_info->framebuffer_bpp);
     }
-
+    psf_init();
     printf("[kernel] multiboot2 info at 0x%x, size=%u\n", mb_info, mb_info->total_size);
     printf("[kernel] framebuffer discovered at 0x%x\n", (unsigned int)fb_info->framebuffer_addr);
     printf("[kernel] fb0: width=%u, height=%u, pitch=%u, bpp=%u\n", fb_info->framebuffer_width, fb_info->framebuffer_height, fb_info->framebuffer_pitch, fb_info->framebuffer_bpp);
