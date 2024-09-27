@@ -56,6 +56,23 @@ void* malloc(size_t size)
 	return NULL;
 }
 
+void* calloc(size_t num, size_t size)
+{
+	size_t total_size = num*size;
+	void* ptr = malloc(total_size);
+
+	if (ptr != NULL)
+	{
+		uint8_t* byte_ptr = (uint8_t*)ptr;
+		for (size_t i=0; i<total_size; i++)
+		{
+			byte_ptr[i] = 0;
+		}
+	}
+
+	return ptr;
+}
+
 void free(void* ptr)
 {
 	if (ptr == NULL) return;

@@ -9,7 +9,7 @@
 #include <stdint.h>
 
 extern int scanline;
-extern char _binary_include_fonts_UniCyr_8x16_psf_start;
+extern char _binary_include_fonts_UniCyrExt_8x16_psf_start;
 uint16_t* unicode;
 
 #define PIXEL uint32_t

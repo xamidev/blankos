@@ -18,13 +18,13 @@ void putpixel(uint32_t* fb, int pitch, int bpp, int x, int y, uint32_t color)
 
 void draw_char(unsigned short int c, int cx, int cy, uint32_t fg, uint32_t bg)
 {
-	PSF_font *font = (PSF_font*)&_binary_include_fonts_UniCyr_8x16_psf_start;
+	PSF_font *font = (PSF_font*)&_binary_include_fonts_UniCyrExt_8x16_psf_start;
 	int bytesperline=(font->width+7)/8;
 	if (unicode != NULL) {
 		c = unicode[c];
 	}
 
-	unsigned char* glyph = (unsigned char*)&_binary_include_fonts_UniCyr_8x16_psf_start + font->headersize + (c>0&&c<font->numglyph?c:0)*font->bytesperglyph;
+	unsigned char* glyph = (unsigned char*)&_binary_include_fonts_UniCyrExt_8x16_psf_start + font->headersize + (c>0&&c<font->numglyph?c:0)*font->bytesperglyph;
 
 	int offs =
 		(cy * font->height * scanline) +
@@ -54,7 +54,7 @@ void scroll()
 {
 	serial_printf(3, "Scrolling...\r");
 	uint32_t bg_color = 0x00000000;
-	PSF_font *font = (PSF_font*)&_binary_include_fonts_UniCyr_8x16_psf_start;
+	PSF_font *font = (PSF_font*)&_binary_include_fonts_UniCyrExt_8x16_psf_start;
 	
 	int line_size = font->height * scanline;
 	int framebuffer_size = scanline * font->height * (1080/font->height);

@@ -20,5 +20,6 @@ typedef struct block
 void init_alloc();
 void* malloc(size_t size);
 void free(void* ptr);
+void* calloc(size_t num, size_t size);
 
 #endif
