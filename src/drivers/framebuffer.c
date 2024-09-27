@@ -24,8 +24,8 @@ void psf_init()
 	char* s = (char*)((unsigned char*)&FONT_START + font->headersize + font->numglyph * font->bytesperglyph);
 	unicode = calloc(USHRT_MAX, 2);
 	
-	while(s>FONT_END){
-        uint16_t uc = (uint16_t)((unsigned char *)s[0]);
+	while((uintptr_t)s>(uintptr_t)FONT_END){
+        uint16_t uc = (uint16_t)((unsigned char)s[0]);
         if(uc == 0xFF) {
             glyph++;
             s++;
