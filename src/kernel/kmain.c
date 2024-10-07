@@ -113,14 +113,6 @@ void kmain(multiboot2_info *mb_info)
     __asm__ __volatile__("sti");
 
     init_alloc();
-    void* ptr1 = malloc(256);
-    void* ptr2 = malloc(512);
-    printf("[debug] malloc test ptr1=0x%x, ptr2=0x%x\n", (unsigned int)ptr1, (unsigned int)ptr2); 
-    free(ptr1); free(ptr2);
-
-    void* ptr3 = calloc(1024, 2);
-    printf("[debug] calloc test ptr3=0x%x\n", (unsigned int)ptr3);
-    free (ptr3);
 
     // usually the place where i do testing
 
